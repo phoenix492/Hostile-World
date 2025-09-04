@@ -4,7 +4,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.phoenix492.dataattachments.FungalInfectionData;
+import net.phoenix492.attachments.FungalInfectionData;
 import net.phoenix492.hostileworld.HostileWorld;
 
 import java.util.function.Supplier;

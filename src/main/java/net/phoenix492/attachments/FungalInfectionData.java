@@ -1,4 +1,4 @@
-package net.phoenix492.dataattachments;
+package net.phoenix492.attachments;
 
 import net.phoenix492.hostileworld.Config;
 
