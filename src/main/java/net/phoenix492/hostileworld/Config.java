@@ -22,4 +22,8 @@ public class Config {
         .defineInRange("fungalInfectionMaximum", Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
     static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();
 
+    public static final ModConfigSpec.IntValue FUNGICIDE_REDUCTION_PER_LEVEL = SERVER_BUILDER
+        .comment(" Amount of infection buildup reduced per level of Fungicide effect applied to player.")
+        .defineInRange("fungicideReductionPerLevel", 10000, 1, Integer.MAX_VALUE);
+
 }
