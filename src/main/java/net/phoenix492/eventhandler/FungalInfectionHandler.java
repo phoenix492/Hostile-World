@@ -54,24 +54,23 @@ public class FungalInfectionHandler {
                 return;
             }
 
-            // Apply environmental infection buildup for player, unless event is cancelled.
-            if (!NeoForge.EVENT_BUS.post(new EnvironmentalFungalInfectionBuildupEvent(serverPlayer)).isCanceled())
-                environmentalInfectionBuildup(serverPlayer);
+            // Apply environmental infection buildup for player
+            environmentalInfectionBuildup(serverPlayer);
 
-            // Apply fungal infection dropoff for player, unless event is cancelled.
-            if (!NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent(serverPlayer)).isCanceled()) {
-                infectionDropoff(serverPlayer);
-            }
+            // Apply fungal infection dropoff for player
+            infectionDropoff(serverPlayer);
 
             // Apply fungal infection effect to player, unless event is cancelled.
-            if (!NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent(serverPlayer)).isCanceled()) {
-                applyInfectionEffect(serverPlayer);
-            }
+            applyInfectionEffect(serverPlayer);
+
         });
 
     }
 
     private static void environmentalInfectionBuildup(ServerPlayer serverPlayer) {
+        if (!NeoForge.EVENT_BUS.post(new EnvironmentalFungalInfectionBuildupEvent(serverPlayer)).isCanceled()) {
+            return;
+        }
 
         // Build-up infection on players in infectious biomes.
         if (serverPlayer.level().getBiome(serverPlayer.blockPosition()).is(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION)) {
@@ -85,6 +84,9 @@ public class FungalInfectionHandler {
     }
 
     private static void infectionDropoff(ServerPlayer serverPlayer) {
+        if (!NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent(serverPlayer)).isCanceled()) {
+            return;
+        }
         // Remove infection from players at a constant rate.
         if (serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) > Config.FUNGAL_INFECTION_MINIMUM.get()) {
             serverPlayer.setData(
@@ -97,6 +99,9 @@ public class FungalInfectionHandler {
     }
 
     private static void applyInfectionEffect(ServerPlayer serverPlayer) {
+        if (!NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent(serverPlayer)).isCanceled()) {
+            return;
+        }
 
     }
 }
