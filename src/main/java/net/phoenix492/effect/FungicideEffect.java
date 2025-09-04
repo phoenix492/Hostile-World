@@ -15,15 +15,20 @@ public class FungicideEffect extends InstantenousMobEffect {
 
     @Override
     public void applyInstantenousEffect(@Nullable Entity source, @Nullable Entity indirectSource, LivingEntity livingEntity, int amplifier, double health) {
+        // Reduce infection buildup by configurable amount per effect level.
+        // Amplifier starts at zero, so adding one simplifies the "per level" calculations.
         if (livingEntity.hasData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP)) {
-            // Reduce infection buildup by configurable amount per effect level.
-            // Amplifier starts at zero, so adding one simplifies the "per level" calculations.
             livingEntity.setData(
                 ModDataAttachments.FUNGAL_INFECTION_BUILDUP,
-                livingEntity.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) - ((amplifier+1) * Config.FUNGICIDE_REDUCTION_PER_LEVEL.getAsInt())
+                Math.clamp(
+                    livingEntity.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) - (long) (amplifier + 1) * Config.FUNGICIDE_REDUCTION_PER_LEVEL.getAsInt(),
+                    Config.FUNGAL_INFECTION_MINIMUM.get(),
+                    Config.FUNGAL_INFECTION_MAXIMUM.get()
+                )
             );
-            // Deal (Configurable)*Level damage to the player in exchange for pruning the infection.
-            livingEntity.hurt(livingEntity.damageSources().magic(), Config.FUNGICIDE_DAMAGE_PER_LEVEL.get().floatValue() * (amplifier+1));
         }
+
+        // Deal (Configurable)*Level damage to the player in exchange for pruning the infection.
+        livingEntity.hurt(livingEntity.damageSources().magic(), Config.FUNGICIDE_DAMAGE_PER_LEVEL.get().floatValue() * (amplifier+1));
     }
 }
