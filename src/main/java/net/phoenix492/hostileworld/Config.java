@@ -23,7 +23,11 @@ public class Config {
     static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();
 
     public static final ModConfigSpec.IntValue FUNGICIDE_REDUCTION_PER_LEVEL = SERVER_BUILDER
-        .comment(" Amount of infection buildup reduced per level of Fungicide effect applied to player.")
+        .comment(" Amount of infection buildup reduced per level of Fungicide effect applied.")
         .defineInRange("fungicideReductionPerLevel", 10000, 1, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.DoubleValue FUNGICIDE_DAMAGE_PER_LEVEL = SERVER_BUILDER
+        .comment(" Amount of damage dealt per level of Fungicide effect applied.")
+        .defineInRange("fungicideDamagePerLevel", 2.0, 0.0, Double.MAX_VALUE);
 
 }

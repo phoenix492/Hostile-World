@@ -12,8 +12,8 @@ import java.util.function.Supplier;
 public class ModDataAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, HostileWorld.MODID);
 
-    public static final Supplier<AttachmentType<Integer>> FUNGUS_INFECTION_BUILDUP = ATTACHMENT_TYPES.register(
-      "fungus_infection_buildup",
+    public static final Supplier<AttachmentType<Integer>> FUNGAL_INFECTION_BUILDUP = ATTACHMENT_TYPES.register(
+      "fungal_infection_buildup",
         () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
     );
 
