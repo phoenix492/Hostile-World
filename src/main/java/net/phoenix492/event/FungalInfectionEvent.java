@@ -1,0 +1,33 @@
+package net.phoenix492.event;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+
+/**
+ * Fires before and after fungal infection handling is ticked for an entity. <br>
+ * {@link Pre} is cancellable, in which case fungal infection handling will be entirely skipped for the entity the event was posted for.
+ */
+public abstract class FungalInfectionEvent extends LivingEvent {
+
+    public FungalInfectionEvent(LivingEntity entity) {
+        super(entity);
+    }
+
+    /**
+     * Cancellable, in which case this entity will entirely skip infection handling this tick.
+     */
+    public static class Pre extends FungalInfectionEvent implements ICancellableEvent {
+        public Pre(LivingEntity entity) {
+            super(entity);
+        }
+    }
+
+    public static class Post extends FungalInfectionEvent {
+
+        public Post(LivingEntity entity) {
+            super(entity);
+        }
+    }
+
+}
