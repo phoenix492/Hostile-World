@@ -31,7 +31,6 @@ public class FungalInfectionHandler {
 
     @SubscribeEvent
     public static void serverPlayerTick(PlayerTickEvent.Pre event) {
-
         ServerPlayer serverPlayer;
 
         // Ignore clientside player ticks
@@ -55,6 +54,9 @@ public class FungalInfectionHandler {
         // Apply fungal infection effect to player.
         fungalInfectionApplyEffect(serverPlayer);
 
+        // Post-infection event.
+        NeoForge.EVENT_BUS.post(new FungalInfectionEvent.Post(serverPlayer));
+
     }
 
     private static void fungalInfectionEnvironmentalBuildup(ServerPlayer serverPlayer) {
@@ -66,6 +68,8 @@ public class FungalInfectionHandler {
         if (serverPlayer.level().getBiome(serverPlayer.blockPosition()).is(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION)) {
             serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION).increaseInfectionLevel(Config.FUNGAL_INFECTION_BIOME_BUILDUP.getAsInt());
         }
+
+        NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Post(serverPlayer));
 
     }
 
@@ -81,11 +85,11 @@ public class FungalInfectionHandler {
             );
         }
 
+        NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent.Post(serverPlayer));
+
     }
 
     private static void fungalInfectionApplyEffect(ServerPlayer serverPlayer) {
-//        if (!NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent.Pre(serverPlayer)).isCanceled()) {
-//            return;
-//        }
+
     }
 }
