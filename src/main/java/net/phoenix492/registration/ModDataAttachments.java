@@ -13,7 +13,7 @@ public class ModDataAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, HostileWorld.MODID);
 
     public static final Supplier<AttachmentType<FungalInfectionData>> FUNGAL_INFECTION = ATTACHMENT_TYPES.register(
-      "fungal_infection_buildup",
+      "fungal_infection",
         () -> AttachmentType.builder(FungalInfectionData::new).build()
     );
 
