@@ -1,9 +1,11 @@
-package net.phoenix492.event;
+package net.phoenix492.eventhandler;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.phoenix492.event.FungusInfectionPlayerTickEvent;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
@@ -12,13 +14,13 @@ import net.phoenix492.util.TagKeys;
 import java.util.List;
 
 /**
- * Event class that uses FUNGUS_INFECTION_BUILDUP data attachment to track how long a player has been in an infectious biome.
+ * Handles events relating to Fungus Infection.
  */
 @EventBusSubscriber(modid = HostileWorld.MODID)
-public class FungusInfectionBuildupHandler {
+public class FungusInfectionHandler {
 
     @SubscribeEvent
-    public static void mushroomInfectionBuildup(ServerTickEvent.Pre event) {
+    public static void infectionBuildup(ServerTickEvent.Pre event) {
 
         List<ServerPlayer> playerList = event.getServer().getPlayerList().getPlayers();
         playerList.forEach(serverPlayer -> {
@@ -53,6 +55,17 @@ public class FungusInfectionBuildupHandler {
                     Config.FUNGAL_INFECTION_MAXIMUM.getAsInt()
                 )
             );
+
+            // Fire infection tick event if player has any amount of buildup.
+            if (serverPlayer.getData(ModDataAttachments.FUNGUS_INFECTION_BUILDUP) > 0) {
+                NeoForge.EVENT_BUS.post(new FungusInfectionPlayerTickEvent(serverPlayer));
+            }
         });
+    }
+
+    @SubscribeEvent
+    public static void infectionTick(FungusInfectionPlayerTickEvent event) {
+        int buildup = event.getPlayer().getData(ModDataAttachments.FUNGUS_INFECTION_BUILDUP);
+
     }
 }
