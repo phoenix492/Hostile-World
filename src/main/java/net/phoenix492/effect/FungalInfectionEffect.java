@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class FungalInfectionEffect extends MobEffect {
 
+    // TODO: Move these to the config once you've got a schema you like.
     public static final Int2DoubleFunction DAMAGE_REDUCTION_AMPLIFIER_MAP = key -> switch (key) {
         case 0 -> -1d;
         case 1 -> -2d;
