@@ -8,7 +8,7 @@ import net.phoenix492.hostileworld.HostileWorld;
 
 public class TagKeys {
     public static class Biomes {
-        public static TagKey<Biome> FUNGAL_INFECTION = createTag("fungal_infection");
+        public static TagKey<Biome> BUILDS_FUNGAL_INFECTION = createTag("builds_fungal_infection");
 
         private static TagKey<Biome> createTag(String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, name));

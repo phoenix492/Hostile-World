@@ -9,7 +9,7 @@ import net.phoenix492.hostileworld.HostileWorld;
 
 import java.util.function.Supplier;
 
-public class DataAttachmentReg {
+public class ModDataAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, HostileWorld.MODID);
 
     public static final Supplier<AttachmentType<Integer>> FUNGUS_INFECTION_BUILDUP = ATTACHMENT_TYPES.register(

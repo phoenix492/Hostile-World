@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModBiomeTagsProvider extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(TagKeys.Biomes.FUNGAL_INFECTION)
+        tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION)
             .add(Biomes.MUSHROOM_FIELDS);
     }
 
