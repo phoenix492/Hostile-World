@@ -4,6 +4,7 @@ import net.minecraft.world.effect.InstantenousMobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.phoenix492.eventhandler.FungalInfectionHandler;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.registration.ModDataAttachments;
 import org.jetbrains.annotations.Nullable;
@@ -20,12 +21,9 @@ public class FungicideEffect extends InstantenousMobEffect {
         if (livingEntity.hasData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP)) {
             livingEntity.setData(
                 ModDataAttachments.FUNGAL_INFECTION_BUILDUP,
-                Math.clamp(
-                    livingEntity.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) - (long) (amplifier + 1) * Config.FUNGICIDE_REDUCTION_PER_LEVEL.getAsInt(),
-                    Config.FUNGAL_INFECTION_MINIMUM.get(),
-                    Config.FUNGAL_INFECTION_MAXIMUM.get()
-                )
+                livingEntity.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) - (amplifier + 1) * Config.FUNGICIDE_REDUCTION_PER_LEVEL.getAsInt()
             );
+            FungalInfectionHandler.clampInfection(livingEntity);
         }
 
         // Deal (Configurable)*Level damage to the player in exchange for pruning the infection.

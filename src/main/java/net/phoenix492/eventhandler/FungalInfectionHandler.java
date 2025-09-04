@@ -1,11 +1,13 @@
 package net.phoenix492.eventhandler;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.phoenix492.event.EnvironmentalFungalInfectionBuildupEvent;
+import net.phoenix492.event.FungalInfectionApplyEffectEvent;
 import net.phoenix492.event.FungalInfectionDropoffEvent;
 import net.phoenix492.event.FungalInfectionPlayerTickEvent;
 import net.phoenix492.hostileworld.Config;
@@ -27,6 +29,22 @@ import java.util.List;
 @EventBusSubscriber(modid = HostileWorld.MODID)
 public class FungalInfectionHandler {
 
+    /**
+     * Public helper/sanitization method that ensures an entity's infection status lies between configuration defined values.
+     * @param livingEntity Living entity whose infection buildup should be clamped
+     */
+    public static void clampInfection(LivingEntity livingEntity) {
+        // Bound infection buildup to config defined values.
+        livingEntity.setData(
+            ModDataAttachments.FUNGAL_INFECTION_BUILDUP,
+            Math.clamp(
+                livingEntity.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP),
+                Config.FUNGAL_INFECTION_MINIMUM.getAsInt(),
+                Config.FUNGAL_INFECTION_MAXIMUM.getAsInt()
+            )
+        );
+    }
+
     @SubscribeEvent
     public static void serverTick(ServerTickEvent.Pre event) {
         List<ServerPlayer> playerList = event.getServer().getPlayerList().getPlayers();
@@ -36,15 +54,19 @@ public class FungalInfectionHandler {
                 return;
             }
 
-            // Apply environmental infection buildup for player, unless someone cancels the event.
+            // Apply environmental infection buildup for player, unless event is cancelled.
             if (!NeoForge.EVENT_BUS.post(new EnvironmentalFungalInfectionBuildupEvent(serverPlayer)).isCanceled())
                 environmentalInfectionBuildup(serverPlayer);
 
-            // Apply fungal infection dropoff for player, unless someone cancels the event.
+            // Apply fungal infection dropoff for player, unless event is cancelled.
             if (!NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent(serverPlayer)).isCanceled()) {
                 infectionDropoff(serverPlayer);
             }
 
+            // Apply fungal infection effect to player, unless event is cancelled.
+            if (!NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent(serverPlayer)).isCanceled()) {
+                applyInfectionEffect(serverPlayer);
+            }
         });
 
     }
@@ -59,19 +81,10 @@ public class FungalInfectionHandler {
             );
         }
 
-        // Bound infection buildup to config defined values.
-        serverPlayer.setData(
-            ModDataAttachments.FUNGAL_INFECTION_BUILDUP,
-            Math.clamp(
-                serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP),
-                Config.FUNGAL_INFECTION_MINIMUM.getAsInt(),
-                Config.FUNGAL_INFECTION_MAXIMUM.getAsInt()
-            )
-        );
+        clampInfection(serverPlayer);
     }
 
     private static void infectionDropoff(ServerPlayer serverPlayer) {
-
         // Remove infection from players at a constant rate.
         if (serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) > Config.FUNGAL_INFECTION_MINIMUM.get()) {
             serverPlayer.setData(
@@ -79,5 +92,11 @@ public class FungalInfectionHandler {
                 serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION_BUILDUP) - Config.FUNGAL_INFECTION_DROPOFF.getAsInt()
             );
         }
+
+        clampInfection(serverPlayer);
+    }
+
+    private static void applyInfectionEffect(ServerPlayer serverPlayer) {
+
     }
 }

@@ -10,7 +10,7 @@ public class Config {
         .defineInRange("fungalInfectionBiomeBuildup", 3, 0, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_DROPOFF = SERVER_BUILDER
-        .comment(" Amount of infection units to take away from players each tick.", " Applied even when players are in infectious biomes, so effectively subtracts 1 from the above number.")
+        .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when players are in infectious biomes.")
         .defineInRange("fungalInfectionDropoff", 1, 0, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_MINIMUM = SERVER_BUILDER
