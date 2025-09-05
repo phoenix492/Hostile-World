@@ -1,6 +1,7 @@
 package net.phoenix492.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2DoubleFunction;
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,6 +24,25 @@ public class FungalInfectionEffect extends MobEffect {
         case 3 -> -0.25d;
         case 4 -> -0.50d;
         default -> -0.95d;
+    };
+
+    public static final Long2IntFunction INFECTION_TO_AMPLIFIER = key -> {
+        if (key > 10000) {
+            return 4;
+        }
+        if (key > 8000) {
+            return 3;
+        }
+        if (key > 6000) {
+            return 2;
+        }
+        if (key > 4000) {
+            return 1;
+        }
+        if (key > 2000) {
+            return 0;
+        }
+        return -1;
     };
 
     public FungalInfectionEffect(MobEffectCategory category, int color) {
