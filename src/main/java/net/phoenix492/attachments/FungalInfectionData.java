@@ -5,7 +5,7 @@ import net.phoenix492.hostileworld.Config;
 // TODO: Add Codec for serialization. Class is currently non-serializable and thus non-persistent.
 // TODO: Migrate to capability
 public class FungalInfectionData {
-    long infectionLevel;
+    private long infectionLevel;
 
     public FungalInfectionData() {
         this.infectionLevel = 0;
