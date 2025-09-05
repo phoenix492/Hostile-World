@@ -1,17 +1,20 @@
-package net.phoenix492.eventhandler;
+package net.phoenix492.handler;
 
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
 import net.phoenix492.event.FungalInfectionApplyEffectEvent;
 import net.phoenix492.event.FungalInfectionDropoffEvent;
+import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
 import net.phoenix492.event.FungalInfectionEvent;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
+import net.phoenix492.registration.ModEffects;
 import net.phoenix492.util.TagKeys;
 
 /**
@@ -26,9 +29,25 @@ import net.phoenix492.util.TagKeys;
  */
 @EventBusSubscriber(modid = HostileWorld.MODID)
 public class FungalInfectionHandler {
-
-
-
+    // TODO: Replace with configured values. Validate in config that each stage is greater than the last.
+    private static final Long2IntFunction INFECTION_TO_AMPLIFIER = key -> {
+        if (key > 10000) {
+            return 4;
+        }
+        if (key > 8000) {
+            return 3;
+        }
+        if (key > 6000) {
+            return 2;
+        }
+        if (key > 4000) {
+            return 1;
+        }
+        if (key > 2000) {
+            return 0;
+        }
+        return -1;
+    };
     @SubscribeEvent
     public static void serverPlayerTick(PlayerTickEvent.Pre event) {
         ServerPlayer serverPlayer;
@@ -60,7 +79,7 @@ public class FungalInfectionHandler {
     }
 
     private static void fungalInfectionEnvironmentalBuildup(ServerPlayer serverPlayer) {
-        if (!NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Pre(serverPlayer)).isCanceled()) {
+        if (NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Pre(serverPlayer)).isCanceled()) {
             return;
         }
 
@@ -74,7 +93,7 @@ public class FungalInfectionHandler {
     }
 
     private static void fungalInfectionDropoff(ServerPlayer serverPlayer) {
-        if (!NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent.Pre(serverPlayer)).isCanceled()) {
+        if (NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent.Pre(serverPlayer)).isCanceled()) {
             return;
         }
         // Remove infection from entities at a constant rate.
@@ -90,6 +109,25 @@ public class FungalInfectionHandler {
     }
 
     private static void fungalInfectionApplyEffect(ServerPlayer serverPlayer) {
+        int amplifier = INFECTION_TO_AMPLIFIER.get(serverPlayer.getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel());
+        if (amplifier < 0) {
+            return;
+        }
+        MobEffectInstance effect = new MobEffectInstance(
+            ModEffects.FUNGUS_INFECTION_EFFECT,
+            20,
+            amplifier,
+            true,
+            true,
+            true
+        );
 
+        if (NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent.Pre(serverPlayer, effect)).isCanceled()) {
+            return;
+        }
+
+        serverPlayer.addEffect(effect);
+
+        NeoForge.EVENT_BUS.post(new FungalInfectionApplyEffectEvent.Pre(serverPlayer, effect));
     }
 }
