@@ -14,7 +14,7 @@ public class ModDataAttachments {
 
     public static final Supplier<AttachmentType<FungalInfectionData>> FUNGAL_INFECTION = ATTACHMENT_TYPES.register(
       "fungal_infection",
-        () -> AttachmentType.builder(FungalInfectionData::new).build()
+        () -> AttachmentType.builder(FungalInfectionData::new).serialize(FungalInfectionData.CODEC).build()
     );
 
     public static void register(IEventBus eventBus) {

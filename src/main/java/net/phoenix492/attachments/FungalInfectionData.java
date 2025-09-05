@@ -1,11 +1,23 @@
 package net.phoenix492.attachments;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.phoenix492.hostileworld.Config;
 
-// TODO: Add Codec for serialization. Class is currently non-serializable and thus non-persistent.
 // TODO: Migrate to capability
 public class FungalInfectionData {
     private long infectionLevel;
+
+    public static final Codec<FungalInfectionData> CODEC = RecordCodecBuilder.create(instance ->
+        instance.group(
+            Codec.LONG.fieldOf("infectionLevel").forGetter(FungalInfectionData::getInfectionLevel)
+        ).apply(instance, FungalInfectionData::new)
+    );
+
+    // Private constructor for deserialization
+    private FungalInfectionData(long initialLevel) {
+        this.infectionLevel = initialLevel;
+    }
 
     public FungalInfectionData() {
         this.infectionLevel = 0;
@@ -15,6 +27,10 @@ public class FungalInfectionData {
         this.infectionLevel = value;
         this.clampInfection();
         return this;
+    }
+
+    public long getInfectionLevel() {
+        return this.infectionLevel;
     }
 
     public FungalInfectionData reduceInfectionLevel(long value) {
@@ -27,10 +43,6 @@ public class FungalInfectionData {
         this.infectionLevel += value;
         this.clampInfection();
         return this;
-    }
-
-    public long getInfectionLevel() {
-        return this.infectionLevel;
     }
 
     /**
