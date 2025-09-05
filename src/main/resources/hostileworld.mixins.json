@@ -4,8 +4,8 @@
   "package": "net.phoenix492.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MyceliumSpreadMixin$MyceliumBlockMixin",
-    "MyceliumSpreadMixin$SpreadingSnowyDirtBlockMixin",
+    "MyceliumSpreadMixins$MyceliumBlockMixin",
+    "MyceliumSpreadMixins$SpreadingSnowyDirtBlockMixin",
     "SpreadingSnowyDirtBlockInvoker"
   ],
   "client": [],
