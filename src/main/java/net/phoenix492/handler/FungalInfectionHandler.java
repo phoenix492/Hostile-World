@@ -1,16 +1,20 @@
 package net.phoenix492.handler;
 
 import it.unimi.dsi.fastutil.longs.Long2IntFunction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.phoenix492.data.EnvironmentalInfectionBuildupData;
 import net.phoenix492.effect.FungalInfectionEffect;
 import net.phoenix492.event.FungalInfectionApplyEffectEvent;
 import net.phoenix492.event.FungalInfectionDropoffEvent;
@@ -19,6 +23,7 @@ import net.phoenix492.event.FungalInfectionEvent;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
+import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.registration.ModEffects;
 import net.phoenix492.util.TagKeys;
 
@@ -64,8 +69,9 @@ public class FungalInfectionHandler {
     public static void serverLivingEntityTick(EntityTickEvent.Post event) {
         LivingEntity entity;
 
-        // Ignore clientside entity ticks and non-living entities
-        if (event.getEntity().level().isClientSide() || !(event.getEntity() instanceof LivingEntity)) {
+        // Ignore clientside entity ticks, non-living entities
+        if (!(event.getEntity() instanceof LivingEntity)
+            || event.getEntity().level().isClientSide()) {
             return;
         } else {
             entity = (LivingEntity) event.getEntity();
@@ -90,16 +96,21 @@ public class FungalInfectionHandler {
      * @param entity
      */
     private static void fungalInfectionEnvironmentalBuildup(LivingEntity entity) {
-        if (NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Pre(entity)).isCanceled()) {
-            return;
-        }
 
         // Build-up infection on players in infectious biomes.
-        if (entity.level().getBiome(entity.blockPosition()).is(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD)) {
-            entity.getData(ModDataAttachments.FUNGAL_INFECTION).increaseInfectionLevel(Config.FUNGAL_INFECTION_BIOME_BUILDUP.getAsInt());
+        Holder<Biome> biomeHolder = entity.level().getBiome(entity.blockPosition());
+        EnvironmentalInfectionBuildupData buildupData = entity.level().registryAccess().lookupOrThrow(Registries.BIOME).getData(ModDataMaps.INFECTION_BUILDUP, biomeHolder.getKey());
+
+        if (buildupData == null) {
+            buildupData = new EnvironmentalInfectionBuildupData();
         }
 
-        NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Post(entity));
+        if (NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Pre(entity, buildupData)).isCanceled()) {
+            return;
+        }
+        entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledIncreaseInfectionLevel(buildupData.getBuildupQuantity());
+
+        NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Post(entity, buildupData));
 
     }
 
@@ -115,7 +126,7 @@ public class FungalInfectionHandler {
         if (entity.getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel() > Config.FUNGAL_INFECTION_MINIMUM.get()) {
             entity.setData(
                 ModDataAttachments.FUNGAL_INFECTION,
-                entity.getData(ModDataAttachments.FUNGAL_INFECTION).reduceInfectionLevel(Config.FUNGAL_INFECTION_UNIVERSAL_DROPOFF.getAsInt())
+                entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledReduceInfectionLevel(Config.FUNGAL_INFECTION_UNIVERSAL_DROPOFF.getAsInt())
             );
         }
 
@@ -136,7 +147,7 @@ public class FungalInfectionHandler {
         }
         MobEffectInstance effect = new MobEffectInstance(
             ModEffects.FUNGUS_INFECTION_EFFECT,
-            20,
+            20 + Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.get(), // Length in ticks equal to how often we check this
             amplifier,
             true,
             true,
@@ -162,17 +173,25 @@ public class FungalInfectionHandler {
         if (entity instanceof ServerPlayer && level.getGameTime() % Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.getAsInt() != 0) {
             event.setCanceled(true);
         }
-        else if (level.getGameTime() % Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.getAsInt() != 0) {
+        else if (level.getGameTime() % Config.FUNGAL_INFECTION_ENTITY_TICK_FREQUENCY.getAsInt() != 0) {
             event.setCanceled(true);
         }
     }
 
     /**
-     * Listens to {@link FungalInfectionEvent.Pre} and prevents players in spectator and creative having their infection ticked.
+     * Listens to {@link FungalInfectionEvent.Pre} and prevents the following from having their infection ticked.
+     * <ul>
+     *     <li>Players in spectator.</li>
+     *     <li>Players in creative.</li>
+     *     <li>Entities tagged with "#hostileworld:fungal_infection_immune"</li>
+     * </ul>
      */
     @SubscribeEvent
-    public static void fungalInfectionPlayerClassLimiter(FungalInfectionEvent.Pre event) {
+    public static void fungalInfectionClassLimiter(FungalInfectionEvent.Pre event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer && (serverPlayer.isCreative() || serverPlayer.isSpectator())) {
+            event.setCanceled(true);
+        }
+        if (event.getEntity() instanceof LivingEntity livingEntity && livingEntity.getType().is(TagKeys.Entities.FUNGAL_INFECTION_IMMUNE)) {
             event.setCanceled(true);
         }
     }

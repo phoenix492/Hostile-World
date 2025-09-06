@@ -13,11 +13,6 @@ public class Config {
         .comment(" How often to tick fungal infection tracking for non-player entities. Same rules as above, but should be less frequent as there are far more entities than players.")
         .defineInRange("fungalInfectionEntityTickFrequency", 20, 1, Integer.MAX_VALUE);
 
-    // TODO: Move this from a config+tag to a datamap
-    public static final ModConfigSpec.IntValue FUNGAL_INFECTION_BIOME_BUILDUP = SERVER_BUILDER
-        .comment(" Amount of infection units per tick to build up on players in biomes tagged with hostileworld:builds_fungal_infection")
-        .defineInRange("fungalInfectionBiomeBuildup", 3, 0, Integer.MAX_VALUE);
-
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_UNIVERSAL_DROPOFF = SERVER_BUILDER
         .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when players are actively receiving infection.")
         .defineInRange("fungalInfectionDropoff", 1, 0, Integer.MAX_VALUE);

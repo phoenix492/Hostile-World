@@ -18,6 +18,7 @@ public class HostileWorld {
 
     public static final String MODID = "hostileworld";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final boolean DEBUG = true;
 
 
     public HostileWorld(IEventBus modEventBus, ModContainer modContainer) {

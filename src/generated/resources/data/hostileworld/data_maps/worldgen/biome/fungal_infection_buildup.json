@@ -1,0 +1,16 @@
+{
+  "values": {
+    "#hostileworld:builds_fungal_infection_fast": {
+      "buildupQuantity": 10
+    },
+    "#hostileworld:builds_fungal_infection_slow": {
+      "buildupQuantity": 2
+    },
+    "#hostileworld:builds_fungal_infection_standard": {
+      "buildupQuantity": 5
+    },
+    "minecraft:mushroom_fields": {
+      "buildupQuantity": 5
+    }
+  }
+}
