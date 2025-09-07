@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#hostileworld:becomes_red_fungus",
+    "#hostileworld:becomes_brown_fungus",
+    "#hostileworld:becomes_mushroom_stem",
+    "#hostileworld:becomes_mycelium",
+    "#hostileworld:becomes_red_mushroom",
+    "#hostileworld:becomes_brown_mushroom",
+    "#hostileworld:consumed_by_fungus"
+  ]
+}

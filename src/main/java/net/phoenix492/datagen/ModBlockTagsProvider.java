@@ -18,12 +18,65 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        // Informational Tags
+
+        tag(TagKeys.Blocks.BECOMES_RED_FUNGUS)
+            .addTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
+            .addTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK);
+
+        tag(TagKeys.Blocks.BECOMES_BROWN_FUNGUS)
+            .addTag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
+            .addTag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM_BLOCK);
+
+        // Each block added to this requires a mixin, thus it can't be a functional tag.
         tag(TagKeys.Blocks.SPREADS_FUNGUS)
             .add(Blocks.MYCELIUM)
             .add(Blocks.MUSHROOM_STEM)
             .add(Blocks.BROWN_MUSHROOM_BLOCK)
             .add(Blocks.RED_MUSHROOM_BLOCK);
 
+
+        // Functional Tags
+        tag(TagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK)
+            .add(Blocks.OAK_LEAVES)
+            .add(Blocks.ACACIA_LEAVES)
+            .add(Blocks.CHERRY_LEAVES)
+            .add(Blocks.AZALEA_LEAVES);
+
+        tag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM_BLOCK)
+            .addTag(TagKeys.Blocks.LEAVES)
+            .remove(TagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK);
+
+        tag(TagKeys.Blocks.BECOMES_MUSHROOM_STEM)
+            .addTag(TagKeys.Blocks.LOGS);
+
+        tag(TagKeys.Blocks.BECOMES_MYCELIUM)
+            .add(Blocks.DIRT)
+            .add(Blocks.GRASS_BLOCK);
+
+        tag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
+            .add(Blocks.TALL_GRASS)
+            .add(Blocks.FERN)
+            .addTag(TagKeys.Blocks.FLOWERS);
+
+        tag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
+            .add(Blocks.SHORT_GRASS);
+
+        tag(TagKeys.Blocks.CONSUMED_BY_FUNGUS)
+            .add(Blocks.VINE)
+            .add(Blocks.CAVE_VINES)
+            .add(Blocks.GLOW_LICHEN);
+
+        // Used when checking if target block should be converted.
+        // Also defaults to turning blocks into red mushroom if they're added to this tag alone.
+        tag(TagKeys.Blocks.BECOMES_FUNGUS)
+            .addTag(TagKeys.Blocks.BECOMES_RED_FUNGUS)
+            .addTag(TagKeys.Blocks.BECOMES_BROWN_FUNGUS)
+            .addTag(TagKeys.Blocks.BECOMES_MUSHROOM_STEM)
+            .addTag(TagKeys.Blocks.BECOMES_MYCELIUM)
+            .addTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
+            .addTag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
+            .addTag(TagKeys.Blocks.CONSUMED_BY_FUNGUS);
 
     }
 }
