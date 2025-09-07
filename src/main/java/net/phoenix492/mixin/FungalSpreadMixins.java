@@ -123,6 +123,7 @@ public abstract class FungalSpreadMixins {
 
     /**
      * Each of the mixins in this class does the exact same thing, and that's make a block that ordinarily doesn't randomly tick begin randomly ticking.
+     * It does so by mixing into its registration, grabbing the BlockBehavior.Properties passed to the new block call, and calling .randomTicks() on it.
      */
     @Mixin(Blocks.class)
     public abstract static class BlocksMixin {
@@ -131,25 +132,25 @@ public abstract class FungalSpreadMixins {
         @Definition(id = "register", method = "Lnet/minecraft/world/level/block/Blocks;register(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;")
         @Expression("block = register('mushroom_stem', @(new block_class(?)))")
         @ModifyArg(method = "<clinit>", at = @At("MIXINEXTRAS:EXPRESSION"))
-        private static BlockBehaviour.Properties makeMushroomStemTick(BlockBehaviour.Properties properties) {
+        private static BlockBehaviour.Properties hostileworld$makeMushroomStemTick(BlockBehaviour.Properties properties) {
             return properties.randomTicks();
         }
 
         @Definition(id = "block", field = "Lnet/minecraft/world/level/block/Blocks;BROWN_MUSHROOM_BLOCK:Lnet/minecraft/world/level/block/Block;")
-        @Definition(id = "HMB", type = HugeMushroomBlock.class)
+        @Definition(id = "block_class", type = HugeMushroomBlock.class)
         @Definition(id = "register", method = "Lnet/minecraft/world/level/block/Blocks;register(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;")
-        @Expression("block = register('brown_mushroom_block', @(new HMB(?)))")
+        @Expression("block = register('brown_mushroom_block', @(new block_class(?)))")
         @ModifyArg(method = "<clinit>", at = @At("MIXINEXTRAS:EXPRESSION"))
-        private static BlockBehaviour.Properties makeBrownMushroomBlockTick(BlockBehaviour.Properties properties) {
+        private static BlockBehaviour.Properties hostileworld$makeBrownMushroomBlockTick(BlockBehaviour.Properties properties) {
             return properties.randomTicks();
         }
 
         @Definition(id = "block", field = "Lnet/minecraft/world/level/block/Blocks;RED_MUSHROOM_BLOCK:Lnet/minecraft/world/level/block/Block;")
-        @Definition(id = "HMB", type = HugeMushroomBlock.class)
+        @Definition(id = "block_class", type = HugeMushroomBlock.class)
         @Definition(id = "register", method = "Lnet/minecraft/world/level/block/Blocks;register(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;")
-        @Expression("block = register('red_mushroom_block', @(new HMB(?)))")
+        @Expression("block = register('red_mushroom_block', @(new block_class(?)))")
         @ModifyArg(method = "<clinit>", at = @At("MIXINEXTRAS:EXPRESSION"))
-        private static BlockBehaviour.Properties makeRedMushroomBlockTick(BlockBehaviour.Properties properties) {
+        private static BlockBehaviour.Properties hostileworld$makeRedMushroomBlockTick(BlockBehaviour.Properties properties) {
             return properties.randomTicks();
         }
     }
