@@ -9,8 +9,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.phoenix492.effect.FungicideEffect;
 import net.phoenix492.effect.FungalInfectionEffect;
+import net.phoenix492.effect.FungicideEffect;
 import net.phoenix492.hostileworld.HostileWorld;
 
 public class ModEffects {

@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biomes;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.util.TagKeys;
@@ -16,7 +15,6 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD)
-            .add(Biomes.MUSHROOM_FIELDS)
             .addOptionalTag(ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "builds_fungal_infection"));
     }
 

@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "#hostileworld:becomes_red_mushroom_block"
+  ],
+  "values": [
+    "#minecraft:leaves"
+  ]
+}
