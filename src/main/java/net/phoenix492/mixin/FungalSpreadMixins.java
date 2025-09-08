@@ -5,15 +5,13 @@ import com.llamalad7.mixinextras.expression.Expression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HugeMushroomBlock;
-import net.minecraft.world.level.block.MyceliumBlock;
-import net.minecraft.world.level.block.SpreadingSnowyDirtBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.phoenix492.hostileworld.FungalSpreadFunction;
-import net.phoenix492.util.TagKeys;
+import net.phoenix492.data.FungalTransformationData;
+import net.phoenix492.hostileworld.Config;
+import net.phoenix492.registration.ModDataMaps;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public abstract class FungalSpreadMixins {
 
+    // The two parent mixins here add a hook into a parent method that the children can override, thus preventing mixin conflicts from directly overriding the method.
     @Mixin(BlockBehaviour.class)
     public abstract static class BlockBehaviorMixin {
 
@@ -31,6 +30,7 @@ public abstract class FungalSpreadMixins {
 
     @Mixin(SpreadingSnowyDirtBlock.class)
     public abstract static class SpreadingSnowyDirtBlockMixin {
+
         @Inject(at = @At("HEAD"), method = "randomTick", cancellable = true)
         protected void hostileworld$onRandomTickForMyceliumBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {}
     }
@@ -43,42 +43,63 @@ public abstract class FungalSpreadMixins {
             // This is exactly what vanilla grass and mycelium do, but I've replicated here
             if (!SpreadingSnowyDirtBlockInvoker.invokeCanBeGrass(state, level, pos)) {
                 // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-                if (!level.isAreaLoaded(pos, 1)) {
-                    info.cancel();
-                    return;
+                if (level.isAreaLoaded(pos, 1)) {
+                    level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
                 }
-                level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+                info.cancel();
+                return;
             }
-            else {
-                // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-                if (!level.isAreaLoaded(pos, 3)) {
-                    info.cancel();
-                    return;
+
+            // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
+            if (!level.isAreaLoaded(pos, 3)) {
+                info.cancel();
+                return;
+            }
+
+            for (int i = 0; i < Config.FUNGAL_SPREAD_SPEED.getAsInt(); i++) {
+                BlockPos spreadTargetPosition = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+                BlockState spreadTargetBlockstate = level.getBlockState(spreadTargetPosition);
+                FungalTransformationData transformData = spreadTargetBlockstate.getBlockHolder().getData(ModDataMaps.FUNGAL_SPREAD_TRANSFORM);
+
+                // If block has no defined transformation, then just return.
+                if (transformData == null) {
+                    continue;
                 }
-                // Unlike parent, no longer checks for light level when spreading. The fungus is evil like that.
-                for (int i = 0; i < 4; i++) {
-                    BlockPos spreadTargetPosition = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-                    BlockState spreadTargetBlockstate = level.getBlockState(spreadTargetPosition);
-                    if (spreadTargetBlockstate.is(TagKeys.Blocks.BECOMES_FUNGUS)) {
-                        BlockState spreadTargetTransformedBlockstate = FungalSpreadFunction.FUNGAL_SPREAD_FUNCTION.apply(spreadTargetBlockstate);
-                        // If we're spreading Mycelium, we need to make sure mycelium can actually propagate to where it's going. We also need to set its snowy status.
-                        if (spreadTargetTransformedBlockstate.is(Blocks.MYCELIUM)) {
-                            if (SpreadingSnowyDirtBlockInvoker.invokeCanPropagate(Blocks.MYCELIUM.defaultBlockState(), level, spreadTargetPosition)) {
-                                level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW)));
-                            }
-                        }
-                        // If we're spreading mushrooms, we also want to make sure they won't just pop off and leave dropped items everywhere.
-                        else if (spreadTargetTransformedBlockstate.is(Blocks.RED_MUSHROOM) || spreadTargetTransformedBlockstate.is(Blocks.BROWN_MUSHROOM)) {
-                            if (level.getBlockState(spreadTargetPosition.below()).is(Blocks.MYCELIUM)) {
-                                level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate);
-                            }
-                        }
-                        // Otherwise just go ahead and set the block.
-                        else {
-                            level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate);
-                        }
+
+                // Once we've confirmed we have the data, we set the block state here so that the conditions afterward can modify it.
+                BlockState targetState = transformData.target().defaultBlockState();
+
+                // Run failure check.
+                if (transformData.failChance() > random.nextFloat()) {
+                    continue;
+                }
+
+                // The propagation check makes sure the target block is capable of being grass & isn't underwater.
+                if (transformData.propagationCheck()) {
+                    if (!SpreadingSnowyDirtBlockInvoker.invokeCanPropagate(targetState, level, spreadTargetPosition)) {
+                        continue;
                     }
                 }
+
+                // The mycelium check has us check underneath the target block for mycelium, used by default so mushrooms don't pop-off
+                if (transformData.myceliumCheck()) {
+                    if (!level.getBlockState(spreadTargetPosition.below()).is(Blocks.MYCELIUM)) {
+                        continue;
+                    }
+                }
+
+                // Run consumption check
+                if (transformData.consumeChance() > random.nextFloat()) {
+                    targetState = Blocks.AIR.defaultBlockState();
+                }
+
+                // Additional check for snowy blocks (grasses) to check their snow status upon spread.
+                if (targetState.getBlock() instanceof SnowyDirtBlock) {
+                    targetState.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
+                }
+
+                // Finally, set & update the block to its transformed variant.
+                level.setBlockAndUpdate(spreadTargetPosition, targetState);
             }
             info.cancel();
         }
@@ -93,29 +114,51 @@ public abstract class FungalSpreadMixins {
                 info.cancel();
                 return;
             }
-            // Unlike parent, no longer checks for light level when spreading. The fungus is evil like that.
-            for (int i = 0; i < 4; i++) {
+
+            for (int i = 0; i < Config.FUNGAL_SPREAD_SPEED.getAsInt(); i++) {
                 BlockPos spreadTargetPosition = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
                 BlockState spreadTargetBlockstate = level.getBlockState(spreadTargetPosition);
-                if (spreadTargetBlockstate.is(TagKeys.Blocks.BECOMES_FUNGUS)) {
-                    BlockState spreadTargetTransformedBlockstate = FungalSpreadFunction.FUNGAL_SPREAD_FUNCTION.apply(spreadTargetBlockstate);
-                    // If we're spreading Mycelium, we need to make sure mycelium can actually propagate to where it's going. We also need to set its snowy status.
-                    if (spreadTargetTransformedBlockstate.is(Blocks.MYCELIUM)) {
-                        if (SpreadingSnowyDirtBlockInvoker.invokeCanPropagate(Blocks.MYCELIUM.defaultBlockState(), level, spreadTargetPosition)) {
-                            level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW)));
-                        }
-                    }
-                    // If we're spreading mushrooms, we also want to make sure they won't just pop off and leave dropped items everywhere.
-                    else if (spreadTargetTransformedBlockstate.is(Blocks.RED_MUSHROOM) || spreadTargetTransformedBlockstate.is(Blocks.BROWN_MUSHROOM)) {
-                        if (level.getBlockState(spreadTargetPosition.below()).is(Blocks.MYCELIUM)) {
-                            level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate);
-                        }
-                    }
-                    // Otherwise just go ahead and set the block.
-                    else {
-                        level.setBlockAndUpdate(spreadTargetPosition, spreadTargetTransformedBlockstate);
+                FungalTransformationData transformData = spreadTargetBlockstate.getBlockHolder().getData(ModDataMaps.FUNGAL_SPREAD_TRANSFORM);
+
+                // If block has no defined transformation, then just return.
+                if (transformData == null) {
+                    continue;
+                }
+
+                // Once we've confirmed we have the data, we set the block state here so that the conditions afterward can modify it.
+                BlockState targetState = transformData.target().defaultBlockState();
+
+                // Run failure check.
+                if (transformData.failChance() > random.nextFloat()) {
+                    continue;
+                }
+
+                // The propagation check makes sure the target block is capable of being grass & isn't underwater.
+                if (transformData.propagationCheck()) {
+                    if (!SpreadingSnowyDirtBlockInvoker.invokeCanPropagate(targetState, level, spreadTargetPosition)) {
+                        continue;
                     }
                 }
+
+                // The mycelium check has us check underneath the target block for mycelium, used by default so mushrooms don't pop-off
+                if (transformData.myceliumCheck()) {
+                    if (!level.getBlockState(spreadTargetPosition.below()).is(Blocks.MYCELIUM)) {
+                        continue;
+                    }
+                }
+
+                // Run consumption check
+                if (transformData.consumeChance() > random.nextFloat()) {
+                    targetState = Blocks.AIR.defaultBlockState();
+                }
+
+                // Additional check for snowy blocks (grasses) to check their snow status upon spread.
+                if (targetState.getBlock() instanceof SnowyDirtBlock) {
+                    targetState.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
+                }
+
+                // Finally, set & update the block to its transformed variant.
+                level.setBlockAndUpdate(spreadTargetPosition, targetState);
             }
             info.cancel();
         }

@@ -17,13 +17,12 @@ public class Config {
         .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when players are actively receiving infection.")
         .defineInRange("fungalInfectionDropoff", 1, 0, Integer.MAX_VALUE);
 
-
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_MINIMUM = SERVER_BUILDER
-        .comment(" Minimum value for infection buildup on a player.")
+        .comment(" Minimum value for infection buildup.")
         .defineInRange("fungalInfectionMinimum", 0, 0, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_MAXIMUM = SERVER_BUILDER
-        .comment(" Maximum value for infection buildup on a player.")
+        .comment(" Maximum value for infection buildup.")
         .defineInRange("fungalInfectionMaximum", Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGICIDE_REDUCTION_PER_LEVEL = SERVER_BUILDER
@@ -33,6 +32,10 @@ public class Config {
     public static final ModConfigSpec.DoubleValue FUNGICIDE_DAMAGE_PER_LEVEL = SERVER_BUILDER
         .comment(" Amount of damage dealt per level of Fungicide effect applied.")
         .defineInRange("fungicideDamagePerLevel", 2.0, 0.0, Double.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue FUNGAL_SPREAD_SPEED = SERVER_BUILDER
+        .comment(" Amount of times fungus spreading blocks will check a nearby block each time one receives a random tick. Vanilla grass uses 4. High values will cause increasing amounts of lag due to running additional checks.")
+        .defineInRange("fungalSpreadSpeed", 4, 0, Integer.MAX_VALUE);
 
     // This goes last. Don't forget.
     static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();

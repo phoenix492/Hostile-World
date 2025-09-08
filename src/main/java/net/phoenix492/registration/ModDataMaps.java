@@ -3,11 +3,13 @@ package net.phoenix492.registration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.phoenix492.data.EnvironmentalInfectionBuildupData;
+import net.phoenix492.data.FungalTransformationData;
 import net.phoenix492.hostileworld.HostileWorld;
 
 @EventBusSubscriber
@@ -19,9 +21,16 @@ public class ModDataMaps {
         EnvironmentalInfectionBuildupData.CODEC
     ).build();
 
+    public static final DataMapType<Block, FungalTransformationData> FUNGAL_SPREAD_TRANSFORM = DataMapType.builder(
+        ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "fungal_spread_transform"),
+        Registries.BLOCK,
+        FungalTransformationData.CODEC
+    ).build();
+
 
     @SubscribeEvent
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(INFECTION_BUILDUP);
+        event.register(FUNGAL_SPREAD_TRANSFORM);
     }
 }

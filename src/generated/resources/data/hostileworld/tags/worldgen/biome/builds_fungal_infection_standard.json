@@ -1,6 +1,5 @@
 {
   "values": [
-    "minecraft:mushroom_fields",
     {
       "id": "#hostileworld:builds_fungal_infection",
       "required": false

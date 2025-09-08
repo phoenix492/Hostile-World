@@ -102,13 +102,13 @@ public class FungalInfectionHandler {
         EnvironmentalInfectionBuildupData buildupData = entity.level().registryAccess().lookupOrThrow(Registries.BIOME).getData(ModDataMaps.INFECTION_BUILDUP, biomeHolder.getKey());
 
         if (buildupData == null) {
-            buildupData = new EnvironmentalInfectionBuildupData();
+            buildupData = new EnvironmentalInfectionBuildupData(0);
         }
 
         if (NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Pre(entity, buildupData)).isCanceled()) {
             return;
         }
-        entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledIncreaseInfectionLevel(buildupData.getBuildupQuantity());
+        entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledIncreaseInfectionLevel(buildupData.buildupQuantity());
 
         NeoForge.EVENT_BUS.post(new FungalInfectionEnvironmentalBuildupEvent.Post(entity, buildupData));
 

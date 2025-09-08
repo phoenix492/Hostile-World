@@ -57,6 +57,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
             .add(Blocks.TALL_GRASS)
             .add(Blocks.FERN)
+            .add(Blocks.LARGE_FERN)
             .addTag(TagKeys.Blocks.FLOWERS);
 
         tag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM)

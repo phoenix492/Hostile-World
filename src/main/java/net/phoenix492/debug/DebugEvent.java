@@ -47,7 +47,7 @@ public class DebugEvent {
             return;
         }
         if (event.getEntity().getMainHandItem().getItem().equals(Items.STRUCTURE_BLOCK)) {
-            event.getBuildupData().setBuildupQuantity(1000);
+            event.setBuildupData(1000);
             HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " infection level: " + event.getEntity().getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel());
         }
     }
@@ -58,7 +58,7 @@ public class DebugEvent {
             return;
         }
         if (event.getEntity().getMainHandItem().getItem().equals(Items.SEA_PICKLE)) {
-            event.getBuildupData().setBuildupQuantity(-1000);
+            event.setBuildupData(-1000);
             HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " infection level: " + event.getEntity().getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel());
         }
     }
@@ -66,7 +66,7 @@ public class DebugEvent {
     @SubscribeEvent
     public static void environmentalinfectioninfo(FungalInfectionEnvironmentalBuildupEvent.Post event) {
         if (event.getEntity() instanceof ServerPlayer) {
-            HostileWorld.LOGGER.debug("Added " + event.getBuildupData().getBuildupQuantity() * Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.get() + " to the infection level of " + event.getEntity().getName().getString());
+            HostileWorld.LOGGER.debug("Added " + event.getBuildupData().buildupQuantity() * Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.get() + " to the infection level of " + event.getEntity().getName().getString());
         }
     }
 
