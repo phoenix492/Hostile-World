@@ -17,6 +17,10 @@ public class Config {
         .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when entities are actively receiving infection.")
         .defineInRange("fungalInfectionDropoff", 1, 0, Integer.MAX_VALUE);
 
+    public static final ModConfigSpec.IntValue FUNGAL_INFECTION_SPORE_DROPPER_BUILDUP = SERVER_BUILDER
+        .comment(" Amount of infection units to give to players who are standing beneath designated \"Spore dropping\" blocks (by default red and brown mushroom blocks) each tick.")
+        .defineInRange("fungalInfectionSporeDropperBuildup", 10, 0, Integer.MAX_VALUE);
+
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_MINIMUM = SERVER_BUILDER
         .comment(" Minimum value for infection buildup.")
         .defineInRange("fungalInfectionMinimum", 0, 0, Integer.MAX_VALUE);
@@ -36,6 +40,10 @@ public class Config {
     public static final ModConfigSpec.IntValue FUNGAL_SPREAD_SPEED = SERVER_BUILDER
         .comment(" Amount of times fungus spreading blocks will check a nearby block each time one receives a random tick. Vanilla grass uses 4. High values will cause increasing amounts of lag due to running additional checks.")
         .defineInRange("fungalSpreadSpeed", 4, 0, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue SPORE_DROPPER_RANGE = SERVER_BUILDER
+        .comment(" How far (in blocks) that blocks tagged as \"spore dropping\" will affect the world below them.", " This includes things such as mushrooms quickly creating mycelium below them and entities receiving infection buildup while underneath spore droppers.", " High values may increase lag (untested, but default is safe).")
+        .defineInRange("sporeDropperRange", 15, 0, 512);
 
     // This goes last. Don't forget.
     static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();

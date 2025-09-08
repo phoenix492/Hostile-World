@@ -1,6 +1,7 @@
 package net.phoenix492.handler;
 
 import it.unimi.dsi.fastutil.longs.Long2IntFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
@@ -87,6 +88,7 @@ public class FungalInfectionHandler {
 
         fungalInfectionEnvironmentalBuildup(serverPlayer);
         fungalInfectionStandingBuildup(serverPlayer);
+        fungalInfectionSporeBuildup(serverPlayer);
         fungalInfectionDropoff(serverPlayer);
         fungalInfectionApplyEffect(serverPlayer);
 
@@ -112,8 +114,9 @@ public class FungalInfectionHandler {
             return;
         }
 
-        fungalInfectionEnvironmentalBuildup(entity);
         fungalInfectionStandingBuildup(entity);
+        fungalInfectionEnvironmentalBuildup(entity);
+        fungalInfectionSporeBuildup(entity);
         fungalInfectionDropoff(entity);
         fungalInfectionApplyEffect(entity);
 
@@ -172,6 +175,22 @@ public class FungalInfectionHandler {
         NeoForge.EVENT_BUS.post(new FungalInfectionBlockBuildupEvent.Post(entity, standingOn, blockInfectionData));
     }
 
+    /**
+     * Applies infection buildup for spore-dropping blocks.
+     */
+    private static void fungalInfectionSporeBuildup(LivingEntity entity) {
+        BlockPos checkedPosImmutable = entity.blockPosition().above();
+        BlockPos.MutableBlockPos checkedPos = new BlockPos.MutableBlockPos(checkedPosImmutable.getX(), checkedPosImmutable.getY(), checkedPosImmutable.getZ());
+        for (int i = 1; i <= Config.SPORE_DROPPER_RANGE.getAsInt(); i++) {
+            checkedPos.setY(checkedPos.getY() + 1);
+            if (!entity.level().getBlockState(checkedPos).is(TagKeys.Blocks.REPLACEABLE)) {
+                if (entity.level().getBlockState(checkedPos).is(TagKeys.Blocks.DROPS_SPORES)) {
+                    entity.getData(ModDataAttachments.FUNGAL_INFECTION).increaseInfectionLevel(Config.FUNGAL_INFECTION_SPORE_DROPPER_BUILDUP.getAsInt());
+                }
+                break;
+            }
+        }
+    }
     /**
      * Applies config defined universal infection dropoff to the passed entity.
      * @param entity

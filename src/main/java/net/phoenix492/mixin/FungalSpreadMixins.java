@@ -129,8 +129,7 @@ public abstract class FungalSpreadMixins {
             */
             if (level.getBlockState(pos).is(TagKeys.Blocks.DROPS_SPORES)) {
                 BlockPos.MutableBlockPos scannedBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
-                // Check up to 15 blocks below. I don't think this needs to be configurable, 15 is a sane number.
-                for (int i = 2; i <= 15; i++) {
+                for (int i = 2; i <= Config.SPORE_DROPPER_RANGE.getAsInt(); i++) {
                     scannedBlockPos.setY(scannedBlockPos.getY() - 1);
                     // If the block we're checking is not replaceable and becomes mycelium, we stop our check and replace it, making sure to preserve snowy status.
                     if (!level.getBlockState(scannedBlockPos).is(TagKeys.Blocks.REPLACEABLE)) {
