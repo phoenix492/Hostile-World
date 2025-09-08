@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "#hostileworld:becomes_red_fungus",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_brown_fungus",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_mushroom_stem",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_mycelium",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_red_mushroom",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_brown_mushroom",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:consumed_by_fungus",
+      "required": false
+    }
+  ]
+}

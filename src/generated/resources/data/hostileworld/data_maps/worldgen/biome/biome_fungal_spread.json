@@ -1,0 +1,10 @@
+{
+  "values": {
+    "#c:is_magical": {
+      "spreadSuccessChance": 0.0
+    },
+    "minecraft:dark_forest": {
+      "spreadSuccessChance": 0.001
+    }
+  }
+}

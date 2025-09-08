@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#hostileworld:becomes_red_mushroom",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_red_mushroom_block",
+      "required": false
+    }
+  ]
+}

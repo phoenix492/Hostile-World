@@ -1,0 +1,30 @@
+{
+  "values": {
+    "#hostileworld:becomes_brown_mushroom": {
+      "consumeChance": 0.75,
+      "myceliumCheck": true,
+      "target": "minecraft:brown_mushroom"
+    },
+    "#hostileworld:becomes_brown_mushroom_block": {
+      "target": "minecraft:brown_mushroom_block"
+    },
+    "#hostileworld:becomes_mushroom_stem": {
+      "target": "minecraft:mushroom_stem"
+    },
+    "#hostileworld:becomes_mycelium": {
+      "propagationCheck": true,
+      "target": "minecraft:mycelium"
+    },
+    "#hostileworld:becomes_red_mushroom": {
+      "consumeChance": 0.25,
+      "myceliumCheck": true,
+      "target": "minecraft:red_mushroom"
+    },
+    "#hostileworld:becomes_red_mushroom_block": {
+      "target": "minecraft:red_mushroom_block"
+    },
+    "#hostileworld:consumed_by_fungus": {
+      "target": "minecraft:air"
+    }
+  }
+}

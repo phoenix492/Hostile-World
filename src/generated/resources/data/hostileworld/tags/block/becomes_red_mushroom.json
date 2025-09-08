@@ -1,0 +1,11 @@
+{
+  "values": [
+    "minecraft:tall_grass",
+    "minecraft:fern",
+    "minecraft:large_fern",
+    {
+      "id": "#minecraft:flowers",
+      "required": false
+    }
+  ]
+}
