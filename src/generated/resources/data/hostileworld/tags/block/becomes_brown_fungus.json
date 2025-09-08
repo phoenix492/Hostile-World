@@ -1,6 +1,12 @@
 {
   "values": [
-    "#hostileworld:becomes_brown_mushroom",
-    "#hostileworld:becomes_brown_mushroom_block"
+    {
+      "id": "#hostileworld:becomes_brown_mushroom",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_brown_mushroom_block",
+      "required": false
+    }
   ]
 }

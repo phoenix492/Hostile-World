@@ -16,6 +16,8 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD)
             .addOptionalTag(ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "builds_fungal_infection"));
+        tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_SLOW)
+            .addOptional(ResourceLocation.fromNamespaceAndPath("minecraft", "dark_forest"));
     }
 
     public ModBiomeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {

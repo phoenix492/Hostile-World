@@ -1,14 +1,12 @@
 package net.phoenix492.debug;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.phoenix492.event.FungalInfectionApplyEffectEvent;
 import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
-import net.phoenix492.event.FungalInfectionEvent;
-import net.phoenix492.hostileworld.Config;
+import net.phoenix492.event.FungalInfectionTickEvent;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
 import net.phoenix492.registration.ModDataMaps;
@@ -19,7 +17,7 @@ import net.phoenix492.registration.ModDataMaps;
 @EventBusSubscriber(modid = HostileWorld.MODID)
 public class DebugEvent {
     @SubscribeEvent
-    public static void printInfection(FungalInfectionEvent.Post event) {
+    public static void printInfection(FungalInfectionTickEvent.Post event) {
         if (!HostileWorld.DEBUG) {
             return;
         }
@@ -58,15 +56,8 @@ public class DebugEvent {
             return;
         }
         if (event.getEntity().getMainHandItem().getItem().equals(Items.SEA_PICKLE)) {
+            HostileWorld.LOGGER.debug("Reducing infection level by 1000!");
             event.setBuildupData(-1000);
-            HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " infection level: " + event.getEntity().getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel());
-        }
-    }
-
-    @SubscribeEvent
-    public static void environmentalinfectioninfo(FungalInfectionEnvironmentalBuildupEvent.Post event) {
-        if (event.getEntity() instanceof ServerPlayer) {
-            HostileWorld.LOGGER.debug("Added " + event.getBuildupData().buildupQuantity() * Config.FUNGAL_INFECTION_PLAYER_TICK_FREQUENCY.get() + " to the infection level of " + event.getEntity().getName().getString());
         }
     }
 
@@ -77,7 +68,7 @@ public class DebugEvent {
         }
         if (event.getEntity().getMainHandItem().getItem().equals(Items.COMMAND_BLOCK)) {
             HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " biome: " + event.getEntity().level().getBiome(event.getEntity().blockPosition()).getRegisteredName());
-            HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " biome buildup: " + event.getEntity().level().getBiome(event.getEntity().blockPosition()).getData(ModDataMaps.INFECTION_BUILDUP));
+            HostileWorld.LOGGER.debug(event.getEntity().getName().getString() + " biome buildup: " + event.getEntity().level().getBiome(event.getEntity().blockPosition()).getData(ModDataMaps.ENVIRONMENTAL_INFECTION_BUILDUP));
         }
     }
 

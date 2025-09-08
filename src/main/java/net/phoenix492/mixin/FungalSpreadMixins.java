@@ -74,6 +74,11 @@ public abstract class FungalSpreadMixins {
                     continue;
                 }
 
+                // Run biome failure check
+                if (level.getBiome(spreadTargetPosition).getData(ModDataMaps.BIOME_FUNGAL_SPREAD) != null && level.getBiome(spreadTargetPosition).getData(ModDataMaps.BIOME_FUNGAL_SPREAD).spreadSuccessChance() < random.nextFloat()) {
+                    continue;
+                }
+
                 // The propagation check makes sure the target block is capable of being grass & isn't underwater.
                 if (transformData.propagationCheck()) {
                     if (!SpreadingSnowyDirtBlockInvoker.invokeCanPropagate(targetState, level, spreadTargetPosition)) {
@@ -130,6 +135,11 @@ public abstract class FungalSpreadMixins {
 
                 // Run failure check.
                 if (transformData.failChance() > random.nextFloat()) {
+                    continue;
+                }
+
+                // Run biome failure check
+                if (level.getBiome(spreadTargetPosition).getData(ModDataMaps.BIOME_FUNGAL_SPREAD) != null && level.getBiome(spreadTargetPosition).getData(ModDataMaps.BIOME_FUNGAL_SPREAD).spreadSuccessChance() < random.nextFloat()) {
                     continue;
                 }
 

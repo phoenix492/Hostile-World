@@ -10,7 +10,7 @@ import net.phoenix492.data.EnvironmentalInfectionBuildupData;
  * {@link Pre} is cancellable, in which case the buildup won't be applied to the entity the event was posted for.
  */
 public abstract class FungalInfectionEnvironmentalBuildupEvent extends LivingEvent {
-    private EnvironmentalInfectionBuildupData buildupData;
+    protected EnvironmentalInfectionBuildupData buildupData;
 
     public FungalInfectionEnvironmentalBuildupEvent(LivingEntity entity, EnvironmentalInfectionBuildupData buildupData) {
         super(entity);
@@ -24,6 +24,13 @@ public abstract class FungalInfectionEnvironmentalBuildupEvent extends LivingEve
         public Pre(LivingEntity entity, EnvironmentalInfectionBuildupData buildupData) {
             super(entity, buildupData);
         }
+        public void setBuildupData(EnvironmentalInfectionBuildupData buildupData) {
+            this.buildupData = buildupData;
+        }
+
+        public void setBuildupData(int buildupQuantity) {
+            this.buildupData = new EnvironmentalInfectionBuildupData(buildupQuantity);
+        }
     }
 
     public static class Post extends FungalInfectionEnvironmentalBuildupEvent {
@@ -36,11 +43,5 @@ public abstract class FungalInfectionEnvironmentalBuildupEvent extends LivingEve
         return buildupData;
     }
 
-    public void setBuildupData(EnvironmentalInfectionBuildupData buildupData) {
-        this.buildupData = buildupData;
-    }
 
-    public void setBuildupData(int buildupQuantity) {
-        this.buildupData = new EnvironmentalInfectionBuildupData(buildupQuantity);
-    }
 }

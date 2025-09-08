@@ -13,6 +13,7 @@ public class TagKeys {
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_SLOW = createTag(HostileWorld.MODID,"builds_fungal_infection_slow");
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_STANDARD = createTag(HostileWorld.MODID,"builds_fungal_infection_standard");
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_FAST = createTag(HostileWorld.MODID,"builds_fungal_infection_fast");
+        public static TagKey<Biome> IS_MAGICAL = createTag("c", "is_magical");
 
         private static TagKey<Biome> createTag(String namespace, String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(namespace, name));

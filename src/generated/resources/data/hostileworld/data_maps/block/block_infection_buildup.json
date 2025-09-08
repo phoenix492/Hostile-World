@@ -1,0 +1,10 @@
+{
+  "values": {
+    "#hostileworld:spreads_fungus": {
+      "breakQuantity": 50,
+      "onBreak": true,
+      "onStand": true,
+      "standQuantity": 10
+    }
+  }
+}

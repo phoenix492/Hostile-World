@@ -14,7 +14,7 @@ public class Config {
         .defineInRange("fungalInfectionEntityTickFrequency", 20, 1, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_UNIVERSAL_DROPOFF = SERVER_BUILDER
-        .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when players are actively receiving infection.")
+        .comment(" Amount of infection units to take away from players each tick.", " Always applied, even when entities are actively receiving infection.")
         .defineInRange("fungalInfectionDropoff", 1, 0, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue FUNGAL_INFECTION_MINIMUM = SERVER_BUILDER

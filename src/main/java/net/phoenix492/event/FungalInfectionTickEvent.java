@@ -10,22 +10,22 @@ import net.phoenix492.handler.FungalInfectionHandler;
  * {@link Pre} is cancellable, in which case fungal infection handling will be entirely skipped for the entity the event was posted for. <br>
  * Subscribing at highest priority will produce undefined behavior, since {@link FungalInfectionHandler#fungalInfectionRateLimiter(Pre)} does so to rate limit ticking.
  */
-public abstract class FungalInfectionEvent extends LivingEvent {
+public abstract class FungalInfectionTickEvent extends LivingEvent {
 
-    public FungalInfectionEvent(LivingEntity entity) {
+    public FungalInfectionTickEvent(LivingEntity entity) {
         super(entity);
     }
 
     /**
      * Cancellable, in which case this entity will entirely skip infection handling this tick.
      */
-    public static class Pre extends FungalInfectionEvent implements ICancellableEvent {
+    public static class Pre extends FungalInfectionTickEvent implements ICancellableEvent {
         public Pre(LivingEntity entity) {
             super(entity);
         }
     }
 
-    public static class Post extends FungalInfectionEvent {
+    public static class Post extends FungalInfectionTickEvent {
 
         public Post(LivingEntity entity) {
             super(entity);

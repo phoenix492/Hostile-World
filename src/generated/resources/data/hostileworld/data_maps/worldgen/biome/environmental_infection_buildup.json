@@ -1,5 +1,8 @@
 {
   "values": {
+    "#c:is_magical": {
+      "buildupQuantity": -1
+    },
     "#hostileworld:builds_fungal_infection_fast": {
       "buildupQuantity": 10
     },
