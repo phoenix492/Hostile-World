@@ -30,6 +30,7 @@ public class TagKeys {
         public static TagKey<Block> LEAVES = createTag("minecraft", "leaves");
         public static TagKey<Block> LOGS = createTag("minecraft", "logs");
         public static TagKey<Block> FLOWERS = createTag("minecraft", "flowers");
+        public static TagKey<Block> REPLACEABLE = createTag("minecraft", "replaceable");
         public static TagKey<Block> SPREADS_FUNGUS = createTag(HostileWorld.MODID, "spreads_fungus");
         public static TagKey<Block> BECOMES_FUNGUS = createTag(HostileWorld.MODID, "becomes_fungus");
         public static TagKey<Block> BECOMES_RED_FUNGUS = createTag(HostileWorld.MODID, "becomes_red_fungus");
@@ -41,6 +42,7 @@ public class TagKeys {
         public static TagKey<Block> BECOMES_BROWN_MUSHROOM = createTag(HostileWorld.MODID, "becomes_brown_mushroom");
         public static TagKey<Block> BECOMES_RED_MUSHROOM = createTag(HostileWorld.MODID, "becomes_red_mushroom");
         public static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
+        public static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));

@@ -19,7 +19,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // Informational Tags
-
         tag(TagKeys.Blocks.BECOMES_RED_FUNGUS)
             .addOptionalTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
             .addOptionalTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK);
@@ -68,8 +67,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.CAVE_VINES)
             .add(Blocks.GLOW_LICHEN);
 
-        // Used when checking if target block should be converted.
-        // Also defaults to turning blocks into red mushroom if they're added to this tag alone.
+        /*
+         Used when checking if target block should be converted.
+         Also defaults to turning blocks into red mushroom if they're added to this tag alone.
+        */
         tag(TagKeys.Blocks.BECOMES_FUNGUS)
             .addOptionalTag(TagKeys.Blocks.BECOMES_RED_FUNGUS)
             .addOptionalTag(TagKeys.Blocks.BECOMES_BROWN_FUNGUS)
@@ -78,6 +79,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .addOptionalTag(TagKeys.Blocks.BECOMES_RED_MUSHROOM)
             .addOptionalTag(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
             .addOptionalTag(TagKeys.Blocks.CONSUMED_BY_FUNGUS);
+
+        /*
+         Mycelium spreading behavior only works for HugeMushroomBlocks, but this tag also controls which blocks will
+         apply infection buildup on entities below.
+        */
+        tag(TagKeys.Blocks.DROPS_SPORES)
+            .add(Blocks.RED_MUSHROOM_BLOCK)
+            .add(Blocks.BROWN_MUSHROOM_BLOCK);
 
     }
 }

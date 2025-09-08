@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.phoenix492.data.FungalTransformationData;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.registration.ModDataMaps;
+import net.phoenix492.util.TagKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -100,7 +101,7 @@ public abstract class FungalSpreadMixins {
 
                 // Additional check for snowy blocks (grasses) to check their snow status upon spread.
                 if (targetState.getBlock() instanceof SnowyDirtBlock) {
-                    targetState.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
+                    targetState = targetState.setValue(SpreadingSnowyDirtBlock.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
                 }
 
                 // Finally, set & update the block to its transformed variant.
@@ -118,6 +119,30 @@ public abstract class FungalSpreadMixins {
             if (!level.isAreaLoaded(pos, 3)) {
                 info.cancel();
                 return;
+            }
+
+            /*
+             Defaults to Brown and Red Mushroom blocks, we use this so they turn blocks below them into
+             mycelium to create an interesting "spreader" effect, where the mushroom appears to act as a canopy of spread.
+             This also allows dark forest to have more mycelium in them then they would with their nerfed spread.
+             TODO: Think about a way to make this more configurable.
+            */
+            if (level.getBlockState(pos).is(TagKeys.Blocks.DROPS_SPORES)) {
+                BlockPos.MutableBlockPos scannedBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
+                // Check up to 15 blocks below. I don't think this needs to be configurable, 15 is a sane number.
+                for (int i = 2; i <= 15; i++) {
+                    scannedBlockPos.setY(scannedBlockPos.getY() - 1);
+                    // If the block we're checking is not replaceable and becomes mycelium, we stop our check and replace it, making sure to preserve snowy status.
+                    if (!level.getBlockState(scannedBlockPos).is(TagKeys.Blocks.REPLACEABLE)) {
+                        // I'm splitting this into two because the linter keeps yelling at me and telling me it's always false. IT'S NOT.
+                        if (level.getBlockState(scannedBlockPos).is(TagKeys.Blocks.BECOMES_MYCELIUM)) {
+                            if (SpreadingSnowyDirtBlockInvoker.invokeCanBeGrass(level.getBlockState(scannedBlockPos), level, scannedBlockPos)) {
+                                level.setBlockAndUpdate(scannedBlockPos, Blocks.MYCELIUM.defaultBlockState().setValue(SnowyDirtBlock.SNOWY, level.getBlockState(scannedBlockPos.above()).is(Blocks.SNOW)));
+                            }
+                        }
+                        break;
+                    }
+                }
             }
 
             for (int i = 0; i < Config.FUNGAL_SPREAD_SPEED.getAsInt(); i++) {
@@ -164,7 +189,7 @@ public abstract class FungalSpreadMixins {
 
                 // Additional check for snowy blocks (grasses) to check their snow status upon spread.
                 if (targetState.getBlock() instanceof SnowyDirtBlock) {
-                    targetState.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
+                    targetState = targetState.setValue(BlockStateProperties.SNOWY, level.getBlockState(spreadTargetPosition.above()).is(Blocks.SNOW));
                 }
 
                 // Finally, set & update the block to its transformed variant.
