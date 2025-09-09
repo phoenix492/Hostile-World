@@ -31,6 +31,12 @@ public class TagKeys {
         public static TagKey<Block> LOGS = createTag("minecraft", "logs");
         public static TagKey<Block> FLOWERS = createTag("minecraft", "flowers");
         public static TagKey<Block> REPLACEABLE = createTag("minecraft", "replaceable");
+
+        // Parity with vanilla fire tags
+        public static TagKey<Block> FIRE = createTag("minecraft", "fire");
+        public static TagKey<Block> DRAGON_TRANSPARENT = createTag("minecraft", "dragon_transparent");
+        public static TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = createTag("minecraft", "enchantment_power_transmitter");
+
         public static TagKey<Block> SPREADS_FUNGUS = createTag(HostileWorld.MODID, "spreads_fungus");
         public static TagKey<Block> BECOMES_FUNGUS = createTag(HostileWorld.MODID, "becomes_fungus");
         public static TagKey<Block> BECOMES_RED_FUNGUS = createTag(HostileWorld.MODID, "becomes_red_fungus");
@@ -43,6 +49,7 @@ public class TagKeys {
         public static TagKey<Block> BECOMES_RED_MUSHROOM = createTag(HostileWorld.MODID, "becomes_red_mushroom");
         public static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
+        public static TagKey<Block> MUSHROOM_FIRE_BURNS = createTag(HostileWorld.MODID, "mushroom_fire_burns");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));

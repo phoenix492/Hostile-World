@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.util.TagKeys;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,6 +68,13 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.CAVE_VINES)
             .add(Blocks.GLOW_LICHEN);
 
+        tag(TagKeys.Blocks.MUSHROOM_FIRE_BURNS)
+            .add(Blocks.RED_MUSHROOM_BLOCK)
+            .add(Blocks.BROWN_MUSHROOM_BLOCK)
+            .add(Blocks.MYCELIUM)
+            .add(Blocks.BROWN_MUSHROOM)
+            .add(Blocks.RED_MUSHROOM);
+
         /*
          Used when checking if target block should be converted.
          Also defaults to turning blocks into red mushroom if they're added to this tag alone.
@@ -87,6 +95,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(TagKeys.Blocks.DROPS_SPORES)
             .add(Blocks.RED_MUSHROOM_BLOCK)
             .add(Blocks.BROWN_MUSHROOM_BLOCK);
+
+        // Vanilla Fire Tag Parity
+        tag(TagKeys.Blocks.FIRE).add(ModBlocks.MUSHROOM_FIRE.get());
+        tag(TagKeys.Blocks.DRAGON_TRANSPARENT).add(ModBlocks.MUSHROOM_FIRE.get());
+        tag(TagKeys.Blocks.REPLACEABLE).add(ModBlocks.MUSHROOM_FIRE.get());
+        tag(TagKeys.Blocks.ENCHANTMENT_POWER_TRANSMITTER).add(ModBlocks.MUSHROOM_FIRE.get());
 
     }
 }
