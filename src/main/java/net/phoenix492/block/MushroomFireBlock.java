@@ -114,8 +114,11 @@ public class MushroomFireBlock extends BaseFireBlock {
      */
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        // Schedules this fire block to be ticked between 30 and 40 ticks into the future.
-        level.scheduleTick(pos, this, 30 + random.nextInt(10));
+        /*
+         Schedules this fire block to be ticked between 20 and 30 ticks into the future.
+         This is about 50% faster than regular fire.
+        */
+        level.scheduleTick(pos, this, 20 + random.nextInt(11));
 
         // If fire tick is disabled, bailout.
         if (!level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
@@ -249,6 +252,7 @@ public class MushroomFireBlock extends BaseFireBlock {
         if (burnoutTarget.getBlock() instanceof SnowyDirtBlock) {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
         }
+
         else {
             level.setBlockAndUpdate(pos, this.defaultBlockState());
         }
@@ -282,14 +286,6 @@ public class MushroomFireBlock extends BaseFireBlock {
             }
         }
         return false;
-    }
-
-    private boolean isNearRain(Level level, BlockPos pos) {
-        return level.isRainingAt(pos)
-            || level.isRainingAt(pos.west())
-            || level.isRainingAt(pos.east())
-            || level.isRainingAt(pos.north())
-            || level.isRainingAt(pos.south());
     }
 
     private int checkIgnition(LevelReader level, BlockPos pos) {
