@@ -45,6 +45,10 @@ public class Config {
         .comment(" How far (in blocks) that blocks tagged as \"spore dropping\" will affect the world below them.", " This includes things such as mushrooms quickly creating mycelium below them and entities receiving infection buildup while underneath spore droppers.", " High values may increase lag (untested, but default is safe).")
         .defineInRange("sporeDropperRange", 15, 0, 512);
 
+    public static final ModConfigSpec.BooleanValue SPONTAENOUS_GERMINATION = SERVER_BUILDER
+        .comment(" Determines if biomes with a germinationChance defined in biome_fungal_spread.json should have a chance of Grass turning into Mycelium, to prevent fully pacifying these biomes.")
+        .define("spontaneousGermination", true);
+
     // This goes last. Don't forget.
     static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();
 }

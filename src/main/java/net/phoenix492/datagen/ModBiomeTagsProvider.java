@@ -14,10 +14,10 @@ import java.util.concurrent.CompletableFuture;
 public class ModBiomeTagsProvider extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD)
-            .addOptionalTag(ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "builds_fungal_infection"));
         tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_SLOW)
             .addOptional(ResourceLocation.fromNamespaceAndPath("minecraft", "dark_forest"));
+        tag(TagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD)
+            .addOptional(ResourceLocation.fromNamespaceAndPath("minecraft", "mushroom_fields"));
     }
 
     public ModBiomeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {

@@ -5,6 +5,9 @@
     },
     "minecraft:dark_forest": {
       "spreadSuccessChance": 0.001
+    },
+    "minecraft:mushroom_fields": {
+      "germinationChance": 1.0E-4
     }
   }
 }

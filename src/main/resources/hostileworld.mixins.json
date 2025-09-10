@@ -9,6 +9,7 @@
   "mixins": [
     "FungalSpreadMixins$BlockBehaviorMixin",
     "FungalSpreadMixins$BlocksMixin",
+    "FungalSpreadMixins$GrassBlockMixin",
     "FungalSpreadMixins$HugeMushroomBlockMixin",
     "FungalSpreadMixins$MyceliumBlockMixin",
     "FungalSpreadMixins$SpreadingSnowyDirtBlockMixin",
