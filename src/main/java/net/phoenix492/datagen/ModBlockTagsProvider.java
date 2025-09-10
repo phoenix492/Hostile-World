@@ -69,11 +69,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.GLOW_LICHEN);
 
         tag(TagKeys.Blocks.MUSHROOM_FIRE_BURNS)
+            .addTag(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)
             .add(Blocks.RED_MUSHROOM_BLOCK)
             .add(Blocks.BROWN_MUSHROOM_BLOCK)
-            .add(Blocks.MYCELIUM)
+            .add(Blocks.MUSHROOM_STEM)
             .add(Blocks.BROWN_MUSHROOM)
             .add(Blocks.RED_MUSHROOM);
+
+        tag(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)
+            .add(Blocks.MYCELIUM);
 
         /*
          Used when checking if target block should be converted.

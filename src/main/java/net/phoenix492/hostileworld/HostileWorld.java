@@ -9,6 +9,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataAttachments;
 import net.phoenix492.registration.ModEffects;
+import net.phoenix492.registration.ModItems;
 import net.phoenix492.util.FlammabilityHelper;
 import org.slf4j.Logger;
 
@@ -28,6 +29,7 @@ public class HostileWorld {
         ModDataAttachments.register(modEventBus);
         ModEffects.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);

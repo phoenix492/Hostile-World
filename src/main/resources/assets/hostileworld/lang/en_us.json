@@ -2,5 +2,7 @@
   "effect.hostileworld.fungicide": "Fungicide",
   "effect.hostileworld.fungicide.description": "Wracks your body to purge mushroom based infections from it. Painful.",
   "effect.hostileworld.fungal_infection": "Mycorrhiza",
-  "effect.hostileworld.fungal_infection.description": "Something foreign to the body has taken root. Stacking penalties with potentially fatal consequences at high levels."
+  "effect.hostileworld.fungal_infection.description": "Something foreign to the body has taken root. Stacking penalties with potentially fatal consequences at high levels.",
+
+  "item.hostileworld.debug_mushroom_igniter": "Debug Mushroom Igniter"
 }

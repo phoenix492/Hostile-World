@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/template_fire_side_alt",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "fire": "minecraft:block/fire_0"
+    "fire": "hostileworld:block/mushroom_fire_0"
   }
 }

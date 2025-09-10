@@ -9,12 +9,12 @@ import net.phoenix492.registration.ModBlocks;
  */
 public class FlammabilityHelper {
     public static void fireSetup() {
-        MushroomFireBlock fireBlock = ModBlocks.MUSHROOM_FIRE.get();
-        fireBlock.setFlammable(Blocks.MYCELIUM, 1000, 500);
-        fireBlock.setFlammable(Blocks.BROWN_MUSHROOM_BLOCK, 1000, 500);
-        fireBlock.setFlammable(Blocks.RED_MUSHROOM_BLOCK, 1000, 500);
-        fireBlock.setFlammable(Blocks.RED_MUSHROOM, 1000, 500);
-        fireBlock.setFlammable(Blocks.BROWN_MUSHROOM, 1000, 500);
-        fireBlock.setFlammable(Blocks.MUSHROOM_STEM, 1000, 500);
+        MushroomFireBlock mushFireBlock = ModBlocks.MUSHROOM_FIRE.get();
+        mushFireBlock.setFlammable(Blocks.MYCELIUM,             1000, 500);
+        mushFireBlock.setFlammable(Blocks.BROWN_MUSHROOM_BLOCK, 1000, 500);
+        mushFireBlock.setFlammable(Blocks.RED_MUSHROOM_BLOCK,   1000, 500);
+        mushFireBlock.setFlammable(Blocks.RED_MUSHROOM,         1000, 500);
+        mushFireBlock.setFlammable(Blocks.BROWN_MUSHROOM,       1000, 500);
+        mushFireBlock.setFlammable(Blocks.MUSHROOM_STEM,        1000, 500);
     }
 }

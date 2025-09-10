@@ -13,6 +13,7 @@ public class TagKeys {
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_SLOW = createTag(HostileWorld.MODID,"builds_fungal_infection_slow");
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_STANDARD = createTag(HostileWorld.MODID,"builds_fungal_infection_standard");
         public static TagKey<Biome> BUILDS_FUNGAL_INFECTION_FAST = createTag(HostileWorld.MODID,"builds_fungal_infection_fast");
+        public static TagKey<Biome> MUSHROOM_FIRE_RESISTANT = createTag(HostileWorld.MODID,"mushroom_fire_resistant");
         public static TagKey<Biome> IS_MAGICAL = createTag("c", "is_magical");
 
         private static TagKey<Biome> createTag(String namespace, String name) {
@@ -50,6 +51,7 @@ public class TagKeys {
         public static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
         public static TagKey<Block> MUSHROOM_FIRE_BURNS = createTag(HostileWorld.MODID, "mushroom_fire_burns");
+        public static TagKey<Block> MUSHROOM_FIRE_BURNS_TO_DIRT = createTag(HostileWorld.MODID, "mushroom_fire_burns_to_dirt");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));
