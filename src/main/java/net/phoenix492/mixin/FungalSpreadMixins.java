@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.phoenix492.data.BiomeFungalSpreadData;
 import net.phoenix492.data.FungalTransformationData;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.registration.ModDataMaps;
@@ -21,19 +22,43 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public abstract class FungalSpreadMixins {
 
-    // The two parent mixins here add a hook into a parent method that the children can override, thus preventing mixin conflicts from directly overriding the method.
+    // The parent mixins here add hooks into a parent method that the children can override, thus preventing mixin conflicts from directly overriding the method.
     @Mixin(BlockBehaviour.class)
     public abstract static class BlockBehaviorMixin {
-
         @Inject(at = @At("HEAD"), method = "randomTick", cancellable = true)
         protected void hostileworld$onRandomTickForHugeMushroomBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {}
     }
 
     @Mixin(SpreadingSnowyDirtBlock.class)
     public abstract static class SpreadingSnowyDirtBlockMixin {
+        @Inject(at = @At("HEAD"), method = "randomTick", cancellable = true)
+        protected void hostileworld$onRandomTickForGrassBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {}
 
         @Inject(at = @At("HEAD"), method = "randomTick", cancellable = true)
         protected void hostileworld$onRandomTickForMyceliumBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {}
+    }
+
+    @Mixin(GrassBlock.class)
+    public abstract static class GrassBlockMixin extends SpreadingSnowyDirtBlockMixin{
+        @Override
+        protected void hostileworld$onRandomTickForGrassBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {
+            if (!Config.SPONTAENOUS_GERMINATION.get()) {
+                return;
+            }
+
+            BiomeFungalSpreadData spreadData = level.getBiome(pos).getData(ModDataMaps.BIOME_FUNGAL_SPREAD);
+            if (spreadData == null) {
+                return;
+            }
+
+            if (spreadData.germinationChance() <= 0) {
+                return;
+            }
+
+            if (spreadData.germinationChance() > random.nextFloat()) {
+                level.setBlockAndUpdate(pos, Blocks.MYCELIUM.defaultBlockState());
+            }
+        }
     }
 
     @Mixin(MyceliumBlock.class)

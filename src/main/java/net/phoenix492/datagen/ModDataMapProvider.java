@@ -28,8 +28,9 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(TagKeys.Biomes.IS_MAGICAL, new EnvironmentalInfectionBuildupData(-1), false);
 
         this.builder(ModDataMaps.BIOME_FUNGAL_SPREAD)
-            .add(Biomes.DARK_FOREST, new BiomeFungalSpreadData(0.001f), false)
-            .add(TagKeys.Biomes.IS_MAGICAL, new BiomeFungalSpreadData(0), false);
+            .add(Biomes.DARK_FOREST, new BiomeFungalSpreadData(0.001f, 0), false)
+            .add(Biomes.MUSHROOM_FIELDS, new BiomeFungalSpreadData(1f, 0.0001f), false)
+            .add(TagKeys.Biomes.IS_MAGICAL, new BiomeFungalSpreadData(0, 0), false);
 
         this.builder(ModDataMaps.BLOCK_INFECTION_BUILDUP)
             .add(TagKeys.Blocks.SPREADS_FUNGUS, new BlockInfectionBuildupData(true, 50, true, 10), false);
