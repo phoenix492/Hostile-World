@@ -33,7 +33,7 @@ public class TagKeys {
         public static TagKey<Block> FLOWERS = createTag("minecraft", "flowers");
         public static TagKey<Block> REPLACEABLE = createTag("minecraft", "replaceable");
 
-        // Parity with vanilla fire tags
+        // Parity with vanilla fire tags for mushroom fire.
         public static TagKey<Block> FIRE = createTag("minecraft", "fire");
         public static TagKey<Block> DRAGON_TRANSPARENT = createTag("minecraft", "dragon_transparent");
         public static TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = createTag("minecraft", "enchantment_power_transmitter");
@@ -48,10 +48,15 @@ public class TagKeys {
         public static TagKey<Block> BECOMES_MYCELIUM = createTag(HostileWorld.MODID, "becomes_mycelium");
         public static TagKey<Block> BECOMES_BROWN_MUSHROOM = createTag(HostileWorld.MODID, "becomes_brown_mushroom");
         public static TagKey<Block> BECOMES_RED_MUSHROOM = createTag(HostileWorld.MODID, "becomes_red_mushroom");
+        public static TagKey<Block> BECOMES_RED_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_red_mycostone");
+        public static TagKey<Block> BECOMES_BROWN_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_brown_mycostone");
+        public static TagKey<Block> BECOMES_MIXED_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_mixed_mycostone");
+        public static TagKey<Block> BECOMES_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_mycostone");
         public static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
         public static TagKey<Block> MUSHROOM_FIRE_BURNS = createTag(HostileWorld.MODID, "mushroom_fire_burns");
         public static TagKey<Block> MUSHROOM_FIRE_BURNS_TO_DIRT = createTag(HostileWorld.MODID, "mushroom_fire_burns_to_dirt");
+        public static TagKey<Block> MUSHROOM_FIRE_BURNS_TO_STONE = createTag(HostileWorld.MODID, "mushroom_fire_burns_to_stone");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));

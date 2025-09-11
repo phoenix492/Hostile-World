@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "hostileworld:block/red_mycostone"
+      },
+      {
+        "model": "hostileworld:block/red_mycostone",
+        "y": 90
+      },
+      {
+        "model": "hostileworld:block/red_mycostone",
+        "y": 180
+      },
+      {
+        "model": "hostileworld:block/red_mycostone",
+        "y": 270
+      }
+    ]
+  }
+}

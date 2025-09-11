@@ -15,6 +15,8 @@ public class ModItems {
         () -> new MushroomIgniter(new Item.Properties())
     );
 
+
+
     public static void register(IEventBus eventBus) {
         MOD_ITEMS.register(eventBus);
     }

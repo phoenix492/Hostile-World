@@ -9,6 +9,7 @@ import net.phoenix492.data.BiomeFungalSpreadData;
 import net.phoenix492.data.BlockInfectionBuildupData;
 import net.phoenix492.data.EnvironmentalInfectionBuildupData;
 import net.phoenix492.data.FungalTransformationData;
+import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.util.TagKeys;
 
@@ -36,12 +37,15 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(TagKeys.Blocks.SPREADS_FUNGUS, new BlockInfectionBuildupData(true, 50, true, 10), false);
 
         this.builder(ModDataMaps.FUNGAL_SPREAD_TRANSFORM)
-            .add(TagKeys.Blocks.BECOMES_MYCELIUM, new FungalTransformationData(Blocks.MYCELIUM, 0, 0, false, true), false)
+            .add(TagKeys.Blocks.BECOMES_MYCELIUM, new FungalTransformationData(Blocks.MYCELIUM, 0, 0, false, true, false), false)
             .add(TagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK, new FungalTransformationData(Blocks.RED_MUSHROOM_BLOCK), false)
             .add(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM_BLOCK, new FungalTransformationData(Blocks.BROWN_MUSHROOM_BLOCK), false)
             .add(TagKeys.Blocks.BECOMES_MUSHROOM_STEM, new FungalTransformationData(Blocks.MUSHROOM_STEM), false)
-            .add(TagKeys.Blocks.BECOMES_RED_MUSHROOM, new FungalTransformationData(Blocks.RED_MUSHROOM, 0, 0.25f, true), false)
-            .add(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM, new FungalTransformationData(Blocks.BROWN_MUSHROOM, 0, 0.75f, true), false)
+            .add(TagKeys.Blocks.BECOMES_RED_MUSHROOM, new FungalTransformationData(Blocks.RED_MUSHROOM, 0, 0.25f, true, false, false), false)
+            .add(TagKeys.Blocks.BECOMES_BROWN_MUSHROOM, new FungalTransformationData(Blocks.BROWN_MUSHROOM, 0, 0.75f, true, false, false), false)
+            .add(TagKeys.Blocks.BECOMES_RED_MYCOSTONE, new FungalTransformationData(ModBlocks.RED_MYCOSTONE.get(), 0, 0, false, false, true), false)
+            .add(TagKeys.Blocks.BECOMES_BROWN_MYCOSTONE, new FungalTransformationData(ModBlocks.BROWN_MYCOSTONE.get(), 0, 0, false, false, true), false)
+            .add(TagKeys.Blocks.BECOMES_MIXED_MYCOSTONE, new FungalTransformationData(ModBlocks.MIXED_MYCOSTONE.get(), 0, 0, false, false, true), false)
             .add(TagKeys.Blocks.CONSUMED_BY_FUNGUS, new FungalTransformationData(Blocks.AIR), false);
 
     }

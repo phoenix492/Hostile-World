@@ -249,13 +249,17 @@ public class MushroomFireBlock extends BaseFireBlock {
             return;
         }
 
-        if (burnoutTarget.getBlock() instanceof SnowyDirtBlock) {
+        if (burnoutTarget.is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)) {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+            return;
         }
 
-        else {
-            level.setBlockAndUpdate(pos, this.defaultBlockState());
+        if (burnoutTarget.is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_STONE)) {
+            level.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            return;
         }
+
+        level.setBlockAndUpdate(pos, this.defaultBlockState());
     }
 
     private BlockState getStateForPlacement(BlockGetter level, BlockPos pos) {
@@ -263,11 +267,11 @@ public class MushroomFireBlock extends BaseFireBlock {
         BlockState blockstate = level.getBlockState(below);
         BlockState toReturn = this.defaultBlockState();
 
-        if (!this.canCatchFire(level, below, Direction.UP) && !blockstate.isFaceSturdy(level, below, Direction.UP)) {
+        if (!this.canCatchFire(level, below) && !blockstate.isFaceSturdy(level, below, Direction.UP)) {
             for (Direction direction : Direction.values()) {
                 BooleanProperty booleanproperty = PROPERTY_BY_DIRECTION.get(direction);
                 if (booleanproperty != null) {
-                    toReturn = toReturn.setValue(booleanproperty, this.canCatchFire(level, pos.relative(direction), direction.getOpposite()));
+                    toReturn = toReturn.setValue(booleanproperty, this.canCatchFire(level, pos.relative(direction)));
                 }
             }
         }
@@ -275,13 +279,13 @@ public class MushroomFireBlock extends BaseFireBlock {
         return toReturn;
     }
 
-    private boolean canCatchFire(BlockGetter world, BlockPos pos, Direction face) {
+    private boolean canCatchFire(BlockGetter world, BlockPos pos) {
         return world.getBlockState(pos).is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS);
     }
 
     private boolean isIgnitableLocation(BlockGetter level, BlockPos pos) {
         for (Direction direction : Direction.values()) {
-            if (this.canCatchFire(level, pos.relative(direction), direction.getOpposite())) {
+            if (this.canCatchFire(level, pos.relative(direction))) {
                 return true;
             }
         }
@@ -309,10 +313,6 @@ public class MushroomFireBlock extends BaseFireBlock {
 
     private int getBurnOdds(BlockState state) {
         return this.burnOdds.getInt(state.getBlock());
-    }
-
-    private void log(String s) {
-        HostileWorld.LOGGER.debug(s);
     }
 
 }

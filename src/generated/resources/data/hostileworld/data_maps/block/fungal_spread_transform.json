@@ -8,6 +8,14 @@
     "#hostileworld:becomes_brown_mushroom_block": {
       "target": "minecraft:brown_mushroom_block"
     },
+    "#hostileworld:becomes_brown_mycostone": {
+      "airExposureCheck": true,
+      "target": "hostileworld:brown_mycostone"
+    },
+    "#hostileworld:becomes_mixed_mycostone": {
+      "airExposureCheck": true,
+      "target": "hostileworld:mixed_mycostone"
+    },
     "#hostileworld:becomes_mushroom_stem": {
       "target": "minecraft:mushroom_stem"
     },
@@ -22,6 +30,10 @@
     },
     "#hostileworld:becomes_red_mushroom_block": {
       "target": "minecraft:red_mushroom_block"
+    },
+    "#hostileworld:becomes_red_mycostone": {
+      "airExposureCheck": true,
+      "target": "hostileworld:red_mycostone"
     },
     "#hostileworld:consumed_by_fungus": {
       "target": "minecraft:air"

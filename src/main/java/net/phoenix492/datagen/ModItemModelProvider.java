@@ -4,6 +4,7 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModItems;
 
 public class ModItemModelProvider extends ItemModelProvider {
@@ -14,5 +15,6 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.DEBUG_MUSHROOM_IGNITER.asItem());
+        simpleBlockItem(ModBlocks.RED_MYCOSTONE.get());
     }
 }
