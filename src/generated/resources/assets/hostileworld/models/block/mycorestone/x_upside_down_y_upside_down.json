@@ -1,0 +1,99 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "rotation": 180,
+          "texture": "#top"
+        },
+        "east": {
+          "cullface": "east",
+          "rotation": 180,
+          "texture": "#side"
+        },
+        "north": {
+          "cullface": "north",
+          "rotation": 180,
+          "texture": "#side"
+        },
+        "south": {
+          "cullface": "south",
+          "rotation": 180,
+          "texture": "#side"
+        },
+        "up": {
+          "cullface": "up",
+          "rotation": 180,
+          "texture": "#top"
+        },
+        "west": {
+          "cullface": "west",
+          "rotation": 180,
+          "texture": "#side"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "rotation": 180,
+          "texture": "#overlay"
+        },
+        "east": {
+          "cullface": "east",
+          "rotation": 180,
+          "texture": "#overlay"
+        },
+        "north": {
+          "cullface": "north",
+          "rotation": 180,
+          "texture": "#overlay"
+        },
+        "south": {
+          "cullface": "south",
+          "rotation": 180,
+          "texture": "#overlay"
+        },
+        "up": {
+          "cullface": "up",
+          "rotation": 180,
+          "texture": "#overlay"
+        },
+        "west": {
+          "cullface": "west",
+          "rotation": 180,
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "overlay": "hostileworld:block/mycorestone_overlay",
+    "particle": "minecraft:block/stone",
+    "side": "minecraft:block/deepslate",
+    "top": "minecraft:block/deepslate_top"
+  }
+}

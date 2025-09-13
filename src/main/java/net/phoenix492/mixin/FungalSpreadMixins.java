@@ -12,7 +12,7 @@ import net.phoenix492.data.BiomeFungalSpreadData;
 import net.phoenix492.handler.FungalSpreadHandler;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.registration.ModDataMaps;
-import net.phoenix492.util.TagKeys;
+import net.phoenix492.util.ModTagKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -104,14 +104,14 @@ public abstract class FungalSpreadMixins {
              This also allows dark forest to have more mycelium in them then they would with their nerfed spread.
              TODO: Think about a way to make this more configurable.
             */
-            if (level.getBlockState(pos).is(TagKeys.Blocks.DROPS_SPORES)) {
+            if (level.getBlockState(pos).is(ModTagKeys.Blocks.DROPS_SPORES)) {
                 BlockPos.MutableBlockPos scannedBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
                 for (int i = 2; i <= Config.SPORE_DROPPER_RANGE.getAsInt(); i++) {
                     scannedBlockPos.setY(scannedBlockPos.getY() - 1);
                     // If the block we're checking is not replaceable and becomes mycelium, we stop our check and replace it, making sure to preserve snowy status.
-                    if (!level.getBlockState(scannedBlockPos).is(TagKeys.Blocks.REPLACEABLE)) {
+                    if (!level.getBlockState(scannedBlockPos).is(ModTagKeys.Blocks.REPLACEABLE)) {
                         // I'm splitting this into two because the linter keeps yelling at me and telling me it's always false. IT'S NOT.
-                        if (level.getBlockState(scannedBlockPos).is(TagKeys.Blocks.BECOMES_MYCELIUM)) {
+                        if (level.getBlockState(scannedBlockPos).is(ModTagKeys.Blocks.BECOMES_MYCELIUM)) {
                             if (SpreadingSnowyDirtBlockInvoker.invokeCanBeGrass(level.getBlockState(scannedBlockPos), level, scannedBlockPos)) {
                                 level.setBlockAndUpdate(scannedBlockPos, Blocks.MYCELIUM.defaultBlockState().setValue(SnowyDirtBlock.SNOWY, level.getBlockState(scannedBlockPos.above()).is(Blocks.SNOW)));
                             }

@@ -26,7 +26,7 @@ import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
 import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.registration.ModEffects;
-import net.phoenix492.util.TagKeys;
+import net.phoenix492.util.ModTagKeys;
 
 /**
  * Handles infection status for entities every server tick.
@@ -127,12 +127,17 @@ public class FungalInfectionHandler {
 
     /**
      * Applies data-map defined environmental (biome) infection to the passed entity.
-     * @param entity
+     * @param entity Entity which infection is applied to.
      */
     private static void fungalInfectionEnvironmentalBuildup(LivingEntity entity) {
 
-        // Build-up infection on players in infectious biomes.
         Holder<Biome> biomeHolder = entity.level().getBiome(entity.blockPosition());
+
+        // On the odd chance an entity is in a biome without a key or not in a biome (how???), bailout.
+        if (biomeHolder.getKey() == null) {
+            return;
+        }
+
         EnvironmentalInfectionBuildupData buildupData = entity.level().registryAccess().lookupOrThrow(Registries.BIOME).getData(ModDataMaps.ENVIRONMENTAL_INFECTION_BUILDUP, biomeHolder.getKey());
 
         if (buildupData == null) {
@@ -150,7 +155,7 @@ public class FungalInfectionHandler {
 
     /**
      * Applies data-map defined infection for the block an entity is standing on.
-     * @param entity
+     * @param entity Entity which infection is applied to.
      */
     private static void fungalInfectionStandingBuildup(LivingEntity entity) {
         BlockState standingOn = entity.level().getBlockState(entity.blockPosition().below());
@@ -183,8 +188,8 @@ public class FungalInfectionHandler {
         BlockPos.MutableBlockPos checkedPos = new BlockPos.MutableBlockPos(checkedPosImmutable.getX(), checkedPosImmutable.getY(), checkedPosImmutable.getZ());
         for (int i = 1; i <= Config.SPORE_DROPPER_RANGE.getAsInt(); i++) {
             checkedPos.setY(checkedPos.getY() + 1);
-            if (!entity.level().getBlockState(checkedPos).is(TagKeys.Blocks.REPLACEABLE)) {
-                if (entity.level().getBlockState(checkedPos).is(TagKeys.Blocks.DROPS_SPORES)) {
+            if (!entity.level().getBlockState(checkedPos).is(ModTagKeys.Blocks.REPLACEABLE)) {
+                if (entity.level().getBlockState(checkedPos).is(ModTagKeys.Blocks.DROPS_SPORES)) {
                     entity.getData(ModDataAttachments.FUNGAL_INFECTION).increaseInfectionLevel(Config.FUNGAL_INFECTION_SPORE_DROPPER_BUILDUP.getAsInt());
                 }
                 break;
@@ -193,7 +198,7 @@ public class FungalInfectionHandler {
     }
     /**
      * Applies config defined universal infection dropoff to the passed entity.
-     * @param entity
+     * @param entity Entity which infection dropoff is applied to.
      */
     private static void fungalInfectionDropoff(LivingEntity entity) {
         if (NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent.Pre(entity)).isCanceled()) {
@@ -214,7 +219,7 @@ public class FungalInfectionHandler {
     /**
      * Applies a {@link MobEffectInstance} with {@link ModEffects#FUNGUS_INFECTION_EFFECT} to the passed entity. <br>
      * The amplifier/level is determined via a {@link Long2IntFunction} in the FUNGUS_INFECTION_EFFECT class.
-     * @param entity
+     * @param entity Entity which infection effect is applied to.
      */
     private static void fungalInfectionApplyEffect(LivingEntity entity) {
         long infectionLevel = entity.getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel();
@@ -268,7 +273,7 @@ public class FungalInfectionHandler {
         if (event.getEntity() instanceof ServerPlayer serverPlayer && (serverPlayer.isCreative() || serverPlayer.isSpectator())) {
             event.setCanceled(true);
         }
-        if (event.getEntity() instanceof LivingEntity livingEntity && livingEntity.getType().is(TagKeys.Entities.FUNGAL_INFECTION_IMMUNE)) {
+        if (event.getEntity() instanceof LivingEntity livingEntity && livingEntity.getType().is(ModTagKeys.Entities.FUNGAL_INFECTION_IMMUNE)) {
             event.setCanceled(true);
         }
     }

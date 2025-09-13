@@ -17,15 +17,15 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModBlocks;
-import net.phoenix492.util.TagKeys;
-import org.jetbrains.annotations.NotNull;
+import net.phoenix492.util.ModTagKeys;
 
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+// TODO: Make taking damage from mushroom fire reduce the player's infection level.
+// TODO: Add block-states for differing strengths of fire.
 public class MushroomFireBlock extends BaseFireBlock {
     public static final MapCodec<MushroomFireBlock> CODEC = simpleCodec(MushroomFireBlock::new);
     private final Object2IntMap<Block> igniteOdds = new Object2IntOpenHashMap<>();
@@ -91,7 +91,7 @@ public class MushroomFireBlock extends BaseFireBlock {
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseFireBlock> codec() {
+    protected MapCodec<? extends BaseFireBlock> codec() {
         return CODEC;
     }
 
@@ -114,11 +114,12 @@ public class MushroomFireBlock extends BaseFireBlock {
      */
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        //TODO: Change this back from debug speeds. Should be 20 + nextInt(11)
         /*
          Schedules this fire block to be ticked between 20 and 30 ticks into the future.
          This is about 50% faster than regular fire.
         */
-        level.scheduleTick(pos, this, 20 + random.nextInt(11));
+        level.scheduleTick(pos, this, 1 + random.nextInt(1));
 
         // If fire tick is disabled, bailout.
         if (!level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
@@ -142,14 +143,14 @@ public class MushroomFireBlock extends BaseFireBlock {
                     level.removeBlock(pos, false);
                     return;
                 }
-                return;
+                // This return would prevent the fire from spreading even if it's right next to something burnable.
+                // I'd much rather it spread and burn.
+                // return;
             }
         }
 
-        /*
-         Once we've made it past the "destroy myself" checks, we can check to see if we're destroying blocks around us.
-        */
-        boolean biomeFireResistant = level.getBiome(pos).is(TagKeys.Biomes.MUSHROOM_FIRE_RESISTANT);
+         // After getting past all the "destroy myself" checks, it's finally time to see if we're destroying something else.
+        boolean biomeFireResistant = level.getBiome(pos).is(ModTagKeys.Biomes.MUSHROOM_FIRE_RESISTANT);
         int fireResistantBiomeModifier = biomeFireResistant ? -50 : 0;
         for (Direction d : Direction.values()) {
             if (d == Direction.DOWN || d == Direction.UP) {
@@ -160,7 +161,7 @@ public class MushroomFireBlock extends BaseFireBlock {
             }
         }
 
-        // Finally, it's time to check fire spread.
+        // Finally time to check fire spread.
         BlockPos.MutableBlockPos checkedBlock = new BlockPos.MutableBlockPos();
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
@@ -195,6 +196,7 @@ public class MushroomFireBlock extends BaseFireBlock {
                 }
             }
         }
+
     }
 
     @Override
@@ -217,7 +219,8 @@ public class MushroomFireBlock extends BaseFireBlock {
         if (!oldState.is(state.getBlock()) && !state.canSurvive(level, pos)) {
             level.removeBlock(pos, false);
         }
-        level.scheduleTick(pos, this, 30 + level.random.nextInt(10));
+        // TODO: Change back from debug speed. should be 30 + nextInt(10)
+        level.scheduleTick(pos, this, 1 + level.random.nextInt(1));
     }
 
     public static boolean canBePlacedAt(Level level, BlockPos pos) {
@@ -241,7 +244,17 @@ public class MushroomFireBlock extends BaseFireBlock {
 
     private void checkBurnOut(ServerLevel level, BlockPos pos, int chance, RandomSource random) {
         BlockState burnoutTarget = level.getBlockState(pos);
-        if (!burnoutTarget.is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS)) {
+        if (!burnoutTarget.is(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS)) {
+            /*
+             This is an extra hardcoded check for blocks like grass and flowers that would otherwise block mushroom fire from
+             getting mycelium beneath them, making it less effective at doing its job and leaving too many mycelium pockets.
+             Some are okay to encourage vigilance, but this results in an annoying whack-a-mole game.
+            */
+            if (!(level.getBlockState(pos).getBlock() instanceof AirBlock)) {
+                if (level.getBlockState(pos.below()).is(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)) {
+                    level.setBlockAndUpdate(pos.below(), Blocks.DIRT.defaultBlockState());
+                }
+            }
             return;
         }
 
@@ -249,15 +262,17 @@ public class MushroomFireBlock extends BaseFireBlock {
             return;
         }
 
-        if (burnoutTarget.is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)) {
+        if (burnoutTarget.is(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)) {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             return;
         }
 
-        if (burnoutTarget.is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_STONE)) {
+        if (burnoutTarget.is(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_STONE)) {
             level.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }
+
+
 
         level.setBlockAndUpdate(pos, this.defaultBlockState());
     }
@@ -280,7 +295,7 @@ public class MushroomFireBlock extends BaseFireBlock {
     }
 
     private boolean canCatchFire(BlockGetter world, BlockPos pos) {
-        return world.getBlockState(pos).is(TagKeys.Blocks.MUSHROOM_FIRE_BURNS);
+        return world.getBlockState(pos).is(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS);
     }
 
     private boolean isIgnitableLocation(BlockGetter level, BlockPos pos) {

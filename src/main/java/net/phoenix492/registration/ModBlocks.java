@@ -1,6 +1,7 @@
 package net.phoenix492.registration;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -10,6 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.phoenix492.block.MushroomFireBlock;
+import net.phoenix492.block.MycorestoneBlock;
 import net.phoenix492.block.MycostoneBlock;
 import net.phoenix492.hostileworld.HostileWorld;
 
@@ -42,6 +44,7 @@ public class ModBlocks {
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 6.0F)
+                .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
     );
@@ -50,10 +53,11 @@ public class ModBlocks {
         "brown_mycostone",
         () -> new MycostoneBlock(
             BlockBehaviour.Properties.of()
-                .mapColor(MapColor.CRIMSON_HYPHAE)
+                .mapColor(MapColor.COLOR_BROWN)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 6.0F)
+                .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
     );
@@ -62,14 +66,27 @@ public class ModBlocks {
         "mixed_mycostone",
         () -> new MycostoneBlock(
             BlockBehaviour.Properties.of()
-                .mapColor(MapColor.CRIMSON_HYPHAE)
+                .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 6.0F)
+                .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
     );
 
+    public static final DeferredBlock<RotatedPillarBlock> MYCORESTONE = registerWithItem(
+        "mycorestone",
+        () -> new MycorestoneBlock(
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_PURPLE)
+                .instrument(NoteBlockInstrument.BIT)
+                .requiresCorrectToolForDrops()
+                .strength(3.0f, 6.0f)
+                .sound(SoundType.DEEPSLATE)
+                .randomTicks()
+        )
+    );
 
     private static <T extends Block> DeferredBlock<T> registerWithItem(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = MOD_BLOCKS.register(

@@ -13,12 +13,14 @@ import net.phoenix492.data.FungalTransformationData;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.mixin.FungalSpreadMixins;
 import net.phoenix492.mixin.SpreadingSnowyDirtBlockInvoker;
+import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataMaps;
+import net.phoenix492.util.ModTagKeys;
 
 /**
- * Contains logic for fungal spread, intended to be called from the randomTick method of blocks.
+ * Contains logic for fungal spread, intended to be called from the randomTick method of blocks.<br>
  * Previously this was inlined into the mixins in {@link FungalSpreadMixins} but that created huge blocks of repeated code,
- * and I needed it more than those few times with the implementation of mycostone.
+ * and I needed it again when few implementing mycostone.
  */
 public class FungalSpreadHandler {
     public static void basicFungalSpread(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -65,11 +67,22 @@ public class FungalSpreadHandler {
                 for (Direction d : Direction.values()) {
                     if (level.getBlockState(spreadTargetPosition.relative(d)).getBlock() instanceof AirBlock) {
                         airExposed = true;
-                        break;
+                        break; // small early break optimization when spreading
                     }
                 }
                 if (!airExposed) {
                     continue;
+                }
+            }
+
+            // The stone variant check uses the source block to determine which mycostone variant we should spread.
+            if (targetState.is(ModTagKeys.Blocks.MYCOSTONES) && transformData.mycostoneVariantCheck()) {
+                if(state.is(ModTagKeys.Blocks.RED_FUNGUS)) {
+                    targetState = ModBlocks.RED_MYCOSTONE.get().defaultBlockState();
+                } else if (state.is(ModTagKeys.Blocks.BROWN_FUNGUS)) {
+                    targetState = ModBlocks.BROWN_MYCOSTONE.get().defaultBlockState();
+                } else {
+                    targetState = ModBlocks.MIXED_MYCOSTONE.get().defaultBlockState();
                 }
             }
 
