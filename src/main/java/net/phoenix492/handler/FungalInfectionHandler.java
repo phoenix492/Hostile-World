@@ -20,7 +20,11 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.phoenix492.data.BlockInfectionBuildupData;
 import net.phoenix492.data.EnvironmentalInfectionBuildupData;
 import net.phoenix492.effect.FungalInfectionEffect;
-import net.phoenix492.event.*;
+import net.phoenix492.event.FungalInfectionApplyEffectEvent;
+import net.phoenix492.event.FungalInfectionBlockBuildupEvent;
+import net.phoenix492.event.FungalInfectionDropoffEvent;
+import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
+import net.phoenix492.event.FungalInfectionTickEvent;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
@@ -206,10 +210,7 @@ public class FungalInfectionHandler {
         }
         // Remove infection from entities at a constant rate.
         if (entity.getData(ModDataAttachments.FUNGAL_INFECTION).getInfectionLevel() > Config.FUNGAL_INFECTION_MINIMUM.get()) {
-            entity.setData(
-                ModDataAttachments.FUNGAL_INFECTION,
-                entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledReduceInfectionLevel(Config.FUNGAL_INFECTION_UNIVERSAL_DROPOFF.getAsInt())
-            );
+            entity.getData(ModDataAttachments.FUNGAL_INFECTION).tickScaledReduceInfectionLevel(Config.FUNGAL_INFECTION_UNIVERSAL_DROPOFF.getAsInt());
         }
 
         NeoForge.EVENT_BUS.post(new FungalInfectionDropoffEvent.Post(entity));
