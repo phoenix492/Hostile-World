@@ -25,7 +25,10 @@
               },
               {
                 "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:mycelium",
+                "blocks": [
+                  "minecraft:mycelium",
+                  "hostileworld:mycoturf"
+                ],
                 "offset": [
                   0,
                   -1,

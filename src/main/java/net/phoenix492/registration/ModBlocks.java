@@ -1,5 +1,11 @@
 package net.phoenix492.registration;
 
+import net.phoenix492.block.MycofireBlock;
+import net.phoenix492.block.MycorestoneBlock;
+import net.phoenix492.block.MycostoneBlock;
+import net.phoenix492.block.MycoturfBlock;
+import net.phoenix492.hostileworld.HostileWorld;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -10,10 +16,6 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.phoenix492.block.MushroomFireBlock;
-import net.phoenix492.block.MycorestoneBlock;
-import net.phoenix492.block.MycostoneBlock;
-import net.phoenix492.hostileworld.HostileWorld;
 
 import java.util.function.Supplier;
 
@@ -21,9 +23,9 @@ public class ModBlocks {
 
     public static final DeferredRegister.Blocks MOD_BLOCKS = DeferredRegister.createBlocks(HostileWorld.MODID);
 
-    public static final DeferredBlock<MushroomFireBlock> MUSHROOM_FIRE = MOD_BLOCKS.register(
-        "mushroom_fire",
-        () -> new MushroomFireBlock(
+    public static final DeferredBlock<MycofireBlock> MYCOFIRE = MOD_BLOCKS.register(
+        "mycofire",
+        () -> new MycofireBlock(
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .replaceable()
@@ -84,6 +86,18 @@ public class ModBlocks {
                 .requiresCorrectToolForDrops()
                 .strength(3.0f, 6.0f)
                 .sound(SoundType.DEEPSLATE)
+                .randomTicks()
+        )
+    );
+
+    public static final DeferredBlock<MycoturfBlock> MYCOTURF = registerWithItem(
+        "mycoturf",
+        () -> new MycoturfBlock(
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_PURPLE)
+                .instrument(NoteBlockInstrument.DIDGERIDOO)
+                .strength(0.1f)
+                .sound(SoundType.MOSS)
                 .randomTicks()
         )
     );

@@ -1,15 +1,6 @@
 package net.phoenix492.handler;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowyDirtBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.phoenix492.data.FungalTransformationData;
+import net.phoenix492.data.map.FungalTransformationData;
 import net.phoenix492.hostileworld.Config;
 import net.phoenix492.mixin.FungalSpreadMixins;
 import net.phoenix492.mixin.SpreadingSnowyDirtBlockInvoker;
@@ -17,10 +8,23 @@ import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.util.ModTagKeys;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import java.util.Optional;
+
 /**
  * Contains logic for fungal spread, intended to be called from the randomTick method of blocks.<br>
- * Previously this was inlined into the mixins in {@link FungalSpreadMixins} but that created huge blocks of repeated code,
- * and I needed it again when few implementing mycostone.
+ * Previously this was inlined into the mixins in {@link FungalSpreadMixins} but that created huge blocks of repeated
+ * code, and I needed it again when implementing mycostone.
  */
 public class FungalSpreadHandler {
     public static void basicFungalSpread(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -29,13 +33,31 @@ public class FungalSpreadHandler {
             BlockState spreadTargetBlockstate = level.getBlockState(spreadTargetPosition);
             FungalTransformationData transformData = spreadTargetBlockstate.getBlockHolder().getData(ModDataMaps.FUNGAL_SPREAD_TRANSFORM);
 
+
             // If block has no defined transformation, then just return.
             if (transformData == null) {
                 continue;
             }
 
+            /*
+             Check to make sure the defined transformation we get is actually a valid value,
+             Linter says .get() could be a null pointer exception, but I'm not so sure.
+             It doesn't hurt to check though, and it keeps the linter happy.
+            */
+            Optional<Block> optionalTarget = transformData.targets().getRandomValue(random);
+            if (optionalTarget.isEmpty()) {
+                continue;
+            }
+
             // Once we've confirmed we have the data, we set the block state here so that the conditions afterward can modify it.
-            BlockState targetState = transformData.target().defaultBlockState();
+            BlockState targetState = optionalTarget.get().defaultBlockState();
+
+            // Spread alike check verifies the target block and the spreading block are the same.
+            if (transformData.spreadAlikeCheck()) {
+                if (!targetState.getBlock().equals(state.getBlock())) {
+                    continue;
+                }
+            }
 
             // Run failure check.
             if (transformData.failChance() > random.nextFloat()) {

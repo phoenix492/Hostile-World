@@ -1,11 +1,12 @@
 package net.phoenix492.datagen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModItems;
+
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.registration.ModItems;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -14,9 +15,14 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(ModItems.DEBUG_MUSHROOM_IGNITER.asItem());
+        basicItem(ModItems.APOCALYPTIC_MUSHROOM_IGNITER.asItem());
+        withExistingParent("strong_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
+        withExistingParent("weak_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
+        withExistingParent("normal_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("red_mycostone", ResourceLocation.parse("hostileworld:block/dummy_red_mycostone"));
         withExistingParent("brown_mycostone", ResourceLocation.parse("hostileworld:block/dummy_brown_mycostone"));
         withExistingParent("mixed_mycostone", ResourceLocation.parse("hostileworld:block/dummy_mixed_mycostone"));
+        withExistingParent("mycorestone", ResourceLocation.parse("hostileworld:block/dummy_mycorestone"));
+        withExistingParent("mycoturf", ResourceLocation.parse("hostileworld:block/mycoturf"));
     }
 }

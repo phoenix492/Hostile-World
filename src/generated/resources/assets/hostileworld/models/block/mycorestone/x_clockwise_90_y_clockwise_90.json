@@ -4,32 +4,26 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "rotation": 90,
           "texture": "#top"
         },
         "east": {
           "cullface": "east",
-          "rotation": 90,
           "texture": "#side"
         },
         "north": {
           "cullface": "north",
-          "rotation": 90,
           "texture": "#side"
         },
         "south": {
           "cullface": "south",
-          "rotation": 90,
           "texture": "#side"
         },
         "up": {
           "cullface": "up",
-          "rotation": 90,
           "texture": "#top"
         },
         "west": {
           "cullface": "west",
-          "rotation": 90,
           "texture": "#side"
         }
       },
@@ -89,10 +83,10 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "overlay": "hostileworld:block/mycorestone_overlay",
-    "particle": "minecraft:block/stone",
+    "particle": "minecraft:block/deepslate",
     "side": "minecraft:block/deepslate",
     "top": "minecraft:block/deepslate_top"
   }

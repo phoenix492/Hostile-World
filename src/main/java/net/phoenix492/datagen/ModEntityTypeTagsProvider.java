@@ -1,15 +1,17 @@
 package net.phoenix492.datagen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.util.ModTagKeys;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.util.ModTagKeys;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
     @Override

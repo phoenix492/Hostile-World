@@ -1,11 +1,12 @@
 package net.phoenix492.registration;
 
+import net.phoenix492.data.attachment.EntityFungalInfectionData;
+import net.phoenix492.hostileworld.HostileWorld;
+
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.phoenix492.data.EntityFungalInfectionData;
-import net.phoenix492.hostileworld.HostileWorld;
 
 import java.util.function.Supplier;
 

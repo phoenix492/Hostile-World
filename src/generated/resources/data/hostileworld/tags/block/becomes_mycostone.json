@@ -11,6 +11,10 @@
     {
       "id": "#hostileworld:becomes_brown_mycostone",
       "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_mycorestone",
+      "required": false
     }
   ]
 }

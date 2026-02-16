@@ -1,12 +1,19 @@
 package net.phoenix492.datagen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModBlocks;
+
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.registration.ModBlocks;
 
 public class ModBlockstateProvider extends BlockStateProvider {
 
@@ -50,13 +57,15 @@ public class ModBlockstateProvider extends BlockStateProvider {
         return builder.build();
     }
 
-    private ConfiguredModel[] mycostoneConfiguredModel(String name) {
+    private ConfiguredModel[] mycostoneConfiguredModelArray(String name) {
         ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
-        int i = 0;
+        int i = 1;
+        final int MODEL_COUNT = 16;
+
         for (ModelBuilder.FaceRotation rot1 : ModelBuilder.FaceRotation.values()) {
             for (ModelBuilder.FaceRotation rot2 : ModelBuilder.FaceRotation.values()) {
-                builder.modelFile(models().getExistingFile(modLoc("block/" + name + "/x_"+rot1.toString().toLowerCase()+"_y_"+rot2.toString().toLowerCase())));
-                if (i < 15) {
+                builder.modelFile(models().getExistingFile(modLoc("block/" + name + "/x_" + rot1.toString().toLowerCase() + "_y_" + rot2.toString().toLowerCase())));
+                if (i < MODEL_COUNT) {
                     builder = builder.nextModel();
                 }
                 i++;
@@ -66,13 +75,57 @@ public class ModBlockstateProvider extends BlockStateProvider {
         return builder.build();
     }
 
+    private ConfiguredModel[] mycorestoneConfiguredModelArray(boolean zAxis, boolean xAxis) {
+        if (zAxis && xAxis) {
+            throw new IllegalArgumentException("One axis at a time (Y is default.)");
+        }
+
+        ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
+        int i = 1;
+        final int MODEL_COUNT = 16;
+
+        for (ModelBuilder.FaceRotation rot1 : ModelBuilder.FaceRotation.values()) {
+            for (ModelBuilder.FaceRotation rot2 : ModelBuilder.FaceRotation.values()) {
+                builder.modelFile(models().getExistingFile(modLoc("block/" + "mycorestone" + "/x_" + rot1.toString().toLowerCase() + "_y_" + rot2.toString().toLowerCase())));
+                if (zAxis) {
+                    builder.rotationX(90);
+                } else if (xAxis) {
+                    builder.rotationX(90).rotationY(90);
+                }
+                if (i < MODEL_COUNT) {
+                    builder = builder.nextModel();
+                }
+                i++;
+            }
+
+        }
+        return builder.build();
+    }
+
+    private void mycorestoneBuilder(ConfiguredModel[] xModels, ConfiguredModel[] yModels, ConfiguredModel[] zModels) {
+        VariantBlockStateBuilder builder = getVariantBuilder(ModBlocks.MYCORESTONE.get());
+        Block mycorestone = ModBlocks.MYCORESTONE.get();
+        BlockState mycorestoneDefaultState = mycorestone.defaultBlockState();
+        builder.forAllStates(state -> {
+            if (state.equals(mycorestoneDefaultState.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X))) {
+                return xModels;
+            } else if (state.equals(mycorestoneDefaultState.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y))) {
+                return yModels;
+            } else {
+                return zModels;
+            }
+        });
+    }
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(ModBlocks.RED_MYCOSTONE.get(), mycostoneConfiguredModel("red_mycostone"));
-        simpleBlock(ModBlocks.BROWN_MYCOSTONE.get(), mycostoneConfiguredModel("brown_mycostone"));
-        simpleBlock(ModBlocks.MIXED_MYCOSTONE.get(), mycostoneConfiguredModel("mixed_mycostone"));
-        simpleBlock(ModBlocks.MYCORESTONE.get(), mycostoneConfiguredModel("mycorestone")); // TODO: Make this rotate when placed.
+        simpleBlock(ModBlocks.RED_MYCOSTONE.get(), mycostoneConfiguredModelArray("red_mycostone"));
+        simpleBlock(ModBlocks.BROWN_MYCOSTONE.get(), mycostoneConfiguredModelArray("brown_mycostone"));
+        simpleBlock(ModBlocks.MIXED_MYCOSTONE.get(), mycostoneConfiguredModelArray("mixed_mycostone"));
+        //mycorestoneBuilder(mycorestoneConfiguredModelArray(false, true), mycorestoneConfiguredModelArray(false, false), mycorestoneConfiguredModelArray(true, false));
+        simpleBlock(ModBlocks.MYCORESTONE.get());
+        simpleBlock(ModBlocks.MYCOTURF.get(), new ModelFile.UncheckedModelFile(modLoc("block/mycoturf")));
+
     }
 
 }

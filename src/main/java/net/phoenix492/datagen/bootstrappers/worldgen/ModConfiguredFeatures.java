@@ -1,5 +1,9 @@
 package net.phoenix492.datagen.bootstrappers.worldgen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModBlocks;
+import net.phoenix492.util.ModTagKeys;
+
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -12,12 +16,14 @@ import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.registration.ModBlocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
 
@@ -27,10 +33,11 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BIG_RED_MUSHROOM_KEY =  registerKey("shroom_caves_big_red_mushroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BIG_BROWN_MUSHROOM_KEY =  registerKey("shroom_caves_big_brown_mushroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_GLOW_LICHEN_KEY = registerKey("shroom_caves_boosted_glow_lichen");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BROWN_MYCOSTONE_BLOB_KEY = registerKey("shroom_caves_brown_mycostone_blob");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_RED_MYCOSTONE_BLOB_KEY = registerKey("shroom_caves_red_mycostone_blob");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_MYCOSTONE_BLOB_KEY = registerKey("brown_mycostone_blob");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MYCOSTONE_BLOB_KEY = registerKey("red_mycostone_blob");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
 
-    public static final RuleTest MIXED_MYCOSTONE_RULETEST = new BlockMatchTest(ModBlocks.MIXED_MYCOSTONE.get());
+    public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, name));
@@ -45,7 +52,7 @@ public class ModConfiguredFeatures {
             FeatureUtils.simplePatchConfiguration(
                 Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.RED_MUSHROOM.defaultBlockState())),
-                List.of(Blocks.MYCELIUM),
+                List.of(Blocks.MYCELIUM, ModBlocks.MYCOTURF.get()),
                 6
             )
         );
@@ -57,7 +64,7 @@ public class ModConfiguredFeatures {
             FeatureUtils.simplePatchConfiguration(
                 Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.BROWN_MUSHROOM.defaultBlockState())),
-                List.of(Blocks.MYCELIUM),
+                List.of(Blocks.MYCELIUM, ModBlocks.MYCOTURF.get()),
                 6
             )
         );
@@ -119,10 +126,10 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_RED_MYCOSTONE_BLOB_KEY,
+            RED_MYCOSTONE_BLOB_KEY,
             Feature.ORE,
             new OreConfiguration(
-                MIXED_MYCOSTONE_RULETEST,
+                MYCOSTONE_BLOB_REPLACEABLES,
                 ModBlocks.RED_MYCOSTONE.get().defaultBlockState(),
                 64,
                 0f
@@ -130,11 +137,22 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BROWN_MYCOSTONE_BLOB_KEY,
+            BROWN_MYCOSTONE_BLOB_KEY,
             Feature.ORE,
             new OreConfiguration(
-                MIXED_MYCOSTONE_RULETEST,
+                MYCOSTONE_BLOB_REPLACEABLES,
                 ModBlocks.BROWN_MYCOSTONE.get().defaultBlockState(),
+                64,
+                0f
+            )
+        );
+        register(
+            context,
+            MIXED_MYCOSTONE_BLOB_KEY,
+            Feature.ORE,
+            new OreConfiguration(
+                MYCOSTONE_BLOB_REPLACEABLES,
+                ModBlocks.MIXED_MYCOSTONE.get().defaultBlockState(),
                 64,
                 0f
             )

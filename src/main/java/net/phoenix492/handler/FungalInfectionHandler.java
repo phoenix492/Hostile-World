@@ -1,6 +1,20 @@
 package net.phoenix492.handler;
 
-import it.unimi.dsi.fastutil.longs.Long2IntFunction;
+import net.phoenix492.data.map.BlockInfectionBuildupData;
+import net.phoenix492.data.map.EnvironmentalInfectionBuildupData;
+import net.phoenix492.effect.FungalInfectionEffect;
+import net.phoenix492.event.FungalInfectionApplyEffectEvent;
+import net.phoenix492.event.FungalInfectionBlockBuildupEvent;
+import net.phoenix492.event.FungalInfectionDropoffEvent;
+import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
+import net.phoenix492.event.FungalInfectionTickEvent;
+import net.phoenix492.hostileworld.Config;
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModDataAttachments;
+import net.phoenix492.registration.ModDataMaps;
+import net.phoenix492.registration.ModEffects;
+import net.phoenix492.util.ModTagKeys;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -17,20 +31,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.phoenix492.data.BlockInfectionBuildupData;
-import net.phoenix492.data.EnvironmentalInfectionBuildupData;
-import net.phoenix492.effect.FungalInfectionEffect;
-import net.phoenix492.event.FungalInfectionApplyEffectEvent;
-import net.phoenix492.event.FungalInfectionBlockBuildupEvent;
-import net.phoenix492.event.FungalInfectionDropoffEvent;
-import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
-import net.phoenix492.event.FungalInfectionTickEvent;
-import net.phoenix492.hostileworld.Config;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.registration.ModDataAttachments;
-import net.phoenix492.registration.ModDataMaps;
-import net.phoenix492.registration.ModEffects;
-import net.phoenix492.util.ModTagKeys;
+
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 
 /**
  * Handles infection status for entities every server tick.

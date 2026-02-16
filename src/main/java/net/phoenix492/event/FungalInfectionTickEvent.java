@@ -1,9 +1,10 @@
 package net.phoenix492.event;
 
+import net.phoenix492.handler.FungalInfectionHandler;
+
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.phoenix492.handler.FungalInfectionHandler;
 
 /**
  * Fires before and after fungal infection handling is ticked for an entity. <br>

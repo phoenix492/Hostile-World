@@ -1,10 +1,11 @@
 package net.phoenix492.effect;
 
-import it.unimi.dsi.fastutil.ints.Int2DoubleFunction;
-import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+
+import it.unimi.dsi.fastutil.ints.Int2DoubleFunction;
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 
 public class FungalInfectionEffect extends MobEffect {
 

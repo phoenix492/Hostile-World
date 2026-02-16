@@ -1,18 +1,33 @@
 package net.phoenix492.registration;
 
+import net.phoenix492.block.MycofireBlock;
+import net.phoenix492.data.component.MushroomIgniterData;
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.item.MushroomIgniter;
+
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.item.MushroomIgniter;
 
 public class ModItems {
     public static final DeferredRegister.Items MOD_ITEMS = DeferredRegister.createItems(HostileWorld.MODID);
 
-    public static final DeferredItem<Item> DEBUG_MUSHROOM_IGNITER = MOD_ITEMS.register(
-      "debug_mushroom_igniter",
-        () -> new MushroomIgniter(new Item.Properties())
+    public static final DeferredItem<Item> APOCALYPTIC_MUSHROOM_IGNITER = MOD_ITEMS.register(
+      "apocalyptic_mushroom_igniter",
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.APOCALYPTIC)))
+    );
+    public static final DeferredItem<Item> STRONG_MUSHROOM_IGNITER = MOD_ITEMS.register(
+        "strong_mushroom_igniter",
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.STRONG)))
+    );
+    public static final DeferredItem<Item> NORMAL_MUSHROOM_IGNITER = MOD_ITEMS.register(
+        "normal_mushroom_igniter",
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.NORMAL)))
+    );
+    public static final DeferredItem<Item> WEAK_MUSHROOM_IGNITER = MOD_ITEMS.register(
+        "weak_mushroom_igniter",
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.WEAK)))
     );
 
 

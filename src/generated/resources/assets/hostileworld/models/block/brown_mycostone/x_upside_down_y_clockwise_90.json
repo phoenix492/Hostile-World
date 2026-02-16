@@ -83,7 +83,7 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "overlay": "hostileworld:block/brown_mycostone_overlay",
     "particle": "minecraft:block/stone",

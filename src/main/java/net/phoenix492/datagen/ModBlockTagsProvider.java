@@ -1,17 +1,19 @@
 package net.phoenix492.datagen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.registration.ModBlocks;
+import net.phoenix492.util.ModTagKeys;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.registration.ModBlocks;
-import net.phoenix492.util.ModTagKeys;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ModBlockTagsProvider extends BlockTagsProvider {
     public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -39,17 +41,20 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.RED_MUSHROOM_BLOCK)
             .add(ModBlocks.RED_MYCOSTONE.get())
             .add(ModBlocks.BROWN_MYCOSTONE.get())
-            .add(ModBlocks.MIXED_MYCOSTONE.get());
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.MYCORESTONE.get());
 
         tag(ModTagKeys.Blocks.BECOMES_MYCOSTONE)
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_RED_MYCOSTONE)
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_MIXED_MYCOSTONE)
-            .addOptionalTag(ModTagKeys.Blocks.BECOMES_BROWN_MYCOSTONE);
+            .addOptionalTag(ModTagKeys.Blocks.BECOMES_BROWN_MYCOSTONE)
+            .addOptionalTag(ModTagKeys.Blocks.BECOMES_MYCORESTONE);
 
         tag(ModTagKeys.Blocks.MYCOSTONES)
             .add(ModBlocks.RED_MYCOSTONE.get())
             .add(ModBlocks.BROWN_MYCOSTONE.get())
-            .add(ModBlocks.MIXED_MYCOSTONE.get());
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.MYCORESTONE.get());
 
         // Functional Tags
 
@@ -96,29 +101,42 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(ModTagKeys.Blocks.BECOMES_RED_MYCOSTONE)
             .add(Blocks.STONE);
 
+        tag(ModTagKeys.Blocks.BECOMES_MYCOTURF)
+            .add(Blocks.MOSS_BLOCK);
+
         tag(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS)
             .add(Blocks.VINE)
             .add(Blocks.CAVE_VINES);
 
-        tag(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS)
-            .addTag(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)
-            .addTag(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_STONE)
+        tag(ModTagKeys.Blocks.MYCOFIRE_BURNS)
+            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)
+            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_STONE)
+            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DEEPSLATE)
+            .add(ModBlocks.MYCOTURF.get())
             .add(Blocks.RED_MUSHROOM_BLOCK)
             .add(Blocks.BROWN_MUSHROOM_BLOCK)
             .add(Blocks.MUSHROOM_STEM)
             .add(Blocks.BROWN_MUSHROOM)
             .add(Blocks.RED_MUSHROOM);
 
-        tag(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_DIRT)
+        tag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)
             .add(Blocks.MYCELIUM);
 
-        tag(ModTagKeys.Blocks.MUSHROOM_FIRE_BURNS_TO_STONE)
-            .addTag(ModTagKeys.Blocks.MYCOSTONES);
+        tag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_STONE)
+            .addTag(ModTagKeys.Blocks.MYCOSTONES)
+            .remove(ModBlocks.MYCORESTONE.get());
+
+        tag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DEEPSLATE)
+            .add(ModBlocks.MYCORESTONE.get());
+
+        tag(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES)
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.MYCORESTONE.get());
 
 
         /*
          Mycelium spreading behavior only works for HugeMushroomBlocks, but this tag also controls which blocks will
-         apply infection buildup on entities below. I supposed if you add Stems to it, they'll also spore.
+         apply infection buildup on entities below. I suppose if you add Stems to it, they'll also spore.
         */
         tag(ModTagKeys.Blocks.DROPS_SPORES)
             .add(Blocks.RED_MUSHROOM_BLOCK)
@@ -138,11 +156,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.BROWN_MUSHROOM_BLOCK)
             .add(ModBlocks.BROWN_MYCOSTONE.get());
 
-        // Vanilla Fire Tag Parity
-        tag(BlockTags.FIRE).add(ModBlocks.MUSHROOM_FIRE.get());
-        tag(BlockTags.DRAGON_TRANSPARENT).add(ModBlocks.MUSHROOM_FIRE.get());
-        tag(BlockTags.REPLACEABLE).add(ModBlocks.MUSHROOM_FIRE.get());
-        tag(BlockTags.ENCHANTMENT_POWER_TRANSMITTER).add(ModBlocks.MUSHROOM_FIRE.get());
+        //  Mycofire Tag Parity
+        tag(BlockTags.FIRE).add(ModBlocks.MYCOFIRE.get());
+        tag(BlockTags.DRAGON_TRANSPARENT).add(ModBlocks.MYCOFIRE.get());
+        tag(BlockTags.REPLACEABLE).add(ModBlocks.MYCOFIRE.get());
+        tag(BlockTags.ENCHANTMENT_POWER_TRANSMITTER).add(ModBlocks.MYCOFIRE.get());
+
+        // Mycoturf parity
+        tag(BlockTags.MUSHROOM_GROW_BLOCK).add(ModBlocks.MYCOTURF.get());
+        tag(BlockTags.DIRT).add(ModBlocks.MYCOTURF.get());
 
     }
 }

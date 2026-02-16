@@ -1,11 +1,12 @@
 package net.phoenix492.block;
 
+import net.phoenix492.handler.FungalSpreadHandler;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.phoenix492.handler.FungalSpreadHandler;
 
 public class MycorestoneBlock extends RotatedPillarBlock {
     public MycorestoneBlock(Properties properties) {

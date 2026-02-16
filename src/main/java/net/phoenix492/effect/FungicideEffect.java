@@ -1,10 +1,11 @@
 package net.phoenix492.effect;
 
+import net.phoenix492.hostileworld.Config;
+import net.phoenix492.registration.ModDataAttachments;
+
 import net.minecraft.world.effect.InstantenousMobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.phoenix492.hostileworld.Config;
-import net.phoenix492.registration.ModDataAttachments;
 
 public class FungicideEffect extends InstantenousMobEffect {
     public FungicideEffect(MobEffectCategory category, int color) {

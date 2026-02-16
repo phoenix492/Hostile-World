@@ -1,13 +1,14 @@
 package net.phoenix492.block;
 
+import net.phoenix492.handler.FungalSpreadHandler;
+import net.phoenix492.registration.ModBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.phoenix492.handler.FungalSpreadHandler;
-import net.phoenix492.registration.ModBlocks;
 
 public class MycostoneBlock extends Block {
     public MycostoneBlock(Properties properties) {
@@ -44,5 +45,4 @@ public class MycostoneBlock extends Block {
 
         FungalSpreadHandler.basicFungalSpread(state, level, pos, random);
     }
-
 }
