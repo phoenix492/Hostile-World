@@ -3,28 +3,128 @@
     "#hostileworld:becomes_brown_mushroom": {
       "consumeChance": 0.75,
       "myceliumCheck": true,
-      "target": "minecraft:brown_mushroom"
+      "targets": [
+        {
+          "data": "minecraft:brown_mushroom",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:becomes_brown_mushroom_block": {
-      "target": "minecraft:brown_mushroom_block"
+      "targets": [
+        {
+          "data": "minecraft:brown_mushroom_block",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:becomes_mushroom_stem": {
-      "target": "minecraft:mushroom_stem"
+      "targets": [
+        {
+          "data": "minecraft:mushroom_stem",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:becomes_mycelium": {
       "propagationCheck": true,
-      "target": "minecraft:mycelium"
+      "targets": [
+        {
+          "data": "minecraft:mycelium",
+          "weight": 1
+        }
+      ]
+    },
+    "#hostileworld:becomes_mycostone": {
+      "airExposureCheck": true,
+      "mycostoneVariantCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:red_mycostone",
+          "weight": 1
+        }
+      ]
+    },
+    "#hostileworld:becomes_mycoturf": {
+      "targets": [
+        {
+          "data": "hostileworld:mycoturf",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:becomes_red_mushroom": {
       "consumeChance": 0.25,
       "myceliumCheck": true,
-      "target": "minecraft:red_mushroom"
+      "targets": [
+        {
+          "data": "minecraft:red_mushroom",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:becomes_red_mushroom_block": {
-      "target": "minecraft:red_mushroom_block"
+      "targets": [
+        {
+          "data": "minecraft:red_mushroom_block",
+          "weight": 1
+        }
+      ]
     },
     "#hostileworld:consumed_by_fungus": {
-      "target": "minecraft:air"
+      "targets": [
+        {
+          "data": "minecraft:air",
+          "weight": 1
+        }
+      ]
+    },
+    "minecraft:andesite": {
+      "airExposureCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:mixed_mycostone",
+          "weight": 1
+        }
+      ]
+    },
+    "minecraft:deepslate": {
+      "airExposureCheck": true,
+      "failChance": 0.5,
+      "spreadAlikeCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:mycorestone",
+          "weight": 1
+        }
+      ]
+    },
+    "minecraft:diorite": {
+      "airExposureCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:brown_mycostone",
+          "weight": 1
+        }
+      ]
+    },
+    "minecraft:granite": {
+      "airExposureCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:red_mycostone",
+          "weight": 1
+        }
+      ]
+    },
+    "minecraft:tuff": {
+      "airExposureCheck": true,
+      "targets": [
+        {
+          "data": "hostileworld:brown_mycostone",
+          "weight": 1
+        }
+      ]
     }
   }
 }

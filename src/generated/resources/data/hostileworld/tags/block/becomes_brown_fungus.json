@@ -7,6 +7,10 @@
     {
       "id": "#hostileworld:becomes_brown_mushroom_block",
       "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_brown_mycostone",
+      "required": false
     }
   ]
 }

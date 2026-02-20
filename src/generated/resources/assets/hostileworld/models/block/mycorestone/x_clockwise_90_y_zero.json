@@ -1,0 +1,90 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#top"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#side"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#side"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#side"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#top"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#side"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#overlay"
+        },
+        "east": {
+          "cullface": "east",
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#overlay"
+        },
+        "south": {
+          "cullface": "south",
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "up": {
+          "cullface": "up",
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "overlay": "hostileworld:block/mycorestone_overlay",
+    "particle": "minecraft:block/deepslate",
+    "side": "minecraft:block/deepslate",
+    "top": "minecraft:block/deepslate_top"
+  }
+}

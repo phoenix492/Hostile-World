@@ -23,5 +23,9 @@ run
 runs
 run-data
 
+# krita project files
+*.kra
+
 repo
 /src/generated/resources/.cache/
+/dev/gfx/vanilla_textures/

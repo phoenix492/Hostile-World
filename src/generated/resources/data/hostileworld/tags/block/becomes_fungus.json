@@ -25,6 +25,10 @@
       "required": false
     },
     {
+      "id": "#hostileworld:becomes_mycostone",
+      "required": false
+    },
+    {
       "id": "#hostileworld:consumed_by_fungus",
       "required": false
     }

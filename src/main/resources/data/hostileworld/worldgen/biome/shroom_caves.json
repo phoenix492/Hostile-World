@@ -1,0 +1,38 @@
+{
+  "has_precipitation": true,
+  "temperature": 2.0,
+  "temperature_modifier": "none",
+  "downfall": 1.0,
+  "effects": {
+    "fog_color": 12638463,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "sky_color": 7842047,
+    "grass_color_modifier": "none"
+  },
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "hostileworld:shroom_caves_red_mycostone_blob_placed",
+      "hostileworld:shroom_caves_brown_mycostone_blob_placed"
+    ],
+    [],
+    [],
+    [
+      "hostileworld:shroom_caves_red_mushroom_placed",
+      "hostileworld:shroom_caves_brown_mushroom_placed",
+      "hostileworld:shroom_caves_big_red_mushroom_placed",
+      "hostileworld:shroom_caves_big_brown_mushroom_placed",
+      "hostileworld:shroom_caves_boosted_glow_lichen_placed"
+    ],
+    []
+  ],
+  "spawners": {},
+  "spawn_costs": {}
+}

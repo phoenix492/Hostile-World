@@ -1,10 +1,11 @@
 package net.phoenix492.event;
 
+import net.phoenix492.data.map.BlockInfectionBuildupData;
+
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.phoenix492.data.BlockInfectionBuildupData;
 
 /**
  * Fires before and after the fungal infection buildup from block events is applied to an entity.<br>

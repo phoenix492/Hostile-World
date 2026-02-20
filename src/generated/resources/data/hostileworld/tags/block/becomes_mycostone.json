@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#hostileworld:becomes_red_mycostone",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_mixed_mycostone",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_brown_mycostone",
+      "required": false
+    },
+    {
+      "id": "#hostileworld:becomes_mycorestone",
+      "required": false
+    }
+  ]
+}

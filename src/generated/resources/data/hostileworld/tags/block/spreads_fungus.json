@@ -3,6 +3,10 @@
     "minecraft:mycelium",
     "minecraft:mushroom_stem",
     "minecraft:brown_mushroom_block",
-    "minecraft:red_mushroom_block"
+    "minecraft:red_mushroom_block",
+    "hostileworld:red_mycostone",
+    "hostileworld:brown_mycostone",
+    "hostileworld:mixed_mycostone",
+    "hostileworld:mycorestone"
   ]
 }

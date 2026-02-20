@@ -1,5 +1,9 @@
 package net.phoenix492.registration;
 
+import net.phoenix492.effect.FungalInfectionEffect;
+import net.phoenix492.effect.FungicideEffect;
+import net.phoenix492.hostileworld.HostileWorld;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -9,9 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.phoenix492.effect.FungalInfectionEffect;
-import net.phoenix492.effect.FungicideEffect;
-import net.phoenix492.hostileworld.HostileWorld;
 
 public class ModEffects {
     private static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, HostileWorld.MODID);

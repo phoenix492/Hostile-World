@@ -1,5 +1,12 @@
 package net.phoenix492.registration;
 
+import net.phoenix492.data.map.BiomeFungalSpreadData;
+import net.phoenix492.data.map.BlockInfectionBuildupData;
+import net.phoenix492.data.map.EnvironmentalInfectionBuildupData;
+import net.phoenix492.data.map.FungalTransformationData;
+import net.phoenix492.data.map.MycofireFlammabilityData;
+import net.phoenix492.hostileworld.HostileWorld;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -8,11 +15,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
-import net.phoenix492.data.BiomeFungalSpreadData;
-import net.phoenix492.data.BlockInfectionBuildupData;
-import net.phoenix492.data.EnvironmentalInfectionBuildupData;
-import net.phoenix492.data.FungalTransformationData;
-import net.phoenix492.hostileworld.HostileWorld;
 
 @EventBusSubscriber
 public class ModDataMaps {
@@ -41,6 +43,11 @@ public class ModDataMaps {
         FungalTransformationData.CODEC
     ).build();
 
+    public static final DataMapType<Block, MycofireFlammabilityData> MYCOFIRE_FLAMMABILITY_DATA = DataMapType.builder(
+        ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "mycofire_flammability"),
+        Registries.BLOCK,
+        MycofireFlammabilityData.CODEC
+    ).build();
 
 
     @SubscribeEvent
@@ -49,5 +56,6 @@ public class ModDataMaps {
         event.register(BIOME_FUNGAL_SPREAD);
         event.register(FUNGAL_SPREAD_TRANSFORM);
         event.register(BLOCK_INFECTION_BUILDUP);
+        event.register(MYCOFIRE_FLAMMABILITY_DATA);
     }
 }

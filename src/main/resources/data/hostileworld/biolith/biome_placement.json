@@ -1,0 +1,25 @@
+{
+  "sub_biomes": [
+    {
+      "dimension": "minecraft:overworld",
+      "target": "minecraft:mushroom_fields",
+      "biome": "hostileworld:shroom_caves",
+      "criterion": {
+        "type": "biolith:value",
+        "parameter": "depth",
+        "min": 0.1,
+        "max": 0.8
+      }
+    },
+    {
+      "dimension": "minecraft:overworld",
+      "target": "minecraft:mushroom_fields",
+      "biome": "hostileworld:shroom_core",
+      "criterion": {
+        "type": "biolith:value",
+        "parameter": "depth",
+        "min": 0.8
+      }
+    }
+  ]
+}

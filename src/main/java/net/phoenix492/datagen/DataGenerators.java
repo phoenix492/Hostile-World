@@ -1,5 +1,7 @@
 package net.phoenix492.datagen;
 
+import net.phoenix492.hostileworld.HostileWorld;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -7,7 +9,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.phoenix492.hostileworld.HostileWorld;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,11 +22,16 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        // Server/Datapack providers
+        // Client/Resourcepack Providers
+        generator.addProvider(event.includeClient(), new ModBlockModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModBlockstateProvider(packOutput, existingFileHelper));
+
+        // Server/Datapack Providers
         generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new ModBlockTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModDatapackProvider(packOutput, lookupProvider));
     }
 }

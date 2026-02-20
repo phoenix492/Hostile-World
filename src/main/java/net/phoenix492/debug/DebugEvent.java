@@ -1,15 +1,16 @@
 package net.phoenix492.debug;
 
-import net.minecraft.world.item.Items;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.phoenix492.event.FungalInfectionApplyEffectEvent;
 import net.phoenix492.event.FungalInfectionEnvironmentalBuildupEvent;
 import net.phoenix492.event.FungalInfectionTickEvent;
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.registration.ModDataAttachments;
 import net.phoenix492.registration.ModDataMaps;
+
+import net.minecraft.world.item.Items;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
  * Debug class for held items printing info and modifying values.
