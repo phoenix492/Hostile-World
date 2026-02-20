@@ -1,11 +1,12 @@
 package net.phoenix492.hostileworld;
 
-import net.phoenix492.registration.ModBlocks;
-import net.phoenix492.registration.ModCreativeModeTabs;
-import net.phoenix492.registration.ModDataAttachments;
-import net.phoenix492.registration.ModDataComponents;
-import net.phoenix492.registration.ModEffects;
-import net.phoenix492.registration.ModItems;
+import net.phoenix492.hostileworld.config.HostileWorldConfig;
+import net.phoenix492.hostileworld.registration.ModBlocks;
+import net.phoenix492.hostileworld.registration.ModCreativeModeTabs;
+import net.phoenix492.hostileworld.registration.ModDataAttachments;
+import net.phoenix492.hostileworld.registration.ModDataComponents;
+import net.phoenix492.hostileworld.registration.ModEffects;
+import net.phoenix492.hostileworld.registration.ModItems;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -36,7 +37,7 @@ public class HostileWorld {
         ModItems.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModDataComponents.register(modEventBus);
-        modContainer.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, HostileWorldConfig.SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
