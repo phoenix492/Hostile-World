@@ -4,6 +4,7 @@ import net.phoenix492.data.map.BiomeFungalSpreadData;
 import net.phoenix492.data.map.BlockInfectionBuildupData;
 import net.phoenix492.data.map.EnvironmentalInfectionBuildupData;
 import net.phoenix492.data.map.FungalTransformationData;
+import net.phoenix492.data.map.MycofireFlammabilityData;
 import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.util.ModTagKeys;
@@ -55,5 +56,14 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(ResourceLocation.parse("minecraft:deepslate"), FungalTransformationData.builder().addTarget(ModBlocks.MYCORESTONE.get()).airExposureCheck().spreadAlikeCheck().failChance(.50f).build(), false)
             .add(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS, FungalTransformationData.builder().addTarget(Blocks.AIR).build(), false);
 
+        this.builder(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA)
+            .add(ResourceLocation.parse("minecraft:mycelium"), MycofireFlammabilityData.builder().encouragement(30).flammability(60).burnoutTarget(Blocks.DIRT).build(), false)
+            .add(ResourceLocation.parse("minecraft:red_mushroom_block"), MycofireFlammabilityData.builder().encouragement(30).flammability(60).build(), false)
+            .add(ResourceLocation.parse("minecraft:brown_mushroom_block"), MycofireFlammabilityData.builder().encouragement(30).flammability(60).build(), false)
+            .add(ResourceLocation.parse("minecraft:mushroom_stem"), MycofireFlammabilityData.builder().encouragement(30).flammability(60).build(), false)
+            .add(ResourceLocation.parse("minecraft:red_mushroom"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
+            .add(ResourceLocation.parse("minecraft:brown_mushroom"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
+            .add(ResourceLocation.parse("hostileworld:mycoturf"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
+            ;
     }
 }

@@ -56,7 +56,6 @@ public class ModTagKeys {
         public static TagKey<Block> BECOMES_MYCOTURF = createTag(HostileWorld.MODID, "becomes_mycoturf");
         public static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
-        public static TagKey<Block> MYCOFIRE_BURNS = createTag(HostileWorld.MODID, "mycofire_burns");
         public static TagKey<Block> MYCOFIRE_BURNS_TO_DIRT = createTag(HostileWorld.MODID, "mycofire_burns_to_dirt");
         public static TagKey<Block> MYCOFIRE_BURNS_TO_STONE = createTag(HostileWorld.MODID, "mycofire_burns_to_stone");
         public static TagKey<Block> MYCOFIRE_BURNS_TO_DEEPSLATE = createTag(HostileWorld.MODID, "mycofire_burns_to_deepslate");

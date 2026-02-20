@@ -1,7 +1,9 @@
 package net.phoenix492.block;
 
+import net.phoenix492.data.map.MycofireFlammabilityData;
 import net.phoenix492.registration.ModBlocks;
 import net.phoenix492.registration.ModDataAttachments;
+import net.phoenix492.registration.ModDataMaps;
 import net.phoenix492.util.ModTagKeys;
 
 import com.mojang.serialization.MapCodec;
@@ -35,32 +37,59 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
-// TODO: Add block-states for differing strengths of fire.
 public class MycofireBlock extends BaseFireBlock {
     public enum MycofireStrength implements StringRepresentable {
-        WEAK("weak"),
-        NORMAL("normal"),
-        STRONG("strong"),
-        APOCALYPTIC("apocalyptic");
+        // TODO: Redo these numbers and make them configurable.
+        WEAK("weak", 5, 30, 20, 0.5, 0.5),
+        NORMAL("normal", 15, 30, 10, 1, 1),
+        STRONG("strong", 30, 20, 10, 2, 2),
+        APOCALYPTIC("apocalyptic", 0, 1, 1, 999, 999);
 
         private final String name;
+        private final int maxAge;
+        private final int tickCooldownBase;
+        private final int tickCooldownRange;
+        private final double burnoutChanceMult;
+        private final double spreadChanceMult;
 
-        MycofireStrength(String name) {
+        MycofireStrength(String name, int maxAge, int tickCooldownBase, int tickCooldownRange, double burnoutChanceMult, double spreadChanceMult) {
             this.name = name;
+            this.maxAge = maxAge;
+            this.tickCooldownBase = tickCooldownBase;
+            this.tickCooldownRange = tickCooldownRange;
+            this.burnoutChanceMult = burnoutChanceMult;
+            this.spreadChanceMult = spreadChanceMult;
         }
 
         @Override
         public String getSerializedName() {
             return this.name;
         }
+
+        public double getBurnoutChanceMult() {
+            return burnoutChanceMult;
+        }
+
+        public int getTickCooldownRange() {
+            return tickCooldownRange;
+        }
+
+        public int getTickCooldownBase() {
+            return tickCooldownBase;
+        }
+
+        public int getMaxAge() {
+            return maxAge;
+        }
+
+        public double getSpreadChanceMult() {
+            return spreadChanceMult;
+        }
     }
 
+
     public static final MapCodec<MycofireBlock> CODEC = simpleCodec(MycofireBlock::new);
-    private final Object2IntMap<Block> igniteOdds = new Object2IntOpenHashMap<>();
-    private final Object2IntMap<Block> burnOdds = new Object2IntOpenHashMap<>();
     private static final VoxelShape UP_AABB = Block.box(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
     private static final VoxelShape WEST_AABB = Block.box(0.0, 0.0, 0.0, 1.0, 16.0, 16.0);
     private static final VoxelShape EAST_AABB = Block.box(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
@@ -73,24 +102,19 @@ public class MycofireBlock extends BaseFireBlock {
     public static final BooleanProperty UP = PipeBlock.UP;
     public static final EnumProperty<MycofireStrength> STRENGTH = EnumProperty.create("strength", MycofireStrength.class);
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 30);
-    public static final Map<MycofireStrength, Integer> MAX_AGE_BY_STRENGTH = Map.of(
-        MycofireStrength.WEAK, 5,
-        MycofireStrength.NORMAL, 15,
-        MycofireStrength.STRONG, 30,
-        MycofireStrength.APOCALYPTIC, 0
-    );
     private final Map<BlockState, VoxelShape> shapesCache;
     private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION
         .entrySet()
         .stream()
         .filter(entry -> entry.getKey() != Direction.DOWN)
         .collect(Util.toMap());
+    private static final int BASE_BURNOUT_CHANCE = 250;
 
     public MycofireBlock(Properties properties) {
         super(properties, 4f);
         this.registerDefaultState(
             this.defaultBlockState()
-                .setValue(STRENGTH, MycofireStrength.APOCALYPTIC)
+                .setValue(STRENGTH, MycofireStrength.NORMAL)
                 .setValue(AGE, 0)
                 .setValue(NORTH, false)
                 .setValue(EAST, false)
@@ -139,7 +163,7 @@ public class MycofireBlock extends BaseFireBlock {
     @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return this.canSurvive(state, level, currentPos)
-            ? getStateForPlacement(level, currentPos)
+            ? getStateForPlacement(level, currentPos).setValue(STRENGTH, state.getValue(STRENGTH)).setValue(AGE, state.getValue(AGE))
             : Blocks.AIR.defaultBlockState();
     }
 
@@ -155,8 +179,18 @@ public class MycofireBlock extends BaseFireBlock {
      */
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        // Collect the various properties we need to check through the following code.
+        BlockPos blockPosBelow = pos.below();
+        BlockState blockstateBelow = level.getBlockState(blockPosBelow);
+        boolean onInfiniburnSource = blockstateBelow.is(level.dimensionType().infiniburn());
+        MycofireStrength strength = state.getValue(STRENGTH);
+        int age = state.getValue(AGE);
+        boolean biomeFireResistant = level.getBiome(pos).is(ModTagKeys.Biomes.MYCOFIRE_RESISTANT);
+        int fireResistantBiomeModifier = biomeFireResistant ? -50 : 0;
+        int burnoutChance = (int) ((BASE_BURNOUT_CHANCE + fireResistantBiomeModifier) * strength.getBurnoutChanceMult());
+
         // Schedule another tick in the future according to this fire's strength.
-        level.scheduleTick(pos, this, tickCooldownFromStrength(state.getValue(STRENGTH), random));
+        level.scheduleTick(pos, this, strength.getTickCooldownBase() + random.nextInt(strength.getTickCooldownRange()));
 
         /*
          If fire tick is disabled, bailout. We do this AFTER scheduling a tick otherwise fire that was ever ticked
@@ -171,23 +205,13 @@ public class MycofireBlock extends BaseFireBlock {
             level.removeBlock(pos, false);
         }
 
-        // Collect the various properties we need to check through the following code.
-        BlockPos blockPosBelow = pos.below();
-        BlockState blockstateBelow = level.getBlockState(blockPosBelow);
-        boolean onInfiniburnSource = blockstateBelow.is(level.dimensionType().infiniburn());
-        int age = state.getValue(AGE);
-        MycofireStrength strength = state.getValue(STRENGTH);
-        boolean biomeFireResistant = level.getBiome(pos).is(ModTagKeys.Biomes.MYCOFIRE_RESISTANT);
-        int fireResistantBiomeModifier = biomeFireResistant ? -50 : 0;
-
-
         if (!onInfiniburnSource) {
             if (!this.isIgnitableLocation(level, pos)) {
                 /*
                  If we're on top a block that can't physically support the fire, in a nonignitable location, extinguish.
                  Otherwise, 1 in (MAX_AGE - Current Age) + 1 chance to extinguish.
                 */
-                if (!blockstateBelow.isFaceSturdy(level, blockPosBelow, Direction.UP) || random.nextInt(getExtinguishChance(age, strength)) == 0) {
+                if (!blockstateBelow.isFaceSturdy(level, blockPosBelow, Direction.UP) || random.nextInt((strength.getMaxAge() - age) + 1) == 0) {
                     level.removeBlock(pos, false);
                     return;
                 }
@@ -203,10 +227,10 @@ public class MycofireBlock extends BaseFireBlock {
          // After getting past all the "destroy myself" checks, it's time to see if we're destroying something else.
         for (Direction d : Direction.values()) {
             if (d == Direction.DOWN || d == Direction.UP) {
-                this.checkBurnOut(level, pos.relative(d), 250 + fireResistantBiomeModifier, random);
+                this.checkBurnOut(level, pos.relative(d), burnoutChance - 50, random, state);
             }
             else {
-                this.checkBurnOut(level, pos.relative(d), 300 + fireResistantBiomeModifier, random);
+                this.checkBurnOut(level, pos.relative(d), burnoutChance, random, state);
             }
         }
 
@@ -221,16 +245,20 @@ public class MycofireBlock extends BaseFireBlock {
                         continue;
                     }
 
+
                     checkedBlock.setWithOffset(pos, x, y, z);
                     int checkedBlockIgniteOdds = this.checkIgnition(level, checkedBlock);
                     if (checkedBlockIgniteOdds <= 0) {
                         continue;
                     }
 
-                    // Biomes tagged as #hostileworld:mycofire_resistant cut spread to a tenth.
+                    // Biomes tagged as #hostileworld:mycofire_resistant cut spread in half.
                     if (biomeFireResistant) {
-                        checkedBlockIgniteOdds /= 10;
+                        checkedBlockIgniteOdds /= 2;
                     }
+
+                    // Mult. spread based on fire strength
+                    checkedBlockIgniteOdds = (int) (checkedBlockIgniteOdds * strength.getSpreadChanceMult());
 
                     // Reduce spread chance for each block above the fire.
                     int verticalSpreadChanceFilter = 100;
@@ -240,7 +268,7 @@ public class MycofireBlock extends BaseFireBlock {
 
                     // Finally spread the fire. 33% chance to increase age of newly placed fire by 1.
                     if (checkedBlockIgniteOdds > 0 && random.nextInt(verticalSpreadChanceFilter) <= checkedBlockIgniteOdds) {
-                        level.setBlockAndUpdate(checkedBlock, increaseFireAgeZeroBiased(getStateForPlacement(level, checkedBlock), random));
+                        level.setBlockAndUpdate(checkedBlock, increaseFireAgeZeroBiased(getStateForPropagation(level, checkedBlock, state), random));
                     }
                 }
             }
@@ -288,52 +316,42 @@ public class MycofireBlock extends BaseFireBlock {
         return ModBlocks.MYCOFIRE.get().getStateForPlacement(reader, pos);
     }
 
-    public void setFlammable(Block block, int encouragement, int flammability) {
-        /*
-         This check is way too funny to leave out. It also serves as idiot proofing.
-         ... Although unlike Mojang I actually check for void air and cave air. Nice job guys.
-        */
-        if (block instanceof AirBlock) throw new IllegalArgumentException("Tried to set air on fire... This is bad.");
-        this.igniteOdds.put(block, encouragement);
-        this.burnOdds.put(block, flammability);
-    }
-
-    private void checkBurnOut(ServerLevel level, BlockPos pos, int chance, RandomSource random) {
+    private void checkBurnOut(ServerLevel level, BlockPos pos, int chance, RandomSource random, BlockState source) {
         BlockState burnoutTarget = level.getBlockState(pos);
-        if (!burnoutTarget.is(ModTagKeys.Blocks.MYCOFIRE_BURNS)) {
-            /*
-             This is an extra hardcoded check for blocks like grass and flowers that would otherwise block mushroom fire from
-             getting mycelium beneath them, making it less effective at doing its job and leaving too many mycelium pockets.
-             Some are okay to encourage vigilance, but this results in an annoying whack-a-mole game.
-            */
+        MycofireFlammabilityData flammabilityData = burnoutTarget.getBlockHolder().getData(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA);
+
+        /*
+         This is a check so blocks like grass and flowers that would otherwise block mushroom fire from
+         purging mycelium beneath them instead have the block below checked, making it less effective at doing its
+         job and leaving too many mycelium pockets.
+        */
+        if (flammabilityData == null) {
             if (!(level.getBlockState(pos).getBlock() instanceof AirBlock)) {
-                if (level.getBlockState(pos.below()).is(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)) {
-                    level.setBlockAndUpdate(pos.below(), Blocks.DIRT.defaultBlockState());
+                if (level.getBlockState(pos.below()).getBlockHolder().getData(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA) != null) {
+                    checkBurnOut(level, pos.below(), chance, random, source);
                 }
             }
             return;
         }
 
-        if (random.nextInt(chance) > getBurnOdds(burnoutTarget)) {
-            return;
+        if (random.nextInt(chance) > flammabilityData.flammability()) {
+            // Different handling for blocks that burn away and blocks that are purified
+            if (flammabilityData.burnoutTarget() instanceof AirBlock) {
+                // Apply chance to age the newly spread fire.
+                int newFireAge = Math.min(source.getValue(AGE) + random.nextInt(5) / 4, source.getValue(STRENGTH).getMaxAge());
+                level.setBlock(pos, this.getStateForPropagation(level, pos, source), 3);
+            }
+            else {
+                level.setBlock(pos, flammabilityData.burnoutTarget().defaultBlockState(), 3);
+            }
         }
 
-        if (burnoutTarget.is(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)) {
-            level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
-            return;
-        }
 
-        if (burnoutTarget.is(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_STONE)) {
-            level.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
-            return;
-        }
+    }
 
-        if (burnoutTarget.is(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DEEPSLATE)) {
-            level.setBlockAndUpdate(pos, Blocks.DEEPSLATE.defaultBlockState());
-            return;
-        }
-
-        level.setBlockAndUpdate(pos, this.defaultBlockState());
+    private BlockState getStateForPropagation(BlockGetter level, BlockPos pos, BlockState source) {
+        BlockState toReturn = getStateForPlacement(level, pos);
+        return toReturn.setValue(STRENGTH, source.getValue(STRENGTH)).setValue(AGE, source.getValue(AGE));
     }
 
     private BlockState getStateForPlacement(BlockGetter level, BlockPos pos) {
@@ -354,7 +372,7 @@ public class MycofireBlock extends BaseFireBlock {
     }
 
     private boolean canCatchFire(BlockGetter world, BlockPos pos) {
-        return world.getBlockState(pos).is(ModTagKeys.Blocks.MYCOFIRE_BURNS);
+        return (world.getBlockState(pos).getBlockHolder().getData(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA) instanceof MycofireFlammabilityData);
     }
 
     private boolean isIgnitableLocation(BlockGetter level, BlockPos pos) {
@@ -378,43 +396,20 @@ public class MycofireBlock extends BaseFireBlock {
         // Get the maximum ignition odds among all adjacent blocks
         int maxIgnitionOdds = 0;
         for (Direction direction : Direction.values()) {
-            Block adjacentBlock = level.getBlockState(pos.relative(direction)).getBlock();
-            maxIgnitionOdds = Math.max(this.igniteOdds.getInt(adjacentBlock), maxIgnitionOdds);
+
+            if (level.getBlockState(pos.relative(direction)).getBlockHolder().getData(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA) instanceof MycofireFlammabilityData flammabilityData) {
+                maxIgnitionOdds = Math.max(flammabilityData.encouragement(), maxIgnitionOdds);
+            }
         }
 
         return maxIgnitionOdds;
     }
 
-    private int getBurnOdds(BlockState state) {
-        return this.burnOdds.getInt(state.getBlock());
-    }
-
-    private int tickCooldownFromStrength(MycofireStrength strength, RandomSource random) {
-        switch (strength) {
-            case WEAK -> {
-                return 30 + random.nextInt(20);
-            }
-            case NORMAL -> {
-                return  30 + random.nextInt(10);
-            }
-            case STRONG -> {
-                return 20 + random.nextInt(10);
-            }
-            case APOCALYPTIC -> {
-                return 1;
-            }
-            case null, default -> throw new IllegalArgumentException();
-        }
-    }
-
-    private int getExtinguishChance(int age, MycofireStrength strength) {
-        return (MAX_AGE_BY_STRENGTH.get(strength) - (age)) + 1;
-    }
 
     private BlockState increaseFireAge(BlockState fireState) {
         MycofireStrength strength = fireState.getValue(STRENGTH);
         int currentAge = fireState.getValue(AGE);
-        int maxAge = MAX_AGE_BY_STRENGTH.get(strength);
+        int maxAge = strength.getMaxAge();
 
         if (currentAge < maxAge) {
             return fireState.setValue(AGE, currentAge + 1);

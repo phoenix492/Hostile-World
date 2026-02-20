@@ -1,0 +1,39 @@
+{
+  "values": {
+    "hostileworld:mycoturf": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 60,
+      "flammability": 60
+    },
+    "minecraft:brown_mushroom": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 60,
+      "flammability": 60
+    },
+    "minecraft:brown_mushroom_block": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 30,
+      "flammability": 30
+    },
+    "minecraft:mushroom_stem": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 30,
+      "flammability": 30
+    },
+    "minecraft:mycelium": {
+      "burnoutTarget": "minecraft:dirt",
+      "encouragement": 30,
+      "flammability": 30
+    },
+    "minecraft:red_mushroom": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 60,
+      "flammability": 60
+    },
+    "minecraft:red_mushroom_block": {
+      "burnoutTarget": "minecraft:air",
+      "encouragement": 30,
+      "flammability": 30
+    }
+  }
+}

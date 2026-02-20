@@ -6,7 +6,6 @@ import net.phoenix492.registration.ModDataAttachments;
 import net.phoenix492.registration.ModDataComponents;
 import net.phoenix492.registration.ModEffects;
 import net.phoenix492.registration.ModItems;
-import net.phoenix492.util.FlammabilityHelper;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -41,7 +40,6 @@ public class HostileWorld {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        FlammabilityHelper.fireSetup();
     }
 
 }

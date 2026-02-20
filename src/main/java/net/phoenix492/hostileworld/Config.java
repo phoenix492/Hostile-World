@@ -2,6 +2,7 @@ package net.phoenix492.hostileworld;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+// TODO: Reformat this into a more extensible format
 public class Config {
     private static final ModConfigSpec.Builder SERVER_BUILDER = new ModConfigSpec.Builder();
 

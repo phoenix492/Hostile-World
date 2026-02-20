@@ -4,6 +4,7 @@ import net.phoenix492.data.map.BiomeFungalSpreadData;
 import net.phoenix492.data.map.BlockInfectionBuildupData;
 import net.phoenix492.data.map.EnvironmentalInfectionBuildupData;
 import net.phoenix492.data.map.FungalTransformationData;
+import net.phoenix492.data.map.MycofireFlammabilityData;
 import net.phoenix492.hostileworld.HostileWorld;
 
 import net.minecraft.core.registries.Registries;
@@ -42,6 +43,11 @@ public class ModDataMaps {
         FungalTransformationData.CODEC
     ).build();
 
+    public static final DataMapType<Block, MycofireFlammabilityData> MYCOFIRE_FLAMMABILITY_DATA = DataMapType.builder(
+        ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "mycofire_flammability"),
+        Registries.BLOCK,
+        MycofireFlammabilityData.CODEC
+    ).build();
 
 
     @SubscribeEvent
@@ -50,5 +56,6 @@ public class ModDataMaps {
         event.register(BIOME_FUNGAL_SPREAD);
         event.register(FUNGAL_SPREAD_TRANSFORM);
         event.register(BLOCK_INFECTION_BUILDUP);
+        event.register(MYCOFIRE_FLAMMABILITY_DATA);
     }
 }

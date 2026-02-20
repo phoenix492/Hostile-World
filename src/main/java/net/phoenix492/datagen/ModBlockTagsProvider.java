@@ -108,17 +108,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.VINE)
             .add(Blocks.CAVE_VINES);
 
-        tag(ModTagKeys.Blocks.MYCOFIRE_BURNS)
-            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)
-            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_STONE)
-            .addTag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DEEPSLATE)
-            .add(ModBlocks.MYCOTURF.get())
-            .add(Blocks.RED_MUSHROOM_BLOCK)
-            .add(Blocks.BROWN_MUSHROOM_BLOCK)
-            .add(Blocks.MUSHROOM_STEM)
-            .add(Blocks.BROWN_MUSHROOM)
-            .add(Blocks.RED_MUSHROOM);
-
         tag(ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT)
             .add(Blocks.MYCELIUM);
 
