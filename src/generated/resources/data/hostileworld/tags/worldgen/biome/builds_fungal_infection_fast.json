@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "hostileworld:shroom_caves",
+      "required": false
+    },
+    {
+      "id": "hostileworld:shroom_core",
+      "required": false
+    }
+  ]
+}
