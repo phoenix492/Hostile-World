@@ -64,6 +64,9 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(ResourceLocation.parse("minecraft:red_mushroom"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
             .add(ResourceLocation.parse("minecraft:brown_mushroom"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
             .add(ResourceLocation.parse("hostileworld:mycoturf"), MycofireFlammabilityData.builder().encouragement(60).flammability(100).build(), false)
-            ;
+            .add(ResourceLocation.parse("hostileworld:red_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
+            .add(ResourceLocation.parse("hostileworld:brown_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
+            .add(ResourceLocation.parse("hostileworld:mixed_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
+            .add(ResourceLocation.parse("hostileworld:mycorestone"), MycofireFlammabilityData.builder().encouragement(5).flammability(5).burnoutTarget(Blocks.DEEPSLATE).build(), false);
     }
 }

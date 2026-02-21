@@ -1,9 +1,29 @@
 {
   "values": {
+    "hostileworld:brown_mycostone": {
+      "burnoutTarget": "minecraft:stone",
+      "encouragement": 15,
+      "flammability": 15
+    },
+    "hostileworld:mixed_mycostone": {
+      "burnoutTarget": "minecraft:stone",
+      "encouragement": 15,
+      "flammability": 15
+    },
+    "hostileworld:mycorestone": {
+      "burnoutTarget": "minecraft:deepslate",
+      "encouragement": 5,
+      "flammability": 5
+    },
     "hostileworld:mycoturf": {
       "burnoutTarget": "minecraft:air",
       "encouragement": 60,
       "flammability": 60
+    },
+    "hostileworld:red_mycostone": {
+      "burnoutTarget": "minecraft:stone",
+      "encouragement": 15,
+      "flammability": 15
     },
     "minecraft:brown_mushroom": {
       "burnoutTarget": "minecraft:air",
