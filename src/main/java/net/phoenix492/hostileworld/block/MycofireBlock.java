@@ -1,5 +1,6 @@
 package net.phoenix492.hostileworld.block;
 
+import net.phoenix492.hostileworld.config.HostileWorldConfig;
 import net.phoenix492.hostileworld.data.map.MycofireFlammabilityData;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModDataAttachments;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -40,20 +42,52 @@ import com.google.common.collect.ImmutableMap;
 
 public class MycofireBlock extends BaseFireBlock {
     public enum MycofireStrength implements StringRepresentable {
-        // TODO: Redo these numbers and make them configurable.
-        WEAK("weak", 5, 30, 20, 0.5, 0.5),
-        NORMAL("normal", 15, 30, 10, 1, 1),
-        STRONG("strong", 30, 20, 10, 2, 2),
-        APOCALYPTIC("apocalyptic", 0, 1, 1, 999, 999);
+        WEAK(
+            "weak",
+            HostileWorldConfig.SERVER_CONFIG.weakMaxAge,
+            HostileWorldConfig.SERVER_CONFIG.weakTickCooldownBase,
+            HostileWorldConfig.SERVER_CONFIG.weakTickCooldownRange,
+            HostileWorldConfig.SERVER_CONFIG.weakBurnoutChanceMult,
+            HostileWorldConfig.SERVER_CONFIG.weakSpreadChanceMult
+        ),
+        NORMAL(
+            "normal",
+            HostileWorldConfig.SERVER_CONFIG.normalMaxAge,
+            HostileWorldConfig.SERVER_CONFIG.normalTickCooldownBase,
+            HostileWorldConfig.SERVER_CONFIG.normalTickCooldownRange,
+            HostileWorldConfig.SERVER_CONFIG.normalBurnoutChanceMult,
+            HostileWorldConfig.SERVER_CONFIG.normalSpreadChanceMult
+        ),
+        STRONG(
+            "strong",
+            HostileWorldConfig.SERVER_CONFIG.strongMaxAge,
+            HostileWorldConfig.SERVER_CONFIG.strongTickCooldownBase,
+            HostileWorldConfig.SERVER_CONFIG.strongTickCooldownRange,
+            HostileWorldConfig.SERVER_CONFIG.strongBurnoutChanceMult,
+            HostileWorldConfig.SERVER_CONFIG.strongSpreadChanceMult
+        ),
+        APOCALYPTIC(
+            "apocalyptic",
+            HostileWorldConfig.SERVER_CONFIG.apocalypticMaxAge,
+            HostileWorldConfig.SERVER_CONFIG.apocalypticTickCooldownBase,
+            HostileWorldConfig.SERVER_CONFIG.apocalypticTickCooldownRange,
+            HostileWorldConfig.SERVER_CONFIG.apocalypticBurnoutChanceMult,
+            HostileWorldConfig.SERVER_CONFIG.apocalypticSpreadChanceMult
+        );
 
         private final String name;
-        private final int maxAge;
-        private final int tickCooldownBase;
-        private final int tickCooldownRange;
-        private final double burnoutChanceMult;
-        private final double spreadChanceMult;
+        private final ModConfigSpec.ConfigValue<Integer> maxAge;
+        private final ModConfigSpec.ConfigValue<Integer> tickCooldownBase;
+        private final ModConfigSpec.ConfigValue<Integer> tickCooldownRange;
+        private final ModConfigSpec.ConfigValue<Double> burnoutChanceMult;
+        private final ModConfigSpec.ConfigValue<Double> spreadChanceMult;
 
-        MycofireStrength(String name, int maxAge, int tickCooldownBase, int tickCooldownRange, double burnoutChanceMult, double spreadChanceMult) {
+        MycofireStrength(String name,
+                         ModConfigSpec.ConfigValue<Integer> maxAge,
+                         ModConfigSpec.ConfigValue<Integer> tickCooldownBase,
+                         ModConfigSpec.ConfigValue<Integer> tickCooldownRange,
+                         ModConfigSpec.ConfigValue<Double> burnoutChanceMult,
+                         ModConfigSpec.ConfigValue<Double> spreadChanceMult) {
             this.name = name;
             this.maxAge = maxAge;
             this.tickCooldownBase = tickCooldownBase;
@@ -68,23 +102,23 @@ public class MycofireBlock extends BaseFireBlock {
         }
 
         public double getBurnoutChanceMult() {
-            return burnoutChanceMult;
+            return burnoutChanceMult.get();
         }
 
         public int getTickCooldownRange() {
-            return tickCooldownRange;
+            return tickCooldownRange.get();
         }
 
         public int getTickCooldownBase() {
-            return tickCooldownBase;
+            return tickCooldownBase.get();
         }
 
         public int getMaxAge() {
-            return maxAge;
+            return maxAge.get();
         }
 
         public double getSpreadChanceMult() {
-            return spreadChanceMult;
+            return spreadChanceMult.get();
         }
     }
 
@@ -339,7 +373,7 @@ public class MycofireBlock extends BaseFireBlock {
             if (flammabilityData.burnoutTarget() instanceof AirBlock) {
                 // Apply chance to age the newly spread fire.
                 int newFireAge = Math.min(source.getValue(AGE) + random.nextInt(5) / 4, source.getValue(STRENGTH).getMaxAge());
-                level.setBlock(pos, this.getStateForPropagation(level, pos, source), 3);
+                level.setBlock(pos, this.getStateForPropagation(level, pos, source).setValue(AGE, newFireAge), 3);
             }
             else {
                 level.setBlock(pos, flammabilityData.burnoutTarget().defaultBlockState(), 3);

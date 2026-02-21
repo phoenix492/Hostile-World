@@ -28,6 +28,31 @@ public class HostileWorldConfig {
     public final ModConfigSpec.ConfigValue<Integer> sporeDropperRange;
     public final ModConfigSpec.ConfigValue<Boolean> spontaneousGermination;
 
+    // Mycofire
+    public final ModConfigSpec.ConfigValue<Integer> weakMaxAge;
+    public final ModConfigSpec.ConfigValue<Integer> weakTickCooldownBase;
+    public final ModConfigSpec.ConfigValue<Integer> weakTickCooldownRange;
+    public final ModConfigSpec.ConfigValue<Double> weakBurnoutChanceMult;
+    public final ModConfigSpec.ConfigValue<Double> weakSpreadChanceMult;
+
+    public final ModConfigSpec.ConfigValue<Integer> normalMaxAge;
+    public final ModConfigSpec.ConfigValue<Integer> normalTickCooldownBase;
+    public final ModConfigSpec.ConfigValue<Integer> normalTickCooldownRange;
+    public final ModConfigSpec.ConfigValue<Double> normalBurnoutChanceMult;
+    public final ModConfigSpec.ConfigValue<Double> normalSpreadChanceMult;
+
+    public final ModConfigSpec.ConfigValue<Integer> strongMaxAge;
+    public final ModConfigSpec.ConfigValue<Integer> strongTickCooldownBase;
+    public final ModConfigSpec.ConfigValue<Integer> strongTickCooldownRange;
+    public final ModConfigSpec.ConfigValue<Double> strongBurnoutChanceMult;
+    public final ModConfigSpec.ConfigValue<Double> strongSpreadChanceMult;
+
+    public final ModConfigSpec.ConfigValue<Integer> apocalypticMaxAge;
+    public final ModConfigSpec.ConfigValue<Integer> apocalypticTickCooldownBase;
+    public final ModConfigSpec.ConfigValue<Integer> apocalypticTickCooldownRange;
+    public final ModConfigSpec.ConfigValue<Double> apocalypticBurnoutChanceMult;
+    public final ModConfigSpec.ConfigValue<Double> apocalypticSpreadChanceMult;
+
 
     private HostileWorldConfig(ModConfigSpec.Builder BUILDER) {
         BUILDER.push("Fungal Infection Settings");
@@ -68,5 +93,46 @@ public class HostileWorldConfig {
                 .comment(" Determines if biomes with a germinationChance defined in biome_fungal_spread.json should have a chance of Grass turning into Mycelium, to prevent fully pacifying these biomes.")
                 .define("spontaneousGermination", true);
         BUILDER.pop();
+
+        BUILDER.comment(
+            """
+                Settings for parameters of how each level of Mycofire spreads, as follows they are:
+                maxAge: How old the fire is allowed to be. Effectively controls how long it lasts and how far it spreads.
+                tickCooldownBase: Minimum time between fire updates in ticks (1/20ths of a second)
+                tickCooldownRange: A random amount of ticks between 1 and this number is added to the previous number
+                burnoutChanceMult: Multiplier for how likely the fire is to destroy/convert a block
+                spreadChanceMult: Multiplier for how like the fire is to spread to another block"""
+        ).push("Mycofire Settings");
+            BUILDER.push("Weak");
+                weakMaxAge = BUILDER.defineInRange("weakMaxAge", 5, 0, Integer.MAX_VALUE);
+                weakTickCooldownBase = BUILDER.defineInRange("weakTickCooldownBase", 30, 1, Integer.MAX_VALUE);
+                weakTickCooldownRange = BUILDER.defineInRange("weakTickCooldownRange", 20, 1, Integer.MAX_VALUE);
+                weakBurnoutChanceMult = BUILDER.defineInRange("weakBurnoutChanceMult", 0.5, Double.MIN_VALUE, Double.MAX_VALUE);
+                weakSpreadChanceMult = BUILDER.defineInRange("weakSpreadChanceMult", 0.5, Double.MIN_VALUE, Double.MAX_VALUE);
+            BUILDER.pop();
+
+            BUILDER.push("Normal");
+                normalMaxAge = BUILDER.defineInRange("normalMaxAge", 15, 0, Integer.MAX_VALUE);
+                normalTickCooldownBase = BUILDER.defineInRange("normalTickCooldownBase", 30, 1, Integer.MAX_VALUE);
+                normalTickCooldownRange = BUILDER.defineInRange("normalTickCooldownRange", 10, 1, Integer.MAX_VALUE);
+                normalBurnoutChanceMult = BUILDER.defineInRange("normalBurnoutChanceMult", 1, Double.MIN_VALUE, Double.MAX_VALUE);
+                normalSpreadChanceMult = BUILDER.defineInRange("normalSpreadChanceMult", 1, Double.MIN_VALUE, Double.MAX_VALUE);
+            BUILDER.pop();
+
+            BUILDER.push("Strong");
+                strongMaxAge = BUILDER.defineInRange("strongMaxAge", 20, 0, Integer.MAX_VALUE);
+                strongTickCooldownBase = BUILDER.defineInRange("strongTickCooldownBase", 20, 1, Integer.MAX_VALUE);
+                strongTickCooldownRange = BUILDER.defineInRange("strongTickCooldownRange", 10, 1, Integer.MAX_VALUE);
+                strongBurnoutChanceMult = BUILDER.defineInRange("strongBurnoutChanceMult", 2, Double.MIN_VALUE, Double.MAX_VALUE);
+                strongSpreadChanceMult = BUILDER.defineInRange("strongSpreadChanceMult", 2, Double.MIN_VALUE, Double.MAX_VALUE);
+            BUILDER.pop();
+
+            BUILDER.push("Apocalyptic");
+                apocalypticMaxAge = BUILDER.defineInRange("apocalypticMaxAge", 0, 0, Integer.MAX_VALUE);
+                apocalypticTickCooldownBase = BUILDER.defineInRange("apocalypticTickCooldownBase", 1, 1, Integer.MAX_VALUE);
+                apocalypticTickCooldownRange = BUILDER.defineInRange("apocalypticTickCooldownRange", 1, 1, Integer.MAX_VALUE);
+                apocalypticBurnoutChanceMult = BUILDER.defineInRange("apocalypticBurnoutChanceMult", 999, Double.MIN_VALUE, Double.MAX_VALUE);
+                apocalypticSpreadChanceMult = BUILDER.defineInRange("apocalypticSpreadChanceMult", 999, Double.MIN_VALUE, Double.MAX_VALUE);
+            BUILDER.pop();
     }
 }
