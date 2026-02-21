@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    },
+    {
+      "item": "hostileworld:immunite_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "hostileworld:immunite_cluster"
+  }
+}

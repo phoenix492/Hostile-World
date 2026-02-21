@@ -31,6 +31,8 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.MYCORESTONE.asItem());
                 output.accept(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.asItem());
                 output.accept(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.asItem());
+                output.accept(ModItems.IMMUNITE_SHARD);
+                output.accept(ModItems.IMMUNITE_CLUSTER);
             })
             .build()
     );

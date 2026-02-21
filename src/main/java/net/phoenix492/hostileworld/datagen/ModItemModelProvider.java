@@ -16,6 +16,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.APOCALYPTIC_MUSHROOM_IGNITER.asItem());
+        basicItem(ModItems.IMMUNITE_CLUSTER.asItem());
+        basicItem(ModItems.IMMUNITE_SHARD.asItem());
         withExistingParent("strong_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("weak_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("normal_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));

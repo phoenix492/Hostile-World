@@ -29,6 +29,15 @@ public class ModItems {
         "weak_mushroom_igniter",
         () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.WEAK)).stacksTo(1))
     );
+    public static final DeferredItem<Item> IMMUNITE_SHARD = MOD_ITEMS.register(
+        "immunite_shard",
+        () -> new Item(new Item.Properties())
+    );
+    public static final DeferredItem<Item> IMMUNITE_CLUSTER = MOD_ITEMS.register(
+        "immunite_cluster",
+        () -> new Item(new Item.Properties())
+    );
+
 
 
 

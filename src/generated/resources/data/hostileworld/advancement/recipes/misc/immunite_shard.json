@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_immunite_cluster": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hostileworld:immunite_cluster"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hostileworld:immunite_shard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_immunite_cluster"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hostileworld:immunite_shard"
+    ]
+  }
+}
