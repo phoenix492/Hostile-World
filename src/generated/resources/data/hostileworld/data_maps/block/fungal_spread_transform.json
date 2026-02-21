@@ -53,6 +53,15 @@
         }
       ]
     },
+    "#hostileworld:becomes_nascent_autoimmune_cluster": {
+      "failChance": 0.75,
+      "targets": [
+        {
+          "data": "hostileworld:nascent_autoimmune_cluster",
+          "weight": 1
+        }
+      ]
+    },
     "#hostileworld:becomes_red_mushroom": {
       "consumeChance": 0.25,
       "myceliumCheck": true,

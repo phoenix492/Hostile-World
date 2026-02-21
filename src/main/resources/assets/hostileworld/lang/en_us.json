@@ -15,5 +15,7 @@
   "block.hostileworld.mycorestone": "Mycorestone",
   "block.hostileworld.mycoturf": "Mycoturf",
   "block.hostileworld.mycofire": "Mycofire",
+  "block.hostileworld.nascent_autoimmune_cluster": "Nascent Autoimmune Cluster",
+  "block.hostileworld.mature_autoimmune_cluster": "Mature Autoimmune Cluster",
   "creativetab.hostileworld.hostileworld_creative_tab": "Hostile World"
 }

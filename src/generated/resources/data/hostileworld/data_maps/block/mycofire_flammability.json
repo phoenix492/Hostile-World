@@ -5,6 +5,11 @@
       "encouragement": 15,
       "flammability": 15
     },
+    "hostileworld:mature_autoimmune_cluster": {
+      "burnoutTarget": "minecraft:coal_ore",
+      "encouragement": 5,
+      "flammability": 5
+    },
     "hostileworld:mixed_mycostone": {
       "burnoutTarget": "minecraft:stone",
       "encouragement": 15,
@@ -19,6 +24,11 @@
       "burnoutTarget": "minecraft:air",
       "encouragement": 60,
       "flammability": 60
+    },
+    "hostileworld:nascent_autoimmune_cluster": {
+      "burnoutTarget": "minecraft:coal_ore",
+      "encouragement": 15,
+      "flammability": 15
     },
     "hostileworld:red_mycostone": {
       "burnoutTarget": "minecraft:stone",

@@ -42,7 +42,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(ModBlocks.RED_MYCOSTONE.get())
             .add(ModBlocks.BROWN_MYCOSTONE.get())
             .add(ModBlocks.MIXED_MYCOSTONE.get())
-            .add(ModBlocks.MYCORESTONE.get());
+            .add(ModBlocks.MYCORESTONE.get())
+            .add(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get())
+            .add(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get());
 
         tag(ModTagKeys.Blocks.BECOMES_MYCOSTONE)
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_RED_MYCOSTONE)
@@ -70,6 +72,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_RED_MUSHROOM)
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
             .addOptionalTag(ModTagKeys.Blocks.BECOMES_MYCOSTONE)
+            .addOptionalTag(ModTagKeys.Blocks.BECOMES_NASCENT_AUTOIMMUNE_CLUSTER)
             .addOptionalTag(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS);
 
         tag(ModTagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK)
@@ -103,6 +106,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTagKeys.Blocks.BECOMES_MYCOTURF)
             .add(Blocks.MOSS_BLOCK);
+
+        tag(ModTagKeys.Blocks.BECOMES_NASCENT_AUTOIMMUNE_CLUSTER)
+            .add(Blocks.COAL_ORE)
+            .add(Blocks.COPPER_ORE)
+            .add(Blocks.DIAMOND_ORE)
+            .add(Blocks.EMERALD_ORE)
+            .add(Blocks.GOLD_ORE)
+            .add(Blocks.IRON_ORE)
+            .add(Blocks.LAPIS_ORE)
+            .add(Blocks.REDSTONE_ORE);
 
         tag(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS)
             .add(Blocks.VINE)

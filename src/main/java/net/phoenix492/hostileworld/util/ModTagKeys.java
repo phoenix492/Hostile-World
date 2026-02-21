@@ -54,6 +54,8 @@ public class ModTagKeys {
         public final static TagKey<Block> BECOMES_MYCORESTONE = createTag(HostileWorld.MODID, "becomes_mycorestone");
         public final static TagKey<Block> BECOMES_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_mycostone");
         public final static TagKey<Block> BECOMES_MYCOTURF = createTag(HostileWorld.MODID, "becomes_mycoturf");
+        public final static TagKey<Block> BECOMES_NASCENT_AUTOIMMUNE_CLUSTER = createTag(HostileWorld.MODID, "becomes_nascent_autoimmune_cluster");
+        public final static TagKey<Block> BECOMES_MATURE_AUTOIMMUNE_CLUSTER = createTag(HostileWorld.MODID, "becomes_mature_autoimmune_cluster");
         public final static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public final static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
         public final static TagKey<Block> MYCOFIRE_BURNS_TO_DIRT = createTag(HostileWorld.MODID, "mycofire_burns_to_dirt");

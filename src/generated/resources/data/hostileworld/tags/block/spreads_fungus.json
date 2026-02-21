@@ -7,6 +7,8 @@
     "hostileworld:red_mycostone",
     "hostileworld:brown_mycostone",
     "hostileworld:mixed_mycostone",
-    "hostileworld:mycorestone"
+    "hostileworld:mycorestone",
+    "hostileworld:nascent_autoimmune_cluster",
+    "hostileworld:mature_autoimmune_cluster"
   ]
 }
