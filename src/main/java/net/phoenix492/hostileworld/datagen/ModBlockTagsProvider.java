@@ -82,11 +82,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.AZALEA_LEAVES);
 
         tag(ModTagKeys.Blocks.BECOMES_BROWN_MUSHROOM_BLOCK)
-            .addTag(ModTagKeys.Blocks.LEAVES)
+            .addTag(BlockTags.LEAVES)
             .remove(ModTagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK);
 
         tag(ModTagKeys.Blocks.BECOMES_MUSHROOM_STEM)
-            .addTag(ModTagKeys.Blocks.LOGS);
+            .addTag(BlockTags.LOGS);
 
         tag(ModTagKeys.Blocks.BECOMES_MYCELIUM)
             .add(Blocks.DIRT)
@@ -96,7 +96,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(Blocks.TALL_GRASS)
             .add(Blocks.FERN)
             .add(Blocks.LARGE_FERN)
-            .addOptionalTag(ModTagKeys.Blocks.FLOWERS);
+            .addOptionalTag(BlockTags.FLOWERS);
 
         tag(ModTagKeys.Blocks.BECOMES_BROWN_MUSHROOM)
             .add(Blocks.SHORT_GRASS);
@@ -168,5 +168,23 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MUSHROOM_GROW_BLOCK).add(ModBlocks.MYCOTURF.get());
         tag(BlockTags.DIRT).add(ModBlocks.MYCOTURF.get());
 
+        // Harvest Tags
+        tag(BlockTags.MINEABLE_WITH_HOE)
+            .add(ModBlocks.MYCOTURF.get());
+
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .add(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get())
+            .add(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get())
+            .add(ModBlocks.MYCORESTONE.get())
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.BROWN_MYCOSTONE.get())
+            .add(ModBlocks.RED_MYCOSTONE.get());
+
+        tag(BlockTags.NEEDS_STONE_TOOL)
+            .add(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get());
+
+        tag(BlockTags.NEEDS_IRON_TOOL)
+            .add(ModBlocks.MYCORESTONE.get())
+            .add(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get());
     }
 }

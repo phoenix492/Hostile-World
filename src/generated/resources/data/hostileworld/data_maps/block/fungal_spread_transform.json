@@ -18,6 +18,15 @@
         }
       ]
     },
+    "#hostileworld:becomes_mature_autoimmune_cluster": {
+      "failChance": 0.9,
+      "targets": [
+        {
+          "data": "hostileworld:mature_autoimmune_cluster",
+          "weight": 1
+        }
+      ]
+    },
     "#hostileworld:becomes_mushroom_stem": {
       "targets": [
         {

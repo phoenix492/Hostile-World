@@ -107,6 +107,7 @@ public class ModBlocks {
         () -> new FungusSpreadingBlock(
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_PURPLE)
+                .requiresCorrectToolForDrops()
                 .strength(1.5f, 6.0f)
                 .sound(SoundType.NETHER_ORE)
                 .lightLevel(state -> 5)
@@ -119,6 +120,7 @@ public class ModBlocks {
         () -> new FungusSpreadingBlock(
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_PURPLE)
+                .requiresCorrectToolForDrops()
                 .strength(1.5f, 6.0f)
                 .sound(SoundType.NETHER_ORE)
                 .lightLevel(state -> 10)

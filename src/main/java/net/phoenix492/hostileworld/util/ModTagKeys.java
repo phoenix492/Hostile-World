@@ -30,14 +30,8 @@ public class ModTagKeys {
         }
     }
     public static class Blocks {
-        public final static TagKey<Block> LEAVES = createTag("minecraft", "leaves");
-        public final static TagKey<Block> LOGS = createTag("minecraft", "logs");
-        public final static TagKey<Block> FLOWERS = createTag("minecraft", "flowers");
-        public final static TagKey<Block> REPLACEABLE = createTag("minecraft", "replaceable");
-
         public final static TagKey<Block> RED_FUNGUS = createTag(HostileWorld.MODID, "red_fungus");
         public final static TagKey<Block> BROWN_FUNGUS = createTag(HostileWorld.MODID, "brown_fungus");
-
         public final static TagKey<Block> SPREADS_FUNGUS = createTag(HostileWorld.MODID, "spreads_fungus");
         public final static TagKey<Block> BECOMES_FUNGUS = createTag(HostileWorld.MODID, "becomes_fungus");
         public final static TagKey<Block> BECOMES_RED_FUNGUS = createTag(HostileWorld.MODID, "becomes_red_fungus");
