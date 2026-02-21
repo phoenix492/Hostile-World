@@ -10,6 +10,12 @@
   "item.hostileworld.normal_mushroom_igniter": "Normal Mushroom Igniter",
   "item.hostileworld.immunite_shard": "Immunite Shard",
   "item.hostileworld.immunite_cluster": "Immunite Cluster",
+  "item.minecraft.potion.effect.fungicide": "Potion of Cure Mycorrhiza",
+  "item.minecraft.splash_potion.effect.fungicide": "Splash Potion of Cure Mycorrhiza",
+  "item.minecraft.lingering_potion.effect.fungicide": "Lingering Potion of Cure Mycorrhiza",
+  "item.minecraft.potion.effect.strong_fungicide": "Potion of Cure Mycorrhiza",
+  "item.minecraft.splash_potion.effect.strong_fungicide": "Splash Potion of Cure Mycorrhiza",
+  "item.minecraft.lingering_potion.effect.strong_fungicide": "Lingering Potion of Cure Mycorrhiza",
 
   "block.hostileworld.red_mycostone": "Red Mycostone",
   "block.hostileworld.brown_mycostone": "Brown Mycostone",
