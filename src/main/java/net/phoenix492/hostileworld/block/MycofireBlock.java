@@ -41,6 +41,11 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 
 public class MycofireBlock extends BaseFireBlock {
+    /**
+     * DO. NOT. CHECK. THESE. VALUES. BEFORE. CONFIG REGISTRATION.
+     * <br>
+     * It <i>will</i> crash the game.
+     */
     public enum MycofireStrength implements StringRepresentable {
         WEAK(
             "weak",
@@ -242,7 +247,7 @@ public class MycofireBlock extends BaseFireBlock {
         if (!onInfiniburnSource) {
             if (!this.isIgnitableLocation(level, pos)) {
                 /*
-                 If we're on top a block that can't physically support the fire, in a nonignitable location, extinguish.
+                 If we're in a nonignitable location on a block that can't physically support the fire, extinguish.
                  Otherwise, 1 in (MAX_AGE - Current Age) + 1 chance to extinguish.
                 */
                 if (!blockstateBelow.isFaceSturdy(level, blockPosBelow, Direction.UP) || random.nextInt((strength.getMaxAge() - age) + 1) == 0) {
@@ -252,8 +257,7 @@ public class MycofireBlock extends BaseFireBlock {
                 // Increase the age of fire in non-ignitable locations.
                 level.setBlockAndUpdate(pos, increaseFireAge(state));
             }
-        }
-        else {
+        } else {
             // Infiniburning mycofire should become weak to prevent setting up unreasonably effective beacons of spread prevention.
             level.setBlockAndUpdate(pos, state.setValue(MycofireBlock.STRENGTH, MycofireStrength.WEAK));
         }
@@ -301,7 +305,7 @@ public class MycofireBlock extends BaseFireBlock {
                     }
 
                     // Finally spread the fire. 33% chance to increase age of newly placed fire by 1.
-                    if (checkedBlockIgniteOdds > 0 && random.nextInt(verticalSpreadChanceFilter) <= checkedBlockIgniteOdds) {
+                    if (checkedBlockIgniteOdds > 0 && random.nextInt(verticalSpreadChanceFilter) < checkedBlockIgniteOdds) {
                         level.setBlockAndUpdate(checkedBlock, increaseFireAgeZeroBiased(getStateForPropagation(level, checkedBlock, state), random));
                     }
                 }
@@ -330,7 +334,7 @@ public class MycofireBlock extends BaseFireBlock {
         if (!oldState.is(state.getBlock()) && !state.canSurvive(level, pos)) {
             level.removeBlock(pos, false);
         }
-        level.scheduleTick(pos, this, 1);
+        level.scheduleTick(pos, this, 10);
     }
 
     @Override
@@ -368,7 +372,7 @@ public class MycofireBlock extends BaseFireBlock {
             return;
         }
 
-        if (random.nextInt(chance) > flammabilityData.flammability()) {
+        if (random.nextInt(chance) < flammabilityData.flammability()) {
             // Different handling for blocks that burn away and blocks that are purified
             if (flammabilityData.burnoutTarget() instanceof AirBlock) {
                 // Apply chance to age the newly spread fire.
