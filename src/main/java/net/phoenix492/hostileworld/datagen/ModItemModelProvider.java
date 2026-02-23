@@ -26,8 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent("mixed_mycostone", ResourceLocation.parse("hostileworld:block/dummy_mixed_mycostone"));
         withExistingParent("mycorestone", ResourceLocation.parse("hostileworld:block/dummy_mycorestone"));
         withExistingParent("mycoturf", ResourceLocation.parse("hostileworld:block/mycoturf"));
-        // withExistingParent("nascent_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/nascent_autoimmune_cluster"));
         withExistingParent("nascent_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/dummy_nascent_autoimmune_cluster"));
-        withExistingParent("mature_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/mature_autoimmune_cluster"));
+        withExistingParent("mature_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/dummy_mature_autoimmune_cluster"));
     }
 }

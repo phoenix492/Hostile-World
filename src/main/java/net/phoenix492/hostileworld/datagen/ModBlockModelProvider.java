@@ -80,15 +80,15 @@ public class ModBlockModelProvider extends BlockModelProvider {
         cubeAll("dummy_brown_mycostone", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/brown_mycostone"));
         cubeAll("dummy_mixed_mycostone", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mixed_mycostone"));
         cubeAll("dummy_nascent_autoimmune_cluster", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/nascent_autoimmune_cluster"));
+        cubeAll("dummy_mature_autoimmune_cluster", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mature_autoimmune_cluster"));
         cubeAll("dummy_mycorestone", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mycorestone"));
         cubeAll("mycoturf", mcLoc("block/mycelium_top"));
-        //cubeAll("nascent_autoimmune_cluster", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/nascent_autoimmune_cluster"));
-        cubeAll("mature_autoimmune_cluster", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mature_autoimmune_cluster"));
 
         mycostoneModelBuilder("red_mycostone");
         mycostoneModelBuilder("brown_mycostone");
         mycostoneModelBuilder("mixed_mycostone");
         mycostoneModelBuilder("nascent_autoimmune_cluster");
+        mycostoneModelBuilder("mature_autoimmune_cluster");
         mycorestoneModelBuilder("mycorestone");
 
     }
