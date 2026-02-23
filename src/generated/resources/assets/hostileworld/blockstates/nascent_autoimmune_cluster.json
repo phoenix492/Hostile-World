@@ -1,7 +1,54 @@
 {
   "variants": {
-    "": {
-      "model": "hostileworld:block/nascent_autoimmune_cluster"
-    }
+    "": [
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_zero_y_zero"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_zero_y_clockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_zero_y_upside_down"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_zero_y_counterclockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_clockwise_90_y_zero"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_clockwise_90_y_clockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_clockwise_90_y_upside_down"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_clockwise_90_y_counterclockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_upside_down_y_zero"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_upside_down_y_clockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_upside_down_y_upside_down"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_upside_down_y_counterclockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_counterclockwise_90_y_zero"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_counterclockwise_90_y_clockwise_90"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_counterclockwise_90_y_upside_down"
+      },
+      {
+        "model": "hostileworld:block/nascent_autoimmune_cluster/x_counterclockwise_90_y_counterclockwise_90"
+      }
+    ]
   }
 }

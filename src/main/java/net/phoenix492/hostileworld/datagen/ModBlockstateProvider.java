@@ -122,10 +122,10 @@ public class ModBlockstateProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.RED_MYCOSTONE.get(), mycostoneConfiguredModelArray("red_mycostone"));
         simpleBlock(ModBlocks.BROWN_MYCOSTONE.get(), mycostoneConfiguredModelArray("brown_mycostone"));
         simpleBlock(ModBlocks.MIXED_MYCOSTONE.get(), mycostoneConfiguredModelArray("mixed_mycostone"));
-        //mycorestoneBuilder(mycorestoneConfiguredModelArray(false, true), mycorestoneConfiguredModelArray(false, false), mycorestoneConfiguredModelArray(true, false));
         simpleBlock(ModBlocks.MYCORESTONE.get());
         simpleBlock(ModBlocks.MYCOTURF.get(), new ModelFile.UncheckedModelFile(modLoc("block/mycoturf")));
-        simpleBlock(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get(), new ModelFile.UncheckedModelFile(modLoc("block/nascent_autoimmune_cluster")));
+        //simpleBlock(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get(), new ModelFile.UncheckedModelFile(modLoc("block/nascent_autoimmune_cluster")));
+        simpleBlock(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get(), mycostoneConfiguredModelArray("nascent_autoimmune_cluster"));
         simpleBlock(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get(), new ModelFile.UncheckedModelFile(modLoc("block/mature_autoimmune_cluster")));
 
     }

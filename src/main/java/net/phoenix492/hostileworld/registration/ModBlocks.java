@@ -110,7 +110,6 @@ public class ModBlocks {
                 .requiresCorrectToolForDrops()
                 .strength(3.0f, 6.0f)
                 .sound(SoundType.NETHER_ORE)
-                .lightLevel(state -> 5)
                 .randomTicks()
         )
     );
@@ -123,7 +122,6 @@ public class ModBlocks {
                 .requiresCorrectToolForDrops()
                 .strength(4.5f, 6.0f)
                 .sound(SoundType.NETHER_ORE)
-                .lightLevel(state -> 10)
                 .randomTicks()
         )
     );
