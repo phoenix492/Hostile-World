@@ -16,6 +16,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.APOCALYPTIC_MUSHROOM_IGNITER.asItem());
+        basicItem(ModItems.IMMUNITE_CLUSTER.asItem());
+        basicItem(ModItems.IMMUNITE_SHARD.asItem());
         withExistingParent("strong_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("weak_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("normal_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
@@ -24,5 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent("mixed_mycostone", ResourceLocation.parse("hostileworld:block/dummy_mixed_mycostone"));
         withExistingParent("mycorestone", ResourceLocation.parse("hostileworld:block/dummy_mycorestone"));
         withExistingParent("mycoturf", ResourceLocation.parse("hostileworld:block/mycoturf"));
+        withExistingParent("nascent_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/dummy_nascent_autoimmune_cluster"));
+        withExistingParent("mature_autoimmune_cluster", ResourceLocation.parse("hostileworld:block/dummy_mature_autoimmune_cluster"));
     }
 }

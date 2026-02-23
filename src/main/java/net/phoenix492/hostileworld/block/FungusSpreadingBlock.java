@@ -8,8 +8,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MycoturfBlock extends Block {
-    public MycoturfBlock(Properties properties) {
+public class FungusSpreadingBlock extends Block {
+    public FungusSpreadingBlock(Properties properties) {
         super(properties);
     }
 

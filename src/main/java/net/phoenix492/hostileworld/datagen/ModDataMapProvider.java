@@ -54,7 +54,9 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(ResourceLocation.parse("minecraft:diorite"), FungalTransformationData.builder().addTarget(ModBlocks.BROWN_MYCOSTONE.get()).airExposureCheck().build(), false)
             .add(ResourceLocation.parse("minecraft:tuff"), FungalTransformationData.builder().addTarget(ModBlocks.BROWN_MYCOSTONE.get()).airExposureCheck().build(), false)
             .add(ResourceLocation.parse("minecraft:deepslate"), FungalTransformationData.builder().addTarget(ModBlocks.MYCORESTONE.get()).airExposureCheck().spreadAlikeCheck().failChance(.50f).build(), false)
-            .add(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS, FungalTransformationData.builder().addTarget(Blocks.AIR).build(), false);
+            .add(ModTagKeys.Blocks.CONSUMED_BY_FUNGUS, FungalTransformationData.builder().addTarget(Blocks.AIR).build(), false)
+            .add(ModTagKeys.Blocks.BECOMES_NASCENT_AUTOIMMUNE_CLUSTER, FungalTransformationData.builder().addTarget(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.get()).failChance(0.75f).build(), false)
+            .add(ModTagKeys.Blocks.BECOMES_MATURE_AUTOIMMUNE_CLUSTER, FungalTransformationData.builder().addTarget(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get()).failChance(0.90f).build(), false);
 
         this.builder(ModDataMaps.MYCOFIRE_FLAMMABILITY_DATA)
             .add(ResourceLocation.parse("minecraft:mycelium"), MycofireFlammabilityData.builder().encouragement(30).flammability(60).burnoutTarget(Blocks.DIRT).build(), false)
@@ -67,6 +69,8 @@ public class ModDataMapProvider extends DataMapProvider {
             .add(ResourceLocation.parse("hostileworld:red_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
             .add(ResourceLocation.parse("hostileworld:brown_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
             .add(ResourceLocation.parse("hostileworld:mixed_mycostone"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.STONE).build(), false)
-            .add(ResourceLocation.parse("hostileworld:mycorestone"), MycofireFlammabilityData.builder().encouragement(5).flammability(5).burnoutTarget(Blocks.DEEPSLATE).build(), false);
+            .add(ResourceLocation.parse("hostileworld:mycorestone"), MycofireFlammabilityData.builder().encouragement(5).flammability(5).burnoutTarget(Blocks.DEEPSLATE).build(), false)
+            .add(ResourceLocation.parse("hostileworld:nascent_autoimmune_cluster"), MycofireFlammabilityData.builder().encouragement(15).flammability(20).burnoutTarget(Blocks.COAL_ORE).build(), false)
+            .add(ResourceLocation.parse("hostileworld:mature_autoimmune_cluster"), MycofireFlammabilityData.builder().encouragement(5).flammability(5).burnoutTarget(Blocks.COAL_ORE).build(), false);
     }
 }

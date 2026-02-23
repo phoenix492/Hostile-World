@@ -24,7 +24,7 @@ public class ModEffects {
 
     public static final Holder<MobEffect> FUNGUS_INFECTION_EFFECT = MOB_EFFECTS.register(
         "fungal_infection",
-        () -> new FungalInfectionEffect(MobEffectCategory.HARMFUL, 0x915487)
+        () -> new FungalInfectionEffect(MobEffectCategory.HARMFUL, 0x93819c)
             .addAttributeModifier(
                 Attributes.ATTACK_DAMAGE,
                 ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "fungal_infection_damage_reduction"),

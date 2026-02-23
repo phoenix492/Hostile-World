@@ -3,7 +3,7 @@ package net.phoenix492.hostileworld.registration;
 import net.phoenix492.hostileworld.block.MycofireBlock;
 import net.phoenix492.hostileworld.block.MycorestoneBlock;
 import net.phoenix492.hostileworld.block.MycostoneBlock;
-import net.phoenix492.hostileworld.block.MycoturfBlock;
+import net.phoenix492.hostileworld.block.FungusSpreadingBlock;
 import net.phoenix492.hostileworld.HostileWorld;
 
 import net.minecraft.world.level.block.Block;
@@ -29,7 +29,7 @@ public class ModBlocks {
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .replaceable()
-                .noCollission()
+                .noCollission() // WHY
                 .instabreak()
                 .lightLevel(state -> 15)
                 .sound(SoundType.WOOL)
@@ -45,7 +45,7 @@ public class ModBlocks {
                 .mapColor(MapColor.CRIMSON_HYPHAE)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
-                .strength(1.5F, 6.0F)
+                .strength(3.0F, 6.0F)
                 .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
@@ -58,7 +58,7 @@ public class ModBlocks {
                 .mapColor(MapColor.COLOR_BROWN)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
-                .strength(1.5F, 6.0F)
+                .strength(3.0F, 6.0F)
                 .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
@@ -71,7 +71,7 @@ public class ModBlocks {
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
-                .strength(1.5F, 6.0F)
+                .strength(3.0F, 6.0F)
                 .sound(SoundType.NETHERRACK)
                 .randomTicks()
         )
@@ -84,15 +84,15 @@ public class ModBlocks {
                 .mapColor(MapColor.TERRACOTTA_PURPLE)
                 .instrument(NoteBlockInstrument.BIT)
                 .requiresCorrectToolForDrops()
-                .strength(3.0f, 6.0f)
+                .strength(5.0f, 6.0f)
                 .sound(SoundType.DEEPSLATE)
                 .randomTicks()
         )
     );
 
-    public static final DeferredBlock<MycoturfBlock> MYCOTURF = registerWithItem(
+    public static final DeferredBlock<FungusSpreadingBlock> MYCOTURF = registerWithItem(
         "mycoturf",
-        () -> new MycoturfBlock(
+        () -> new FungusSpreadingBlock(
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .instrument(NoteBlockInstrument.DIDGERIDOO)
@@ -101,6 +101,32 @@ public class ModBlocks {
                 .randomTicks()
         )
     );
+
+    public static final DeferredBlock<FungusSpreadingBlock> NASCENT_AUTOIMMUNE_CLUSTER = registerWithItem(
+        "nascent_autoimmune_cluster",
+        () -> new FungusSpreadingBlock(
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_PURPLE)
+                .requiresCorrectToolForDrops()
+                .strength(3.0f, 6.0f)
+                .sound(SoundType.NETHER_ORE)
+                .randomTicks()
+        )
+    );
+
+    public static final DeferredBlock<FungusSpreadingBlock> MATURE_AUTOIMMUNE_CLUSTER = registerWithItem(
+        "mature_autoimmune_cluster",
+        () -> new FungusSpreadingBlock(
+            BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_PURPLE)
+                .requiresCorrectToolForDrops()
+                .strength(4.5f, 6.0f)
+                .sound(SoundType.NETHER_ORE)
+                .randomTicks()
+        )
+    );
+
+
 
     private static <T extends Block> DeferredBlock<T> registerWithItem(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = MOD_BLOCKS.register(

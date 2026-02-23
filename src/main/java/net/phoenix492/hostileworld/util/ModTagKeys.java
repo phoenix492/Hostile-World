@@ -30,14 +30,8 @@ public class ModTagKeys {
         }
     }
     public static class Blocks {
-        public final static TagKey<Block> LEAVES = createTag("minecraft", "leaves");
-        public final static TagKey<Block> LOGS = createTag("minecraft", "logs");
-        public final static TagKey<Block> FLOWERS = createTag("minecraft", "flowers");
-        public final static TagKey<Block> REPLACEABLE = createTag("minecraft", "replaceable");
-
         public final static TagKey<Block> RED_FUNGUS = createTag(HostileWorld.MODID, "red_fungus");
         public final static TagKey<Block> BROWN_FUNGUS = createTag(HostileWorld.MODID, "brown_fungus");
-
         public final static TagKey<Block> SPREADS_FUNGUS = createTag(HostileWorld.MODID, "spreads_fungus");
         public final static TagKey<Block> BECOMES_FUNGUS = createTag(HostileWorld.MODID, "becomes_fungus");
         public final static TagKey<Block> BECOMES_RED_FUNGUS = createTag(HostileWorld.MODID, "becomes_red_fungus");
@@ -54,6 +48,8 @@ public class ModTagKeys {
         public final static TagKey<Block> BECOMES_MYCORESTONE = createTag(HostileWorld.MODID, "becomes_mycorestone");
         public final static TagKey<Block> BECOMES_MYCOSTONE = createTag(HostileWorld.MODID, "becomes_mycostone");
         public final static TagKey<Block> BECOMES_MYCOTURF = createTag(HostileWorld.MODID, "becomes_mycoturf");
+        public final static TagKey<Block> BECOMES_NASCENT_AUTOIMMUNE_CLUSTER = createTag(HostileWorld.MODID, "becomes_nascent_autoimmune_cluster");
+        public final static TagKey<Block> BECOMES_MATURE_AUTOIMMUNE_CLUSTER = createTag(HostileWorld.MODID, "becomes_mature_autoimmune_cluster");
         public final static TagKey<Block> CONSUMED_BY_FUNGUS = createTag(HostileWorld.MODID, "consumed_by_fungus");
         public final static TagKey<Block> DROPS_SPORES = createTag(HostileWorld.MODID, "drops_spores");
         public final static TagKey<Block> MYCOFIRE_BURNS_TO_DIRT = createTag(HostileWorld.MODID, "mycofire_burns_to_dirt");
@@ -61,6 +57,7 @@ public class ModTagKeys {
         public final static TagKey<Block> MYCOFIRE_BURNS_TO_DEEPSLATE = createTag(HostileWorld.MODID, "mycofire_burns_to_deepslate");
         public final static TagKey<Block> MYCOSTONES = createTag(HostileWorld.MODID, "mycostones");
         public final static TagKey<Block> MYCOSTONE_BLOB_REPLACEABLES = createTag(HostileWorld.MODID, "mycostone_blob_replaceables");
+        public final static TagKey<Block> MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = createTag(HostileWorld.MODID, "mature_autoimmune_cluster_replaceables");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));

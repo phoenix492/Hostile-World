@@ -36,8 +36,10 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_MYCOSTONE_BLOB_KEY = registerKey("brown_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MYCOSTONE_BLOB_KEY = registerKey("red_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
+    public static final RuleTest MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES);
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, name));
@@ -155,6 +157,17 @@ public class ModConfiguredFeatures {
                 ModBlocks.MIXED_MYCOSTONE.get().defaultBlockState(),
                 64,
                 0f
+            )
+        );
+        register(
+            context,
+            MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY,
+            Feature.ORE,
+            new OreConfiguration(
+                MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES,
+                ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get().defaultBlockState(),
+                8,
+                0.5f
             )
         );
     }

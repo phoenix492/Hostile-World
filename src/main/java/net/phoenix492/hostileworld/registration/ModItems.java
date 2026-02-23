@@ -15,20 +15,29 @@ public class ModItems {
 
     public static final DeferredItem<Item> APOCALYPTIC_MUSHROOM_IGNITER = MOD_ITEMS.register(
       "apocalyptic_mushroom_igniter",
-        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.APOCALYPTIC)))
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.APOCALYPTIC)).stacksTo(1))
     );
     public static final DeferredItem<Item> STRONG_MUSHROOM_IGNITER = MOD_ITEMS.register(
         "strong_mushroom_igniter",
-        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.STRONG)))
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.STRONG)).stacksTo(1))
     );
     public static final DeferredItem<Item> NORMAL_MUSHROOM_IGNITER = MOD_ITEMS.register(
         "normal_mushroom_igniter",
-        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.NORMAL)))
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.NORMAL)).stacksTo(1))
     );
     public static final DeferredItem<Item> WEAK_MUSHROOM_IGNITER = MOD_ITEMS.register(
         "weak_mushroom_igniter",
-        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.WEAK)))
+        () -> new MushroomIgniter(new Item.Properties().component(ModDataComponents.MUSHROOM_IGNITER_STRENGTH, new MushroomIgniterData(MycofireBlock.MycofireStrength.WEAK)).stacksTo(1))
     );
+    public static final DeferredItem<Item> IMMUNITE_SHARD = MOD_ITEMS.register(
+        "immunite_shard",
+        () -> new Item(new Item.Properties())
+    );
+    public static final DeferredItem<Item> IMMUNITE_CLUSTER = MOD_ITEMS.register(
+        "immunite_cluster",
+        () -> new Item(new Item.Properties())
+    );
+
 
 
 

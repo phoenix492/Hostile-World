@@ -1,5 +1,7 @@
 package net.phoenix492.hostileworld.handler;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.hostileworld.config.HostileWorldConfig;
 import net.phoenix492.hostileworld.data.map.BlockInfectionBuildupData;
 import net.phoenix492.hostileworld.data.map.EnvironmentalInfectionBuildupData;
 import net.phoenix492.hostileworld.effect.FungalInfectionEffect;
@@ -8,8 +10,6 @@ import net.phoenix492.hostileworld.event.FungalInfectionBlockBuildupEvent;
 import net.phoenix492.hostileworld.event.FungalInfectionDropoffEvent;
 import net.phoenix492.hostileworld.event.FungalInfectionEnvironmentalBuildupEvent;
 import net.phoenix492.hostileworld.event.FungalInfectionTickEvent;
-import net.phoenix492.hostileworld.config.HostileWorldConfig;
-import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.hostileworld.registration.ModDataAttachments;
 import net.phoenix492.hostileworld.registration.ModDataMaps;
 import net.phoenix492.hostileworld.registration.ModEffects;
@@ -19,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -194,7 +195,7 @@ public class FungalInfectionHandler {
         BlockPos.MutableBlockPos checkedPos = new BlockPos.MutableBlockPos(checkedPosImmutable.getX(), checkedPosImmutable.getY(), checkedPosImmutable.getZ());
         for (int i = 1; i <= HostileWorldConfig.SERVER_CONFIG.sporeDropperRange.get(); i++) {
             checkedPos.setY(checkedPos.getY() + 1);
-            if (!entity.level().getBlockState(checkedPos).is(ModTagKeys.Blocks.REPLACEABLE)) {
+            if (!entity.level().getBlockState(checkedPos).is(BlockTags.REPLACEABLE)) {
                 if (entity.level().getBlockState(checkedPos).is(ModTagKeys.Blocks.DROPS_SPORES)) {
                     entity.getData(ModDataAttachments.FUNGAL_INFECTION).increaseInfectionLevel(HostileWorldConfig.SERVER_CONFIG.fungalInfectionSporeDropperBuildup.get());
                 }

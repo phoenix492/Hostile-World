@@ -1,13 +1,14 @@
 package net.phoenix492.hostileworld.mixin;
 
+import net.phoenix492.hostileworld.config.HostileWorldConfig;
 import net.phoenix492.hostileworld.data.map.BiomeFungalSpreadData;
 import net.phoenix492.hostileworld.handler.FungalSpreadHandler;
-import net.phoenix492.hostileworld.config.HostileWorldConfig;
 import net.phoenix492.hostileworld.registration.ModDataMaps;
 import net.phoenix492.hostileworld.util.ModTagKeys;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GrassBlock;
@@ -116,7 +117,7 @@ public abstract class FungalSpreadMixins {
                 for (int i = 2; i <= HostileWorldConfig.SERVER_CONFIG.sporeDropperRange.get(); i++) {
                     scannedBlockPos.setY(scannedBlockPos.getY() - 1);
                     // If the block we're checking is not replaceable and becomes mycelium, we stop our check and replace it, making sure to preserve snowy status.
-                    if (!level.getBlockState(scannedBlockPos).is(ModTagKeys.Blocks.REPLACEABLE)) {
+                    if (!level.getBlockState(scannedBlockPos).is(BlockTags.REPLACEABLE)) {
                         // I'm splitting this into two because the linter keeps yelling at me and telling me it's always false. IT'S NOT.
                         if (level.getBlockState(scannedBlockPos).is(ModTagKeys.Blocks.BECOMES_MYCELIUM)) {
                             if (SpreadingSnowyDirtBlockInvoker.invokeCanBeGrass(level.getBlockState(scannedBlockPos), level, scannedBlockPos)) {

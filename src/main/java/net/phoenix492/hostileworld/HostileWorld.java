@@ -7,6 +7,7 @@ import net.phoenix492.hostileworld.registration.ModDataAttachments;
 import net.phoenix492.hostileworld.registration.ModDataComponents;
 import net.phoenix492.hostileworld.registration.ModEffects;
 import net.phoenix492.hostileworld.registration.ModItems;
+import net.phoenix492.hostileworld.registration.ModPotions;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -37,6 +38,7 @@ public class HostileWorld {
         ModItems.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModDataComponents.register(modEventBus);
+        ModPotions.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, HostileWorldConfig.SPEC);
     }
 

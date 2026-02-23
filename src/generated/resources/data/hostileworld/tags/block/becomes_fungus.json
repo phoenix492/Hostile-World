@@ -29,6 +29,10 @@
       "required": false
     },
     {
+      "id": "#hostileworld:becomes_nascent_autoimmune_cluster",
+      "required": false
+    },
+    {
       "id": "#hostileworld:consumed_by_fungus",
       "required": false
     }

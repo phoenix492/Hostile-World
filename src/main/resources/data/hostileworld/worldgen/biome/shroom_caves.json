@@ -22,7 +22,9 @@
       "hostileworld:shroom_caves_red_mycostone_blob_placed",
       "hostileworld:shroom_caves_brown_mycostone_blob_placed"
     ],
-    [],
+    [
+      "hostileworld:shroom_caves_mature_autoimmune_cluster_placed"
+    ],
     [],
     [
       "hostileworld:shroom_caves_red_mushroom_placed",
