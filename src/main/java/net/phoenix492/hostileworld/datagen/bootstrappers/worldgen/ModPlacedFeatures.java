@@ -33,6 +33,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SHROOM_CORE_MIXED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_mixed_mycostone_blob_placed");
     public static final ResourceKey<PlacedFeature> SHROOM_CORE_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_red_mycostone_blob_placed");
     public static final ResourceKey<PlacedFeature> SHROOM_CORE_BROWN_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_brown_mycostone_blob_placed");
+    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY = registerKey("shroom_caves_mature_autoimmune_cluster_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -136,6 +137,17 @@ public class ModPlacedFeatures {
             List.of(
                 RarityFilter.onAverageOnceEvery(3),
                 CountPlacement.of(1),
+                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
+                InSquarePlacement.spread(),
+                BiomeFilter.biome()
+            )
+        );
+        register(
+            context,
+            SHROOM_CAVES_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY),
+            List.of(
+                CountPlacement.of(15),
                 HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome()

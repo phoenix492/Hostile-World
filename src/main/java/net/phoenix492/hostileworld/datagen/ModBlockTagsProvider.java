@@ -135,6 +135,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(ModBlocks.MIXED_MYCOSTONE.get())
             .add(ModBlocks.MYCORESTONE.get());
 
+        tag(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES)
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.MYCORESTONE.get())
+            .add(ModBlocks.BROWN_MYCOSTONE.get())
+            .add(ModBlocks.RED_MYCOSTONE.get());
+
 
         /*
          Mycelium spreading behavior only works for HugeMushroomBlocks, but this tag also controls which blocks will

@@ -57,6 +57,7 @@ public class ModTagKeys {
         public final static TagKey<Block> MYCOFIRE_BURNS_TO_DEEPSLATE = createTag(HostileWorld.MODID, "mycofire_burns_to_deepslate");
         public final static TagKey<Block> MYCOSTONES = createTag(HostileWorld.MODID, "mycostones");
         public final static TagKey<Block> MYCOSTONE_BLOB_REPLACEABLES = createTag(HostileWorld.MODID, "mycostone_blob_replaceables");
+        public final static TagKey<Block> MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = createTag(HostileWorld.MODID, "mature_autoimmune_cluster_replaceables");
 
         private static TagKey<Block> createTag(String namespace, String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, name));
