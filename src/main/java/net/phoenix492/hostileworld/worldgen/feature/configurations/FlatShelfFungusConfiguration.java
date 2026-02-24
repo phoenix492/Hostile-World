@@ -4,22 +4,25 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 
 public record FlatShelfFungusConfiguration(int width, int inwardCapLength, int outwardCapLength, List<Block> validWallTargets, int minStemHeight, int maxStemHeight, int minStemLength, int maxStemLength) implements FeatureConfiguration {
+    private static final List<Block> DEFAULT_BLOCK_LIST = List.of(Blocks.STONE);
+
     public static Codec<FlatShelfFungusConfiguration> CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
-            Codec.INT.fieldOf("capWidth").forGetter(FlatShelfFungusConfiguration::width),
-            Codec.INT.fieldOf("inwardCapLength").forGetter(FlatShelfFungusConfiguration::inwardCapLength),
-            Codec.INT.fieldOf("outwardCapLength").forGetter(FlatShelfFungusConfiguration::outwardCapLength),
-            Codec.list(BuiltInRegistries.BLOCK.byNameCodec()).fieldOf("validWallTargets").forGetter(FlatShelfFungusConfiguration::validWallTargets),
-            Codec.INT.fieldOf("minStemHeight").forGetter(FlatShelfFungusConfiguration::minStemHeight),
-            Codec.INT.fieldOf("maxStemHeight").forGetter(FlatShelfFungusConfiguration::maxStemHeight),
-            Codec.INT.fieldOf("minStemLength").forGetter(FlatShelfFungusConfiguration::minStemLength),
-            Codec.INT.fieldOf("maxStemLength").forGetter(FlatShelfFungusConfiguration::maxStemLength)
+            Codec.INT.optionalFieldOf("capWidth", 2).forGetter(FlatShelfFungusConfiguration::width),
+            Codec.INT.optionalFieldOf("inwardCapLength", 2).forGetter(FlatShelfFungusConfiguration::inwardCapLength),
+            Codec.INT.optionalFieldOf("outwardCapLength", 1).forGetter(FlatShelfFungusConfiguration::outwardCapLength),
+            Codec.list(BuiltInRegistries.BLOCK.byNameCodec()).optionalFieldOf("validWallTargets", DEFAULT_BLOCK_LIST).forGetter(FlatShelfFungusConfiguration::validWallTargets),
+            Codec.INT.optionalFieldOf("minStemHeight", 2).forGetter(FlatShelfFungusConfiguration::minStemHeight),
+            Codec.INT.optionalFieldOf("maxStemHeight", 3).forGetter(FlatShelfFungusConfiguration::maxStemHeight),
+            Codec.INT.optionalFieldOf("minStemLength", 2).forGetter(FlatShelfFungusConfiguration::minStemLength),
+            Codec.INT.optionalFieldOf("maxStemLength", 3).forGetter(FlatShelfFungusConfiguration::maxStemLength)
         ).apply(instance, FlatShelfFungusConfiguration::new)
     );
 
@@ -96,8 +99,11 @@ public record FlatShelfFungusConfiguration(int width, int inwardCapLength, int o
             if (validWallTargets.build().isEmpty()) {
                 throw new IllegalStateException("FlatShelfFungus constructed without valid wall block!");
             }
-            if (minStemHeight < 2) {
-                throw new IllegalStateException("FlatShelfFungus must have a of at least 2!");
+            if (minStemHeight < 1) {
+                throw new IllegalStateException("FlatShelfFungus must have minStemHeight a of at least 1!");
+            }
+            if (minStemLength < 2) {
+                throw new IllegalStateException("FlatShelfFungus must have minStemLength of at least 2!");
             }
             if (minStemHeight > maxStemHeight) {
                 throw new IllegalStateException("FlatShelfFungus minStemHeight must be greater or equal to maxStemHeight!");
