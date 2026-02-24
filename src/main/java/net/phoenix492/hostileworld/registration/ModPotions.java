@@ -22,12 +22,12 @@ public class ModPotions {
 
     public static final Holder<Potion> FUNGICIDE = MOD_POTIONS.register(
         "fungicide",
-        () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 0, false, false, false))
+        () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 0, false, true, false))
     );
 
     public static final Supplier<Potion> STRONG_FUNGICIDE = MOD_POTIONS.register(
         "strong_fungicide",
-        () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 1, false, false, false))
+        () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 1, false, true, false))
     );
 
     public static void register(IEventBus eventBus) {
