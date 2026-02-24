@@ -6,6 +6,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+/**
+ * Record containing information on mycofire flammability per block.
+ * @param encouragement How likely this block is to catch fire when selected to be spread to.
+ * @param flammability How likely this block is to be burned up while on fire.
+ * @param burnoutTarget What this block turns into when burned up, default Air.
+ */
 public record MycofireFlammabilityData(int encouragement, int flammability, Block burnoutTarget) {
     public static final Codec<MycofireFlammabilityData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.INT.fieldOf("encouragement").forGetter(MycofireFlammabilityData::encouragement),
