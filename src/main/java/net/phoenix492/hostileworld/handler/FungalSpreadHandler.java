@@ -1,11 +1,12 @@
 package net.phoenix492.hostileworld.handler;
 
-import net.phoenix492.hostileworld.data.map.FungalTransformationData;
 import net.phoenix492.hostileworld.config.HostileWorldConfig;
+import net.phoenix492.hostileworld.data.map.FungalTransformationData;
 import net.phoenix492.hostileworld.mixin.FungalSpreadMixins;
 import net.phoenix492.hostileworld.mixin.SpreadingSnowyDirtBlockInvoker;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModDataMaps;
+import net.phoenix492.hostileworld.registration.ModGameRules;
 import net.phoenix492.hostileworld.util.ModTagKeys;
 
 import net.minecraft.core.BlockPos;
@@ -28,6 +29,11 @@ import java.util.Optional;
  */
 public class FungalSpreadHandler {
     public static void basicFungalSpread(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+
+        if (!level.getGameRules().getBoolean(ModGameRules.DO_FUNGAL_SPREAD)) {
+            return;
+        }
+
         for (int i = 0; i < HostileWorldConfig.SERVER_CONFIG.fungalSpreadSpeed.get(); i++) {
             BlockPos spreadTargetPosition = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
             BlockState spreadTargetBlockstate = level.getBlockState(spreadTargetPosition);
