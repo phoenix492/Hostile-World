@@ -2,7 +2,9 @@ package net.phoenix492.hostileworld.datagen.bootstrappers.worldgen;
 
 import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.hostileworld.registration.ModBlocks;
+import net.phoenix492.hostileworld.registration.ModFeatures;
 import net.phoenix492.hostileworld.util.ModTagKeys;
+import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatShelfFungusConfiguration;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -37,6 +39,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MYCOSTONE_BLOB_KEY = registerKey("red_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS = registerKey("brown_shelf_fungus");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
     public static final RuleTest MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES);
@@ -169,6 +172,18 @@ public class ModConfiguredFeatures {
                 8,
                 0.5f
             )
+        );
+        register(
+            context,
+            BROWN_SHELF_FUNGUS,
+            ModFeatures.BROWN_SHELF_FUNGUS.get(),
+            FlatShelfFungusConfiguration.builder()
+                .addValidWallTarget(ModBlocks.MIXED_MYCOSTONE.get())
+                .minStemLength(2)
+                .maxStemLength(3)
+                .minStemHeight(2)
+                .maxStemHeight(2)
+                .build()
         );
     }
 

@@ -6,6 +6,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Block;
 
+// TODO: Add "cascading," a way for converted blocks to encourage a domino effect near them.
+// TODO: Add "mushblooming", an option for some blocks to attempt to spawn a large mushroom as a way of making plains biomes more visually interesting.
 /**
  * Object containing data for what <i>target</i> block a given <i>source</i> block is transformed into upon being chosen for fungal spread.
  * @param targets What this block should be transformed into. A weighted list

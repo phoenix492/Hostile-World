@@ -1,0 +1,15 @@
+{
+  "type": "hostileworld:brown_shelf_fungus",
+  "config": {
+    "capWidth": 2,
+    "inwardCapLength": 2,
+    "maxStemHeight": 2,
+    "maxStemLength": 3,
+    "minStemHeight": 2,
+    "minStemLength": 2,
+    "outwardCapLength": 1,
+    "validWallTargets": [
+      "hostileworld:mixed_mycostone"
+    ]
+  }
+}

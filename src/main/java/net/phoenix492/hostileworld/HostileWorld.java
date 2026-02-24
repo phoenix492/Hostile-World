@@ -6,6 +6,7 @@ import net.phoenix492.hostileworld.registration.ModCreativeModeTabs;
 import net.phoenix492.hostileworld.registration.ModDataAttachments;
 import net.phoenix492.hostileworld.registration.ModDataComponents;
 import net.phoenix492.hostileworld.registration.ModEffects;
+import net.phoenix492.hostileworld.registration.ModFeatures;
 import net.phoenix492.hostileworld.registration.ModItems;
 import net.phoenix492.hostileworld.registration.ModPotions;
 
@@ -39,6 +40,7 @@ public class HostileWorld {
         ModCreativeModeTabs.register(modEventBus);
         ModDataComponents.register(modEventBus);
         ModPotions.register(modEventBus);
+        ModFeatures.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, HostileWorldConfig.SPEC);
     }
 
