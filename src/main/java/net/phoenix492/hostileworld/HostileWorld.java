@@ -9,14 +9,21 @@ import net.phoenix492.hostileworld.registration.ModEffects;
 import net.phoenix492.hostileworld.registration.ModFeatures;
 import net.phoenix492.hostileworld.registration.ModGameRules;
 import net.phoenix492.hostileworld.registration.ModItems;
+import net.phoenix492.hostileworld.registration.ModParticles;
 import net.phoenix492.hostileworld.registration.ModPotions;
+import net.phoenix492.particle.SporeParticles;
 
 import com.mojang.logging.LogUtils;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 import org.slf4j.Logger;
 
@@ -42,11 +49,26 @@ public class HostileWorld {
         ModDataComponents.register(modEventBus);
         ModPotions.register(modEventBus);
         ModFeatures.register(modEventBus);
+        ModParticles.register(modEventBus);
         ModGameRules.register();
         modContainer.registerConfig(ModConfig.Type.SERVER, HostileWorldConfig.SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+
+    }
+
+    @EventBusSubscriber(Dist.CLIENT)
+    public static class ClientSetup {
+        @SubscribeEvent
+        public static void clientSetup(FMLClientSetupEvent event) {
+
+        }
+
+        @SubscribeEvent
+        public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(ModParticles.SPORE_PARTICLES.get(), SporeParticles.Provider::new);
+        }
     }
 
 }
