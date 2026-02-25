@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.Pair;
 
+// TODO: Add special behavior for HugeMushroomBlocks that makes them disable sides correctly.
 public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration> {
     private static final int WALL_FIND_RADIUS = 16;
     private record WallContext(BlockPos wallPos, Direction wallDirection, List<Pair<Integer, Integer>> validPlacements) {}
