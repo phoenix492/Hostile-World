@@ -1,10 +1,11 @@
 package net.phoenix492.hostileworld.registration;
 
+import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.hostileworld.block.FungusSpreadingBlock;
 import net.phoenix492.hostileworld.block.MycofireBlock;
 import net.phoenix492.hostileworld.block.MycorestoneBlock;
 import net.phoenix492.hostileworld.block.MycostoneBlock;
-import net.phoenix492.hostileworld.block.FungusSpreadingBlock;
-import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.hostileworld.block.MycoturfBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -92,7 +93,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<FungusSpreadingBlock> MYCOTURF = registerWithItem(
         "mycoturf",
-        () -> new FungusSpreadingBlock(
+        () -> new MycoturfBlock(
             BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .instrument(NoteBlockInstrument.DIDGERIDOO)
