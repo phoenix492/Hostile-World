@@ -19,19 +19,21 @@
     [],
     [],
     [
-      "hostileworld:shroom_caves_red_mycostone_blob_placed",
-      "hostileworld:shroom_caves_brown_mycostone_blob_placed"
+      "hostileworld:fungal_caverns_red_mycostone_blob_placed",
+      "hostileworld:fungal_caverns_brown_mycostone_blob_placed"
     ],
     [
-      "hostileworld:shroom_caves_mature_autoimmune_cluster_placed"
+      "hostileworld:fungal_caverns_mature_autoimmune_cluster_placed"
     ],
-    [],
     [
-      "hostileworld:shroom_caves_red_mushroom_placed",
-      "hostileworld:shroom_caves_brown_mushroom_placed",
-      "hostileworld:shroom_caves_big_red_mushroom_placed",
-      "hostileworld:shroom_caves_big_brown_mushroom_placed",
-      "hostileworld:shroom_caves_boosted_glow_lichen_placed"
+      "hostileworld:fungal_caverns_brown_shelf_fungus_placed"
+    ],
+    [
+      "hostileworld:fungal_caverns_red_mushroom_placed",
+      "hostileworld:fungal_caverns_brown_mushroom_placed",
+      "hostileworld:fungal_caverns_big_red_mushroom_placed",
+      "hostileworld:fungal_caverns_big_brown_mushroom_placed",
+      "hostileworld:fungal_caverns_boosted_glow_lichen_placed"
     ],
     []
   ],

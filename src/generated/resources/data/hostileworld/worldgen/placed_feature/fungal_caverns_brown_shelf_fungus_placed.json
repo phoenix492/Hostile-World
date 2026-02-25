@@ -1,23 +1,19 @@
 {
-  "feature": "hostileworld:shroom_caves_boosted_glow_lichen",
+  "feature": "hostileworld:brown_shelf_fungus",
   "placement": [
     {
       "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:uniform",
-        "max_inclusive": 256,
-        "min_inclusive": 128
-      }
+      "count": 8
     },
     {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:uniform",
         "max_inclusive": {
-          "absolute": 63
+          "absolute": 60
         },
         "min_inclusive": {
-          "absolute": -64
+          "above_bottom": 0
         }
       }
     },

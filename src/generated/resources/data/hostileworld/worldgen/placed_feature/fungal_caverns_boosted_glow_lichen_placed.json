@@ -1,23 +1,23 @@
 {
-  "feature": "hostileworld:red_mycostone_blob",
+  "feature": "hostileworld:fungal_caverns_boosted_glow_lichen",
   "placement": [
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 3
-    },
-    {
       "type": "minecraft:count",
-      "count": 1
+      "count": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 256,
+        "min_inclusive": 128
+      }
     },
     {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:uniform",
         "max_inclusive": {
-          "absolute": 60
+          "absolute": 63
         },
         "min_inclusive": {
-          "absolute": -30
+          "absolute": -64
         }
       }
     },

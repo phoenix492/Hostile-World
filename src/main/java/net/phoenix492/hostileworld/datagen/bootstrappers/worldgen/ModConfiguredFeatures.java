@@ -39,7 +39,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MYCOSTONE_BLOB_KEY = registerKey("red_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS = registerKey("brown_shelf_fungus");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS_KEY = registerKey("brown_shelf_fungus");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FRANKLIN = registerKey("franklin");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
@@ -176,7 +176,7 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            BROWN_SHELF_FUNGUS,
+            BROWN_SHELF_FUNGUS_KEY ,
             ModFeatures.FLAT_TOP_SHELF_FUNGUS.get(),
             FlatTopShelfFungusConfiguration.builder()
                 .capBlock(Blocks.BROWN_MUSHROOM_BLOCK)

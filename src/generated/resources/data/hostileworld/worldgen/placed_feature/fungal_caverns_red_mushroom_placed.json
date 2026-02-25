@@ -1,9 +1,9 @@
 {
-  "feature": "hostileworld:shroom_caves_big_brown_mushroom",
+  "feature": "hostileworld:fungal_caverns_red_mushrooms",
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
-      "count": 1
+      "count": 4
     },
     {
       "type": "minecraft:biome"
