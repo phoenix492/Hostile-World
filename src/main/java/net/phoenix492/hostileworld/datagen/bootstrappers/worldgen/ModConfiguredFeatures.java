@@ -4,7 +4,7 @@ import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModFeatures;
 import net.phoenix492.hostileworld.util.ModTagKeys;
-import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatShelfFungusConfiguration;
+import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfFungusConfiguration;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -40,6 +40,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS = registerKey("brown_shelf_fungus");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FRANKLIN = registerKey("franklin");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
     public static final RuleTest MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES);
@@ -176,15 +177,42 @@ public class ModConfiguredFeatures {
         register(
             context,
             BROWN_SHELF_FUNGUS,
-            ModFeatures.BROWN_SHELF_FUNGUS.get(),
-            FlatShelfFungusConfiguration.builder()
+            ModFeatures.FLAT_TOP_SHELF_FUNGUS.get(),
+            FlatTopShelfFungusConfiguration.builder()
+                .capBlock(Blocks.BROWN_MUSHROOM_BLOCK)
+                .stemBlock(Blocks.MUSHROOM_STEM)
                 .addValidWallTarget(ModBlocks.MIXED_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.RED_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.BROWN_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.MYCOTURF.get())
                 .minStemLength(2)
                 .maxStemLength(3)
-                .minStemHeight(2)
+                .minStemHeight(1)
                 .maxStemHeight(2)
+                .generateRim()
+                .generateRimCorners()
                 .build()
         );
+        register(
+            context,
+            FRANKLIN,
+            ModFeatures.FLAT_TOP_SHELF_FUNGUS.get(),
+            FlatTopShelfFungusConfiguration.builder()
+                .capBlock(Blocks.RED_MUSHROOM_BLOCK)
+                .stemBlock(Blocks.MUSHROOM_STEM)
+                .addValidWallTarget(ModBlocks.MIXED_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.RED_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.BROWN_MYCOSTONE.get())
+                .addValidWallTarget(ModBlocks.MYCOTURF.get())
+                .minStemHeight(4)
+                .maxStemHeight(6)
+                .minStemLength(2)
+                .maxStemLength(3)
+                .generateRim()
+                .rimDepth(3)
+                .build()
+        );
+
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(

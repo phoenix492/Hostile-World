@@ -1,11 +1,11 @@
 {
   "type": "hostileworld:flat_top_shelf_fungus",
   "config": {
-    "capBlock": "minecraft:brown_mushroom_block",
+    "capBlock": "minecraft:red_mushroom_block",
     "generateRim": true,
-    "generateRimCorners": true,
-    "maxStemHeight": 2,
-    "minStemHeight": 1,
+    "maxStemHeight": 6,
+    "minStemHeight": 4,
+    "rimDepth": 3,
     "stemBlock": "minecraft:mushroom_stem",
     "validWallTargets": [
       "hostileworld:mixed_mycostone",

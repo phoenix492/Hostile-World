@@ -1,6 +1,6 @@
 package net.phoenix492.hostileworld.worldgen.feature;
 
-import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatShelfFungusConfiguration;
+import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfFungusConfiguration;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -8,20 +8,17 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.Pair;
 
-public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
-    public final int WALL_FIND_RADIUS = 16;
+public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration> {
+    private static final int WALL_FIND_RADIUS = 16;
     private record WallContext(BlockPos wallPos, Direction wallDirection, List<Pair<Integer, Integer>> validPlacements) {}
 
     private static class ShelfFungusPlacer {
@@ -105,6 +102,16 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
             return this;
         }
 
+        public ShelfFungusPlacer move(Direction d) {
+            cursor.move(d);
+            return this;
+        }
+
+        public ShelfFungusPlacer move(Direction d, int i) {
+            cursor.move(d, i);
+            return this;
+        }
+
         public void place(BlockState state) {
             level.setBlock(cursor, state, 3);
         }
@@ -144,20 +151,11 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
         }
     }
 
-    public FlatShelfFungus(Codec<FlatShelfFungusConfiguration> codec) {
+    public FlatTopShelfFungus(Codec<FlatTopShelfFungusConfiguration> codec) {
         super(codec);
     }
 
-    private boolean areaIsClear(WorldGenLevel levelAccessor, AABB area) {
-        for (BlockState state : levelAccessor.getBlockStates(area).toList()) {
-            if (!state.isAir()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private List<Pair<Integer, Integer>> validPlacements(WorldGenLevel levelAccessor, BlockPos blockPos, Direction wall, FlatShelfFungusConfiguration configuration) {
+    private List<Pair<Integer, Integer>> validPlacements(WorldGenLevel levelAccessor, BlockPos blockPos, Direction wall, FlatTopShelfFungusConfiguration configuration) {
         Direction away = wall.getOpposite();
         Direction ccw = wall.getCounterClockWise();
         Direction cw = wall.getClockWise();
@@ -167,31 +165,39 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
 
         List<Pair<Integer, Integer>> validLocations = new ArrayList<>();
 
-        // Create an Axis Aligned Bounding Box for checking a 3x1x3 area for space above where the stem terminates, the heuristic I've gone with.
-        // TODO: THIS SECTION OF CODE DOES NOT WORK!!!!!! FIGURE OUT WHY!!!!!
-        AABB checkedArea = AABB.of(BoundingBox.fromCorners(corner1, corner2));
         for (int horiOffset = configuration.minStemLength(); horiOffset <= configuration.maxStemLength(); horiOffset++) {
             for (int vertiOffset = configuration.minStemHeight(); vertiOffset <= configuration.maxStemHeight(); vertiOffset++) {
-                if (!levelAccessor.getBlockState(blockPos.mutable().move(away, horiOffset).move(Direction.UP, vertiOffset)).isAir()) {
-                    break;
+                Iterable<BlockPos> checkedBlocks = BlockPos.betweenClosed(
+                    corner1.mutable().move(away, horiOffset).move(Direction.UP, vertiOffset),
+                    corner2.mutable().move(away, horiOffset).move(Direction.UP, vertiOffset)
+                );
+
+                boolean validPos = true;
+                for(BlockPos pos : checkedBlocks) {
+                    if (!levelAccessor.getBlockState(pos).canBeReplaced()) {
+                        validPos = false;
+                        break;
+                    }
                 }
-                if (areaIsClear(levelAccessor, checkedArea.move(blockPos.mutable().move(away, horiOffset)).move(blockPos.mutable().move(Direction.UP, vertiOffset)))) {
+
+                if (validPos) {
                     validLocations.add(Pair.of(horiOffset, vertiOffset));
                 }
+
             }
         }
 
         return validLocations;
     }
 
-    private WallContext findWall(WorldGenLevel levelAccessor, BlockPos blockPos, List<Block> validWallTargets, FlatShelfFungusConfiguration configuration) {
+    private WallContext findWall(WorldGenLevel levelAccessor, BlockPos blockPos, List<Block> validWallTargets, FlatTopShelfFungusConfiguration configuration) {
         BlockPos.MutableBlockPos wallSearcher = new BlockPos.MutableBlockPos().set(blockPos);
         List<Direction> scanDirections = Direction.Plane.HORIZONTAL.stream().collect(Collectors.toList());
 
         for (int i = 1; i < WALL_FIND_RADIUS; i++) {
             for (Direction d : scanDirections) {
                 wallSearcher.move(d, i);
-                if (!levelAccessor.getBlockState(wallSearcher).isAir()) {
+                if (!levelAccessor.getBlockState(wallSearcher).canBeReplaced()) {
                     if (validWallTargets.contains(levelAccessor.getBlockState(wallSearcher).getBlock())) {
                         List<Pair<Integer, Integer>> validPlacements = validPlacements(levelAccessor, wallSearcher, d, configuration);
                         if (!validPlacements.isEmpty()) {
@@ -200,11 +206,15 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
                         // No valid placements here, this direction is no good! remove it from checked directions.
                         else {
                             scanDirections.remove(d);
+                            wallSearcher.move(d.getOpposite(), i);
+                            break;
                         }
                     }
                     // Not the right block, this direction is no good! Remove it from checked directions.
                     else {
                         scanDirections.remove(d);
+                        wallSearcher.move(d.getOpposite(), i);
+                        break;
                     }
                 }
                 wallSearcher.move(d.getOpposite(), i);
@@ -214,14 +224,14 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FlatShelfFungusConfiguration> context) {
+    public boolean place(FeaturePlaceContext<FlatTopShelfFungusConfiguration> context) {
         WorldGenLevel worldgenlevel = context.level();
         BlockPos blockpos = context.origin();
         RandomSource random = context.random();
-        FlatShelfFungusConfiguration shelfFungusConfiguration = context.config();
+        FlatTopShelfFungusConfiguration shelfFungusConfiguration = context.config();
 
-        final BlockState CAP_BLOCK = Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState();
-        final BlockState STEM_BLOCK = Blocks.MUSHROOM_STEM.defaultBlockState();
+        final BlockState CAP_BLOCK = shelfFungusConfiguration.capBlock().defaultBlockState();
+        final BlockState STEM_BLOCK = shelfFungusConfiguration.stemBlock().defaultBlockState();
         final List<Block> validWallTargets = shelfFungusConfiguration.validWallTargets();
         final int WIDTH = shelfFungusConfiguration.width();
         final int OUTWARD_LENGTH = shelfFungusConfiguration.outwardCapLength();
@@ -256,14 +266,14 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
         // CCW and CW mushroom placements, storing which we have to check backwards on.
         placer.mark();
         placer.ccw();
-        for (int i = 1; placer.getBlock().isAir() && i <= WIDTH; i++) {
+        for (int i = 1; placer.getBlock().canBeReplaced() && i <= WIDTH; i++) {
             horizontalCapCheck.add(placer.placeAndLog(CAP_BLOCK));
             placer.ccw();
         }
         placer.recall();
 
         placer.cw();
-        for (int i = 1; placer.getBlock().isAir() && i <= WIDTH; i++) {
+        for (int i = 1; placer.getBlock().canBeReplaced() && i <= WIDTH; i++) {
             horizontalCapCheck.add(placer.placeAndLog(CAP_BLOCK));
             placer.cw();
         }
@@ -273,7 +283,7 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
             placer.moveTo(pos);
             placer.mark();
             placer.away();
-            for (int i = 1; placer.getBlock().isAir() && i <= OUTWARD_LENGTH; i++) {
+            for (int i = 1; placer.getBlock().canBeReplaced() && i <= OUTWARD_LENGTH; i++) {
                 placer.place(CAP_BLOCK);
                 placer.away();
             }
@@ -281,48 +291,84 @@ public class FlatShelfFungus extends Feature<FlatShelfFungusConfiguration> {
             // Then the inward blocks.
             placer.recall();
             placer.in();
-            for (int i = 1; placer.getBlock().isAir() && i <= INWARD_LENGTH; i++) {
+            for (int i = 1; placer.getBlock().canBeReplaced() && i <= INWARD_LENGTH; i++) {
                 placer.place(CAP_BLOCK);
                 placer.in();
             }
         }
 
         // Now it's time to go around placing the ring.
+        // ...Unless we're not supposed to.
+        if (!shelfFungusConfiguration.generateRim()) {
+            return true;
+        }
+
+        // Assume NOTHING about how the cap generated.
         placer.moveTo(capCenter);
 
-        // First move to outside the CW-AWAY corner and then move 1 down.
-        placer.cw(WIDTH+1);
-        placer.away(OUTWARD_LENGTH+1);
-        placer.down();
-
-        // Then just go around the outside placing the ring.
-        // TODO: Make this check the mushroom block for sane places to place the ring instead of assuming everywhere is fine.
-        for (int i = 0; i < OUTWARD_LENGTH + INWARD_LENGTH + 2; i++) {
-            if (placer.getBlock().isAir()) {
-                placer.place(CAP_BLOCK);
-            }
-            placer.in();
-        }
-
-        for (int i = 0; i < 2*WIDTH + 2; i++) {
-            if (placer.getBlock().isAir()) {
-                placer.place(CAP_BLOCK);
-            }
-            placer.ccw();
-        }
-
-        for (int i = 0; i < OUTWARD_LENGTH + INWARD_LENGTH + 2; i++) {
-            if (placer.getBlock().isAir()) {
-                placer.place(CAP_BLOCK);
-            }
+        // Move to *outside* the away edge of the cap
+        while(worldgenlevel.getBlockState(placer.getPos()).is(CAP_BLOCK.getBlock())) {
             placer.away();
         }
 
-        for (int i = 0; i < 2*WIDTH + 2; i++) {
-            if (placer.getBlock().isAir()) {
-                placer.place(CAP_BLOCK);
+        // Move around the outside of the cap placing cap blocks below us.
+        BlockPos rimStart = placer.getPos();
+        Direction travelDirection = placer.ccw;
+        Direction capDirection = placer.wall;
+        List<BlockPos.MutableBlockPos> ringPlacements = new ArrayList<>();
+        int counter = 0;
+        boolean cornerFlag = false;
+
+        do {
+            // First flag the block below us as part of the ring as long as this isn't a corner when we're not supposed to place them
+            if (
+                worldgenlevel.getBlockState(placer.getPos().below()).canBeReplaced() &&
+                (!cornerFlag || shelfFungusConfiguration.generateRimCorners())
+            ) {
+                placer.down();
+                ringPlacements.add(placer.getPos().mutable());
+                placer.up();
             }
-            placer.cw();
+
+            // If the last iteration flags to us that we're on a clockwise corner, we need to turn.
+            if (cornerFlag) {
+                travelDirection = travelDirection.getClockWise();
+                capDirection = capDirection.getClockWise();
+                cornerFlag = false;
+            }
+
+            // If the way forward is part of the cap, this obviously means we're now facing INTO the cap (which should be clockwise of us.)
+            if (worldgenlevel.getBlockState(placer.getPos().relative(travelDirection)).is(CAP_BLOCK.getBlock())) {
+                // Turn anticlockwise until we're not facing the cap anymore. It's now clockwise of us again.
+                while(worldgenlevel.getBlockState(placer.getPos().relative(travelDirection)).is(CAP_BLOCK.getBlock())) {
+                    travelDirection = travelDirection.getCounterClockWise();
+                    capDirection = capDirection.getCounterClockWise();
+                }
+            }
+            // Now, if there's a mushroom block forward and clockwise of us
+            // (at this point we've already verified we're not facing the cap and placed the ring below),
+            // that means there should be another ordinary straight line spot to place the ring ahead and below of us, so we can loop as normal.
+            // Otherwise, this must mean we've hit a corner that turns clockwise, so we need to let the next iteration know it should handle that after placement!
+            if (!worldgenlevel.getBlockState(placer.getPos().relative(travelDirection).relative(capDirection)).is(CAP_BLOCK.getBlock())) {
+                cornerFlag = true;
+            }
+            placer.move(travelDirection);
+
+            // Failsafe counter.
+            counter++;
+        } while (!placer.getPos().equals(rimStart) && counter < 99);
+
+        // Now we go through and place the ring up to the config defined depth.
+        for (BlockPos.MutableBlockPos pos : ringPlacements) {
+            for (int i = 0; i < shelfFungusConfiguration.rimDepth(); i++ ) {
+                if (worldgenlevel.getBlockState(pos).canBeReplaced()) {
+                    worldgenlevel.setBlock(pos, CAP_BLOCK, 3);
+                    pos.move(Direction.DOWN);
+                }
+                else {
+                    break;
+                }
+            }
         }
 
         return true;
