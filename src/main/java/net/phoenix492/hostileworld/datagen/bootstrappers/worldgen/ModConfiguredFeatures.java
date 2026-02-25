@@ -30,11 +30,11 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import java.util.List;
 
 public class ModConfiguredFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_RED_MUSHROOMS_KEY = registerKey("shroom_caves_red_mushrooms");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BROWN_MUSHROOMS_KEY = registerKey("shroom_caves_brown_mushrooms");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BIG_RED_MUSHROOM_KEY =  registerKey("shroom_caves_big_red_mushroom");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_BIG_BROWN_MUSHROOM_KEY =  registerKey("shroom_caves_big_brown_mushroom");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SHROOM_CAVES_GLOW_LICHEN_KEY = registerKey("shroom_caves_boosted_glow_lichen");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_RED_MUSHROOMS_KEY = registerKey("fungal_caverns_red_mushrooms");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_BROWN_MUSHROOMS_KEY = registerKey("fungal_caverns_brown_mushrooms");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_BIG_RED_MUSHROOM_KEY =  registerKey("fungal_caverns_big_red_mushroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_BIG_BROWN_MUSHROOM_KEY =  registerKey("fungal_caverns_big_brown_mushroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_GLOW_LICHEN_KEY = registerKey("fungal_caverns_boosted_glow_lichen");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_MYCOSTONE_BLOB_KEY = registerKey("brown_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MYCOSTONE_BLOB_KEY = registerKey("red_mycostone_blob");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_MYCOSTONE_BLOB_KEY = registerKey("mixed_mycostone_blob");
@@ -53,7 +53,7 @@ public class ModConfiguredFeatures {
 
         register(
             context,
-            SHROOM_CAVES_RED_MUSHROOMS_KEY,
+            FUNGAL_CAVERNS_RED_MUSHROOMS_KEY,
             Feature.RANDOM_PATCH,
             FeatureUtils.simplePatchConfiguration(
                 Feature.SIMPLE_BLOCK,
@@ -65,7 +65,7 @@ public class ModConfiguredFeatures {
 
         register(
             context,
-            SHROOM_CAVES_BROWN_MUSHROOMS_KEY,
+            FUNGAL_CAVERNS_BROWN_MUSHROOMS_KEY,
             Feature.RANDOM_PATCH,
             FeatureUtils.simplePatchConfiguration(
                 Feature.SIMPLE_BLOCK,
@@ -77,7 +77,7 @@ public class ModConfiguredFeatures {
 
         register(
           context,
-          SHROOM_CAVES_BIG_RED_MUSHROOM_KEY,
+          FUNGAL_CAVERNS_BIG_RED_MUSHROOM_KEY,
           Feature.HUGE_RED_MUSHROOM,
         new HugeMushroomFeatureConfiguration(
             BlockStateProvider.simple(Blocks.RED_MUSHROOM_BLOCK.defaultBlockState().setValue(HugeMushroomBlock.DOWN, false)),
@@ -92,7 +92,7 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BIG_BROWN_MUSHROOM_KEY,
+            FUNGAL_CAVERNS_BIG_BROWN_MUSHROOM_KEY,
             Feature.HUGE_BROWN_MUSHROOM,
             new HugeMushroomFeatureConfiguration(
                 BlockStateProvider.simple(
@@ -112,7 +112,7 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_GLOW_LICHEN_KEY,
+            FUNGAL_CAVERNS_GLOW_LICHEN_KEY,
             Feature.MULTIFACE_GROWTH,
             new MultifaceGrowthConfiguration(
                 (MultifaceBlock) Blocks.GLOW_LICHEN,

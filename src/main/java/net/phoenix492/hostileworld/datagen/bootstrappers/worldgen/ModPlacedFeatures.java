@@ -18,29 +18,26 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.List;
 
 public class ModPlacedFeatures {
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_RED_MUSHROOM_PLACED_KEY = registerKey("shroom_caves_red_mushroom_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_BROWN_MUSHROOM_PLACED_KEY = registerKey("shroom_caves_brown_mushroom_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_BIG_RED_MUSHROOM_PLACED_KEY = registerKey("shroom_caves_big_red_mushroom_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_BIG_BROWN_MUSHROOM_PLACED_KEY = registerKey("shroom_caves_big_brown_mushroom_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_BOOSTED_GLOW_LICHEN_PLACED_KEY = registerKey("shroom_caves_boosted_glow_lichen_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_BROWN_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_caves_brown_mycostone_blob_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_caves_red_mycostone_blob_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CORE_MIXED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_mixed_mycostone_blob_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CORE_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_red_mycostone_blob_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CORE_BROWN_MYCOSTONE_BLOB_PLACED_KEY = registerKey("shroom_core_brown_mycostone_blob_placed");
-    public static final ResourceKey<PlacedFeature> SHROOM_CAVES_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY = registerKey("shroom_caves_mature_autoimmune_cluster_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_RED_MUSHROOM_PLACED_KEY = registerKey("fungal_caverns_red_mushroom_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BROWN_MUSHROOM_PLACED_KEY = registerKey("fungal_caverns_brown_mushroom_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BIG_RED_MUSHROOM_PLACED_KEY = registerKey("fungal_caverns_big_red_mushroom_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BIG_BROWN_MUSHROOM_PLACED_KEY = registerKey("fungal_caverns_big_brown_mushroom_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BOOSTED_GLOW_LICHEN_PLACED_KEY = registerKey("fungal_caverns_boosted_glow_lichen_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BROWN_MYCOSTONE_BLOB_PLACED_KEY = registerKey("fungal_caverns_brown_mycostone_blob_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("fungal_caverns_red_mycostone_blob_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY = registerKey("fungal_caverns_mature_autoimmune_cluster_placed");
+
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         register(
             context,
-            SHROOM_CAVES_RED_MUSHROOM_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOM_CAVES_RED_MUSHROOMS_KEY),
+            FUNGAL_CAVERNS_RED_MUSHROOM_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_RED_MUSHROOMS_KEY),
             List.of(
                 CountOnEveryLayerPlacement.of(4),
                 BiomeFilter.biome()
@@ -48,8 +45,8 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BROWN_MUSHROOM_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOM_CAVES_BROWN_MUSHROOMS_KEY),
+            FUNGAL_CAVERNS_BROWN_MUSHROOM_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_BROWN_MUSHROOMS_KEY),
             List.of(
                 CountOnEveryLayerPlacement.of(5),
                 BiomeFilter.biome()
@@ -57,8 +54,8 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BIG_RED_MUSHROOM_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOM_CAVES_BIG_RED_MUSHROOM_KEY),
+            FUNGAL_CAVERNS_BIG_RED_MUSHROOM_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_BIG_RED_MUSHROOM_KEY),
             List.of(
                 CountOnEveryLayerPlacement.of(1),
                 BiomeFilter.biome()
@@ -66,8 +63,8 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BIG_BROWN_MUSHROOM_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOM_CAVES_BIG_BROWN_MUSHROOM_KEY),
+            FUNGAL_CAVERNS_BIG_BROWN_MUSHROOM_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_BIG_BROWN_MUSHROOM_KEY),
             List.of(
                 CountOnEveryLayerPlacement.of(1),
                 BiomeFilter.biome()
@@ -75,8 +72,8 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BOOSTED_GLOW_LICHEN_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.SHROOM_CAVES_GLOW_LICHEN_KEY),
+            FUNGAL_CAVERNS_BOOSTED_GLOW_LICHEN_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_GLOW_LICHEN_KEY),
             List.of(
                 CountPlacement.of(UniformInt.of(128, 256)),
                 HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(63))),
@@ -86,7 +83,7 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_RED_MYCOSTONE_BLOB_PLACED_KEY,
+            FUNGAL_CAVERNS_RED_MYCOSTONE_BLOB_PLACED_KEY,
             configuredFeatures.getOrThrow(ModConfiguredFeatures.RED_MYCOSTONE_BLOB_KEY),
             List.of(
                 CountPlacement.of(UniformInt.of(3, 5)),
@@ -97,7 +94,7 @@ public class ModPlacedFeatures {
         );
         register(
             context,
-            SHROOM_CAVES_BROWN_MYCOSTONE_BLOB_PLACED_KEY,
+            FUNGAL_CAVERNS_BROWN_MYCOSTONE_BLOB_PLACED_KEY,
             configuredFeatures.getOrThrow(ModConfiguredFeatures.BROWN_MYCOSTONE_BLOB_KEY),
             List.of(
                 CountPlacement.of(UniformInt.of(3, 5)),
@@ -106,45 +103,10 @@ public class ModPlacedFeatures {
                 BiomeFilter.biome()
             )
         );
+        
         register(
             context,
-            SHROOM_CORE_MIXED_MYCOSTONE_BLOB_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.MIXED_MYCOSTONE_BLOB_KEY),
-            List.of(
-                RarityFilter.onAverageOnceEvery(3),
-                CountPlacement.of(1),
-                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
-                InSquarePlacement.spread(),
-                BiomeFilter.biome()
-            )
-        );
-        register(
-            context,
-            SHROOM_CORE_BROWN_MYCOSTONE_BLOB_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.BROWN_MYCOSTONE_BLOB_KEY),
-            List.of(
-                RarityFilter.onAverageOnceEvery(3),
-                CountPlacement.of(1),
-                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
-                InSquarePlacement.spread(),
-                BiomeFilter.biome()
-            )
-        );
-        register(
-            context,
-            SHROOM_CORE_RED_MYCOSTONE_BLOB_PLACED_KEY,
-            configuredFeatures.getOrThrow(ModConfiguredFeatures.RED_MYCOSTONE_BLOB_KEY),
-            List.of(
-                RarityFilter.onAverageOnceEvery(3),
-                CountPlacement.of(1),
-                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
-                InSquarePlacement.spread(),
-                BiomeFilter.biome()
-            )
-        );
-        register(
-            context,
-            SHROOM_CAVES_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY,
+            FUNGAL_CAVERNS_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY,
             configuredFeatures.getOrThrow(ModConfiguredFeatures.MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY),
             List.of(
                 CountPlacement.of(15),
