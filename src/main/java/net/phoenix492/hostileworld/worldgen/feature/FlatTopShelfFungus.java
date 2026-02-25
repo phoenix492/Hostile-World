@@ -228,6 +228,10 @@ public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration>
     public boolean place(FeaturePlaceContext<FlatTopShelfFungusConfiguration> context) {
         WorldGenLevel worldgenlevel = context.level();
         BlockPos blockpos = context.origin();
+        if (!worldgenlevel.getBlockState(blockpos).isAir()) {
+            return false;
+        }
+
         RandomSource random = context.random();
         FlatTopShelfFungusConfiguration shelfFungusConfiguration = context.config();
 
