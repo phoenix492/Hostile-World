@@ -143,7 +143,7 @@ public class HostileWorldConfig {
             blockAquifersInFungalCaverns = BUILDER
                 .comment("Whether to enable a hardcoded check that will block aquifers from spawning in the Fungal Caverns.",
                          "Uses the same technique vanilla uses to block them from the Deep Dark.",
-                         "You likely only need to disable this if you have worldgen mods/datapacks that want heavily affect the terrain and biome distribution,",
+                         "You likely only need to disable this if you have worldgen mods/datapacks that heavily affect the terrain and biome distribution,",
                          "AND also desire aquifers spawning in the following Noise value ranges:",
                          "Continentalness: -1.2 to -1.05",
                          "Depth: >0.1")
