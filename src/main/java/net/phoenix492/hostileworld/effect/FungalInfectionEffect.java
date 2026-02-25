@@ -9,7 +9,7 @@ import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 
 public class FungalInfectionEffect extends MobEffect {
 
-    // TODO: Move these to the config once you've got a schema you like.
+    // TODO: Implement non-placeholder effects.
     public static final Int2DoubleFunction DAMAGE_REDUCTION_AMPLIFIER_MAP = key -> switch (key) {
         case 0 -> -1d;
         case 1 -> -2d;
