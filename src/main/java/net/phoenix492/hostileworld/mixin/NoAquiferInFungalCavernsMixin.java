@@ -45,7 +45,6 @@ public abstract class NoAquiferInFungalCavernsMixin {
 
     @Unique
     private static boolean hostileworld$isFungalCaverns(DensityFunction depthFunction, DensityFunction continentsFunction, DensityFunction.FunctionContext functionContext) {
-        double continents = continentsFunction.compute(functionContext);
-        return (depthFunction.compute(functionContext) > 0.1) && ((continents > -1.2) && (continents < -1.05));
+        return depthFunction.compute(functionContext) >= 0.1 && continentsFunction.compute(functionContext) <= -1.05;
     }
 }
