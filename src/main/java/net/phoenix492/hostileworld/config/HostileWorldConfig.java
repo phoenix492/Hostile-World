@@ -53,6 +53,9 @@ public class HostileWorldConfig {
     public final ModConfigSpec.ConfigValue<Double> apocalypticBurnoutChanceMult;
     public final ModConfigSpec.ConfigValue<Double> apocalypticSpreadChanceMult;
 
+    // Worldgen
+    public final ModConfigSpec.ConfigValue<Boolean> blockAquifersInFungalCaverns;
+
 
     private HostileWorldConfig(ModConfigSpec.Builder BUILDER) {
         BUILDER.push("Fungal Infection Settings");
@@ -134,5 +137,17 @@ public class HostileWorldConfig {
                 apocalypticBurnoutChanceMult = BUILDER.defineInRange("apocalypticBurnoutChanceMult", 999, Double.MIN_VALUE, Double.MAX_VALUE);
                 apocalypticSpreadChanceMult = BUILDER.defineInRange("apocalypticSpreadChanceMult", 999, Double.MIN_VALUE, Double.MAX_VALUE);
             BUILDER.pop();
+        BUILDER.pop();
+
+        BUILDER.push("Worldgen Settings");
+            blockAquifersInFungalCaverns = BUILDER
+                .comment("Whether to enable a hardcoded check that will block aquifers from spawning in the Fungal Caverns.",
+                         "Uses the same technique vanilla uses to block them from the Deep Dark.",
+                         "You likely only need to disable this if you have worldgen mods/datapacks that want heavily affect the terrain and biome distribution,",
+                         "AND also desire aquifers spawning in the following Noise value ranges:",
+                         "Continentalness: -1.2 to -1.05",
+                         "Depth: >0.1")
+                .define("blockAquifersInFungalCaverns", true);
+        BUILDER.pop();
     }
 }
