@@ -11,7 +11,7 @@ import net.phoenix492.hostileworld.registration.ModGameRules;
 import net.phoenix492.hostileworld.registration.ModItems;
 import net.phoenix492.hostileworld.registration.ModParticles;
 import net.phoenix492.hostileworld.registration.ModPotions;
-import net.phoenix492.particle.SporeParticles;
+import net.phoenix492.particle.SporeDropperParticle;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
@@ -67,7 +67,7 @@ public class HostileWorld {
 
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(ModParticles.SPORE_PARTICLES.get(), SporeParticles.Provider::new);
+            event.registerSpriteSet(ModParticles.SPORE_DROPPER_PARTICLE.get(), SporeDropperParticle.Provider::new);
         }
     }
 

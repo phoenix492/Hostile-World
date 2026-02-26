@@ -17,8 +17,8 @@ public class ModParticleDescriptionProvider extends ParticleDescriptionProvider 
     @Override
     protected void addDescriptions() {
         spriteSet(
-            ModParticles.SPORE_PARTICLES.get(),
-            ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "spore")
+            ModParticles.SPORE_DROPPER_PARTICLE.get(),
+            ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "spore_dropper")
         );
     }
 }

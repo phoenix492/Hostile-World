@@ -12,8 +12,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, HostileWorld.MODID);
 
-    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SPORE_PARTICLES = PARTICLE_TYPES.register(
-        "spore_particles",
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SPORE_DROPPER_PARTICLE = PARTICLE_TYPES.register(
+        "spore_dropper_particle",
         () -> new SimpleParticleType(false)
     );
 

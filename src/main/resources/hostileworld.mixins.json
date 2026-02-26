@@ -14,6 +14,7 @@
     "FungalSpreadMixins$MyceliumBlockMixin",
     "FungalSpreadMixins$SpreadingSnowyDirtBlockMixin",
     "NoAquiferInFungalCavernsMixin",
+    "SporeDropperParticleBlockMixin",
     "SpreadingSnowyDirtBlockInvoker"
   ],
   "client": [],
