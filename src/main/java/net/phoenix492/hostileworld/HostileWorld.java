@@ -1,6 +1,7 @@
 package net.phoenix492.hostileworld;
 
 import net.phoenix492.hostileworld.config.HostileWorldConfig;
+import net.phoenix492.hostileworld.particle.SporeDropperParticle;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModCreativeModeTabs;
 import net.phoenix492.hostileworld.registration.ModDataAttachments;
@@ -11,7 +12,6 @@ import net.phoenix492.hostileworld.registration.ModGameRules;
 import net.phoenix492.hostileworld.registration.ModItems;
 import net.phoenix492.hostileworld.registration.ModParticles;
 import net.phoenix492.hostileworld.registration.ModPotions;
-import net.phoenix492.hostileworld.particle.SporeDropperParticle;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
