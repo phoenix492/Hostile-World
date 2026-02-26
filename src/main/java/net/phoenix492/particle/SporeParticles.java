@@ -16,11 +16,11 @@ public class SporeParticles extends TextureSheetParticle {
 
         this.gravity = 0.3f;
         this.lifetime = 60;
-        this.setSpriteFromAge(spriteSet);
-
+        this.hasPhysics = true;
         this.rCol = 1f;
         this.gCol = 1f;
         this.bCol = 1f;
+        this.setSpriteFromAge(spriteSet);
     }
 
     @Override
