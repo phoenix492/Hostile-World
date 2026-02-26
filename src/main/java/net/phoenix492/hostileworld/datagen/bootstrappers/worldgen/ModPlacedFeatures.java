@@ -30,6 +30,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BROWN_MYCOSTONE_BLOB_PLACED_KEY = registerKey("fungal_caverns_brown_mycostone_blob_placed");
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("fungal_caverns_red_mycostone_blob_placed");
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY = registerKey("fungal_caverns_mature_autoimmune_cluster_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BROWN_SHELF_FUNGUS_PLACED_KEY = registerKey("fungal_caverns_brown_shelf_fungus_placed");
 
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -111,6 +112,18 @@ public class ModPlacedFeatures {
             List.of(
                 CountPlacement.of(15),
                 HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.absolute(-30), VerticalAnchor.absolute(60))),
+                InSquarePlacement.spread(),
+                BiomeFilter.biome()
+            )
+        );
+
+        register(
+            context,
+            FUNGAL_CAVERNS_BROWN_SHELF_FUNGUS_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.BROWN_SHELF_FUNGUS_KEY),
+            List.of(
+                CountPlacement.of(10),
+                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.BOTTOM, VerticalAnchor.absolute(60))),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome()
             )
