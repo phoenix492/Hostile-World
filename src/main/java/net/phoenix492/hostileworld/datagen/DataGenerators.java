@@ -30,6 +30,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new ModBlockModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModBlockstateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModParticleDescriptionProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput));
 
         // Server/Datapack Providers
         generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
