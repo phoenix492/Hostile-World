@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Block.class)
-abstract class SporeDropperParticleBlockMixin {
+public abstract class SporeDropperParticleBlockMixin {
     @Inject(at = @At("HEAD"), method = "animateTick")
     protected void hostileworld$onAnimateTickSporeDropperParticles(BlockState state, Level level, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if (((Block)(Object)this).defaultBlockState().is(ModTagKeys.Blocks.DROPS_SPORES) && level.getBlockState(pos.below()).isAir()) {

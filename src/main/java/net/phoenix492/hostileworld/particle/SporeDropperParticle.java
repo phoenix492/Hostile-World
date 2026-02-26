@@ -1,4 +1,4 @@
-package net.phoenix492.particle;
+package net.phoenix492.hostileworld.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;

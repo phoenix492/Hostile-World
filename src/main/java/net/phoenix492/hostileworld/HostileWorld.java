@@ -11,7 +11,7 @@ import net.phoenix492.hostileworld.registration.ModGameRules;
 import net.phoenix492.hostileworld.registration.ModItems;
 import net.phoenix492.hostileworld.registration.ModParticles;
 import net.phoenix492.hostileworld.registration.ModPotions;
-import net.phoenix492.particle.SporeDropperParticle;
+import net.phoenix492.hostileworld.particle.SporeDropperParticle;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
