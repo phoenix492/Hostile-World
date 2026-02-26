@@ -2,7 +2,6 @@ package net.phoenix492.hostileworld.registration;
 
 import net.phoenix492.hostileworld.HostileWorld;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.Potion;
@@ -12,20 +11,19 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = HostileWorld.MODID)
 public class ModPotions {
     public static final DeferredRegister<Potion> MOD_POTIONS = DeferredRegister.create(Registries.POTION, HostileWorld.MODID);
 
-    public static final Holder<Potion> FUNGICIDE = MOD_POTIONS.register(
+    public static final DeferredHolder<Potion, Potion> FUNGICIDE = MOD_POTIONS.register(
         "fungicide",
         () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 0, false, true, false))
     );
 
-    public static final Supplier<Potion> STRONG_FUNGICIDE = MOD_POTIONS.register(
+    public static final DeferredHolder<Potion, Potion> STRONG_FUNGICIDE = MOD_POTIONS.register(
         "strong_fungicide",
         () -> new Potion(new MobEffectInstance(ModEffects.FUNGICIDE_EFFECT, 0, 1, false, true, false))
     );

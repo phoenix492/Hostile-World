@@ -1,10 +1,9 @@
 package net.phoenix492.hostileworld.registration;
 
+import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.hostileworld.effect.FungalInfectionEffect;
 import net.phoenix492.hostileworld.effect.FungicideEffect;
-import net.phoenix492.hostileworld.HostileWorld;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -12,17 +11,18 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEffects {
     private static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, HostileWorld.MODID);
 
-    public static final Holder<MobEffect> FUNGICIDE_EFFECT = MOB_EFFECTS.register(
+    public static final DeferredHolder<MobEffect, MobEffect> FUNGICIDE_EFFECT = MOB_EFFECTS.register(
         "fungicide",
         () -> new FungicideEffect(MobEffectCategory.BENEFICIAL, 0xcc99c3)
     );
 
-    public static final Holder<MobEffect> FUNGUS_INFECTION_EFFECT = MOB_EFFECTS.register(
+    public static final DeferredHolder<MobEffect, MobEffect> FUNGUS_INFECTION_EFFECT = MOB_EFFECTS.register(
         "fungal_infection",
         () -> new FungalInfectionEffect(MobEffectCategory.HARMFUL, 0x93819c)
             .addAttributeModifier(

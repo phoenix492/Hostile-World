@@ -5,15 +5,14 @@ import net.phoenix492.hostileworld.HostileWorld;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import java.util.function.Supplier;
 
 public class ModDataAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, HostileWorld.MODID);
 
-    public static final Supplier<AttachmentType<EntityFungalInfectionData>> FUNGAL_INFECTION = ATTACHMENT_TYPES.register(
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<EntityFungalInfectionData>> FUNGAL_INFECTION = ATTACHMENT_TYPES.register(
       "fungal_infection",
         () -> AttachmentType.builder(EntityFungalInfectionData::new).serialize(EntityFungalInfectionData.CODEC).build()
     );
