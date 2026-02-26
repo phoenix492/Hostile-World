@@ -4,6 +4,7 @@ import net.phoenix492.hostileworld.HostileWorld;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModEffects;
 import net.phoenix492.hostileworld.registration.ModItems;
+import net.phoenix492.hostileworld.util.ModTagKeys;
 
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -48,5 +49,49 @@ public class ModLanguageProvider extends LanguageProvider {
         // Creative Tabs
         add("creativetab.hostileworld.hostileworld_creative_tab", "Hostile World");
 
+        // Tags
+        addTag(() -> ModTagKeys.Blocks.BECOMES_NASCENT_AUTOIMMUNE_CLUSTER, "Becomes Nascent Autoimmune Cluster");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MATURE_AUTOIMMUNE_CLUSTER, "Becomes Mature Autoimmune Cluster");
+
+        addTag(() -> ModTagKeys.Blocks.BECOMES_FUNGUS, "Can Be Infected By Fungus");
+
+        addTag(() -> ModTagKeys.Blocks.BECOMES_BROWN_FUNGUS, "Becomes Brown Fungus");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_BROWN_MUSHROOM, "Becomes Brown Mushroom");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_BROWN_MUSHROOM_BLOCK, "Becomes Brown Mushroom Block");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_BROWN_MYCOSTONE, "Becomes Brown Mycostone");
+
+        addTag(() -> ModTagKeys.Blocks.BECOMES_RED_FUNGUS, "Becomes Red Fungus");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_RED_MUSHROOM, "Becomes Red Mushroom");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_RED_MUSHROOM_BLOCK, "Becomes Red Mushroom Block");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_RED_MYCOSTONE, "Becomes Red Mycostone");
+
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MYCOSTONE, "Becomes Mycostone");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MIXED_MYCOSTONE, "Becomes Mixed Mycostone");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MUSHROOM_STEM, "Becomes Mushroom Stem");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MYCELIUM, "Becomes Mycelium");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MYCORESTONE, "Becomes Mycorestone");
+        addTag(() -> ModTagKeys.Blocks.BECOMES_MYCOTURF, "Becomes Mycoturf");
+        addTag(() -> ModTagKeys.Blocks.CONSUMED_BY_FUNGUS, "Consumed When Converted by Fungus");
+
+        addTag(() -> ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES, "Mycostone Blob Replaceables");
+        addTag(() -> ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES, "Mature Autoimmune Cluster Replaceables");
+
+        addTag(() -> ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DEEPSLATE, "Mycofire Burns to Deepslate");
+        addTag(() -> ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_DIRT, "Mycofire Burns to Dirt");
+        addTag(() -> ModTagKeys.Blocks.MYCOFIRE_BURNS_TO_STONE, "Mycofire Burns to Stone");
+
+        addTag(() -> ModTagKeys.Blocks.MYCOSTONES, "Mycostones");
+        addTag(() -> ModTagKeys.Blocks.BROWN_FUNGUS, "Brown Fungus");
+        addTag(() -> ModTagKeys.Blocks.RED_FUNGUS, "Red Fungus");
+
+        addTag(() -> ModTagKeys.Blocks.DROPS_SPORES, "Drops Fungal Spores");
+        addTag(() -> ModTagKeys.Blocks.SPREADS_FUNGUS, "Spreads Fungus");
+
+        addTag(() -> ModTagKeys.Biomes.BUILDS_FUNGAL_INFECTION_FAST, "Builds Fungal Infection (Fast)");
+        addTag(() -> ModTagKeys.Biomes.BUILDS_FUNGAL_INFECTION_STANDARD, "Builds Fungal Infection (Standard)");
+        addTag(() -> ModTagKeys.Biomes.BUILDS_FUNGAL_INFECTION_SLOW, "Builds Fungal Infection (Slow)");
+        addTag(() -> ModTagKeys.Biomes.MYCOFIRE_RESISTANT, "Mycofire Resistant");
+
+        addTag(() -> ModTagKeys.Entities.FUNGAL_INFECTION_IMMUNE, "Immune to Fungal Infection");
     }
 }
