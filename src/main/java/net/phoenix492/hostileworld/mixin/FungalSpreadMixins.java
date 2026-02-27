@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.MyceliumBlock;
-import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.SpreadingSnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,6 +33,31 @@ public abstract class FungalSpreadMixins {
     public abstract static class BlockBehaviorMixin {
         @Inject(at = @At("HEAD"), method = "randomTick", cancellable = true)
         protected void hostileworld$onRandomTickForHugeMushroomBlock(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {}
+
+        @Inject(at = @At("HEAD"), method = "randomTick")
+        protected void hostileworld$onRandomTickForSporeDropper(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo info) {
+            if (!level.getBlockState(pos).is(ModTagKeys.Blocks.DROPS_SPORES)) {
+                return;
+            }
+
+            BlockPos.MutableBlockPos scannedBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
+            for (int i = 2; i <= HostileWorldConfig.SERVER_CONFIG.sporeDropperRange.get(); i++) {
+                scannedBlockPos.setY(scannedBlockPos.getY() - 1);
+
+                // If the block is air, we don't actually need to check it. Air doesn't convert, stupid, gg go next.
+                if (level.getBlockState(scannedBlockPos).isAir()) {
+                    continue;
+                }
+
+                // If the block we're checking is not replaceable, this will be our last checked block since it's solid
+                // and should block anymore spores.
+                if (!level.getBlockState(scannedBlockPos).is(BlockTags.REPLACEABLE)) {
+                    i = HostileWorldConfig.SERVER_CONFIG.sporeDropperRange.get();
+                }
+
+                FungalSpreadHandler.trySpreadNoChance(state, level, scannedBlockPos, random);
+            }
+        }
     }
 
     @Mixin(SpreadingSnowyDirtBlock.class)
@@ -104,29 +128,6 @@ public abstract class FungalSpreadMixins {
             if (!level.isAreaLoaded(pos, 3)) {
                 info.cancel();
                 return;
-            }
-
-            /*
-             Defaults to Brown and Red Mushroom blocks, we use this so they turn blocks below them into
-             mycelium to create an interesting "spreader" effect, where the mushroom appears to act as a canopy of spread.
-             This also allows dark forest to have more mycelium in them then they would with their nerfed spread.
-             TODO: Think about a way to make this more configurable.
-            */
-            if (level.getBlockState(pos).is(ModTagKeys.Blocks.DROPS_SPORES)) {
-                BlockPos.MutableBlockPos scannedBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
-                for (int i = 2; i <= HostileWorldConfig.SERVER_CONFIG.sporeDropperRange.get(); i++) {
-                    scannedBlockPos.setY(scannedBlockPos.getY() - 1);
-                    // If the block we're checking is not replaceable and becomes mycelium, we stop our check and replace it, making sure to preserve snowy status.
-                    if (!level.getBlockState(scannedBlockPos).is(BlockTags.REPLACEABLE)) {
-                        // I'm splitting this into two because the linter keeps yelling at me and telling me it's always false. IT'S NOT.
-                        if (level.getBlockState(scannedBlockPos).is(ModTagKeys.Blocks.BECOMES_MYCELIUM)) {
-                            if (SpreadingSnowyDirtBlockInvoker.invokeCanBeGrass(level.getBlockState(scannedBlockPos), level, scannedBlockPos)) {
-                                level.setBlockAndUpdate(scannedBlockPos, Blocks.MYCELIUM.defaultBlockState().setValue(SnowyDirtBlock.SNOWY, level.getBlockState(scannedBlockPos.above()).is(Blocks.SNOW)));
-                            }
-                        }
-                        break;
-                    }
-                }
             }
 
             // Call the basic fungal spread handler now that we've done block specific stuff.

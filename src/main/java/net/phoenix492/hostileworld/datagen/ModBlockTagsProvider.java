@@ -143,8 +143,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
 
         /*
-         Mycelium spreading behavior only works for HugeMushroomBlocks, but this tag also controls which blocks will
-         apply infection buildup on entities below. I suppose if you add Stems to it, they'll also spore.
+            Tag controlling which blocks will drop a rain of spores down below.
+            Entities will take infection buildup standing beneath and a neat particle effect shows the area.
+            Any block that already accepts randomTicks will also covert blocks below them.
         */
         tag(ModTagKeys.Blocks.DROPS_SPORES)
             .add(Blocks.RED_MUSHROOM_BLOCK)
