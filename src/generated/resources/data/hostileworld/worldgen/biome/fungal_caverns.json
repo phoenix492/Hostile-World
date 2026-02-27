@@ -1,0 +1,47 @@
+{
+  "carvers": {},
+  "downfall": 1.0,
+  "effects": {
+    "fog_color": 12638463,
+    "sky_color": 7842047,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "hostileworld:fungal_caverns_mature_autoimmune_cluster_placed"
+    ],
+    [
+      "hostileworld:fungal_caverns_red_mycostone_blob_placed",
+      "hostileworld:fungal_caverns_brown_mycostone_blob_placed"
+    ],
+    [],
+    [
+      "hostileworld:fungal_caverns_red_mushroom_placed",
+      "hostileworld:fungal_caverns_brown_mushroom_placed",
+      "hostileworld:fungal_caverns_big_red_mushroom_placed",
+      "hostileworld:fungal_caverns_big_brown_mushroom_placed",
+      "hostileworld:fungal_caverns_boosted_glow_lichen_placed",
+      "hostileworld:fungal_caverns_brown_shelf_fungus_placed"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 2.0
+}

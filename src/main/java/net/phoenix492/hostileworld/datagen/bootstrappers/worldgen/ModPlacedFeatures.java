@@ -3,6 +3,7 @@ package net.phoenix492.hostileworld.datagen.bootstrappers.worldgen;
 import net.phoenix492.hostileworld.HostileWorld;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -34,7 +35,7 @@ public class ModPlacedFeatures {
 
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
-        var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         register(
             context,
             FUNGAL_CAVERNS_RED_MUSHROOM_PLACED_KEY,
