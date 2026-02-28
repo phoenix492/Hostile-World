@@ -6,6 +6,7 @@ import net.phoenix492.hostileworld.block.MycofireBlock;
 import net.phoenix492.hostileworld.block.MycorestoneBlock;
 import net.phoenix492.hostileworld.block.MycostoneBlock;
 import net.phoenix492.hostileworld.block.MycoturfBlock;
+import net.phoenix492.hostileworld.block.MyenokiPatchBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -124,6 +125,19 @@ public class ModBlocks {
                 .strength(4.5f, 6.0f)
                 .sound(SoundType.NETHER_ORE)
                 .randomTicks()
+        )
+    );
+
+    public static final DeferredBlock<Block> MYENOKI_PATCH = registerWithItem(
+        "myenoki_patch",
+        () -> new MyenokiPatchBlock(
+        BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_PURPLE)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.GRASS)
+                .pushReaction(PushReaction.DESTROY)
         )
     );
 

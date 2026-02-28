@@ -126,6 +126,9 @@ public class ModBlockstateProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.get(), mycostoneConfiguredModelArray("mature_autoimmune_cluster"));
         simpleBlock(ModBlocks.MYCORESTONE.get());
         simpleBlock(ModBlocks.MYCOTURF.get(), new ModelFile.UncheckedModelFile(modLoc("block/mycoturf")));
+        simpleBlock(ModBlocks.MYENOKI_PATCH.get(), new ModelFile.UncheckedModelFile(modLoc("block/myenoki_patch")));
+
+
 
     }
 

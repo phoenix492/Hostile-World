@@ -41,6 +41,11 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
                 LootItem.lootTableItem(ModItems.IMMUNITE_CLUSTER)
             )
         );
+        add(ModBlocks.MYENOKI_PATCH.get(),
+            createGrassDrops(
+                ModBlocks.MYENOKI_PATCH.get()
+            )
+        );
         dropSelf(ModBlocks.RED_MYCOSTONE.get());
         dropSelf(ModBlocks.BROWN_MYCOSTONE.get());
         dropSelf(ModBlocks.MIXED_MYCOSTONE.get());
