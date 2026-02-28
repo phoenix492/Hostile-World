@@ -18,12 +18,11 @@ public class SporeDropperParticle extends TextureSheetParticle {
     int x_movement_direction;
     int z_movement_direction;
     int fadeoutTimer;
-    RandomSource random;
 
     protected SporeDropperParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet, double xSpeed, double ySpeed, double zSpeed) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
 
-        this.random = level.getRandom();
+        RandomSource random = level.getRandom();
         this.x_movement_direction = random.nextInt(-1, 1);
         this.z_movement_direction = random.nextInt(-1, 1);
         this.gravity = 0.04f - (random.nextFloat() / 50);
