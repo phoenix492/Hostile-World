@@ -72,16 +72,11 @@ public class SporeDropperParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet spriteSet;
-
-        public Provider(SpriteSet spriteSet) {
-            this.spriteSet = spriteSet;
-        }
+    public record Provider(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
 
         @Override
-        public @Nullable Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new SporeDropperParticle(level, x, y, z, spriteSet, xSpeed, ySpeed, zSpeed);
+            public @Nullable Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+                return new SporeDropperParticle(level, x, y, z, spriteSet, xSpeed, ySpeed, zSpeed);
+            }
         }
-    }
 }
