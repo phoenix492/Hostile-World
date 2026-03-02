@@ -1,7 +1,6 @@
 package net.phoenix492.hostileworld;
 
 import net.phoenix492.hostileworld.config.HostileWorldConfig;
-import net.phoenix492.hostileworld.particle.SporeDropperParticle;
 import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModCreativeModeTabs;
 import net.phoenix492.hostileworld.registration.ModDataAttachments;
@@ -14,16 +13,11 @@ import net.phoenix492.hostileworld.registration.ModParticles;
 import net.phoenix492.hostileworld.registration.ModPotions;
 
 import com.mojang.logging.LogUtils;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 import org.slf4j.Logger;
 
@@ -56,19 +50,6 @@ public class HostileWorld {
 
     private void commonSetup(FMLCommonSetupEvent event) {
 
-    }
-
-    @EventBusSubscriber(Dist.CLIENT)
-    public static class ClientSetup {
-        @SubscribeEvent
-        public static void clientSetup(FMLClientSetupEvent event) {
-
-        }
-
-        @SubscribeEvent
-        public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(ModParticles.SPORE_DROPPER_PARTICLE.get(), SporeDropperParticle.Provider::new);
-        }
     }
 
 }
