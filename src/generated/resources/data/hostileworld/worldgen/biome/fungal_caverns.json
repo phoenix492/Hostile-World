@@ -3,6 +3,12 @@
   "downfall": 1.0,
   "effects": {
     "fog_color": 12638463,
+    "particle": {
+      "options": {
+        "type": "hostileworld:fungal_caverns_breathing_particle"
+      },
+      "probability": 0.05
+    },
     "sky_color": 7842047,
     "water_color": 4159204,
     "water_fog_color": 329011

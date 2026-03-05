@@ -1,12 +1,14 @@
 package net.phoenix492.hostileworld.datagen.bootstrappers.worldgen;
 
 import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.hostileworld.registration.ModParticles;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.AmbientParticleSettings;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -35,6 +37,12 @@ public class ModBiomes {
                 .specialEffects(
                     BiomeSpecialEffectsBuilder
                         .create(12638463, 4159204, 329011, 7842047)
+                        .ambientParticle(
+                            new AmbientParticleSettings(
+                                ModParticles.FUNGAL_CAVERNS_BREATHING_PARTICLE.get(),
+                                0.05f
+                            )
+                        )
                     .build()
                 )
                 .generationSettings(
