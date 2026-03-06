@@ -53,8 +53,8 @@ public class FungalCavernsBreathingParticle extends TextureSheetParticle {
             this.yd += 0.005f;
             this.yd *= 1f + (0.001f/weight);
         }
-        else if (cycleTime <= 75) {
-            this.yd += 0.008f;
+        else if (cycleTime <= 60) {
+            this.yd += 0.009f;
             this.yd *= 1f + (0.01f/weight);
         }
         else if (cycleTime >= 360) {
