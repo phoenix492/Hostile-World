@@ -23,8 +23,8 @@ import it.unimi.dsi.fastutil.Pair;
 
 public final class FlatTopShelfFungus extends SurfaceSnappingFeature<FlatTopShelfFungusConfiguration> {
 
-    public FlatTopShelfFungus(Codec<FlatTopShelfFungusConfiguration> codec, EnumSet<Direction> snapDirections) {
-        super(codec, snapDirections);
+    public FlatTopShelfFungus(Codec<FlatTopShelfFungusConfiguration> codec) {
+        super(codec, EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST));
     }
 
     private record ProtoFeatureBlock(BlockState blockState) {
