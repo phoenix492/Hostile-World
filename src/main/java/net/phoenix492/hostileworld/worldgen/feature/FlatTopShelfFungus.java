@@ -12,36 +12,35 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.Pair;
 
-public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration> {
-    private static final int WALL_FIND_RADIUS = 16;
-    private record WallContext(BlockPos wallPos, Direction wallDirection, List<Pair<Integer, Integer>> validPlacements) {}
+public final class FlatTopShelfFungus extends SurfaceSnappingFeature<FlatTopShelfFungusConfiguration> {
 
+    public FlatTopShelfFungus(Codec<FlatTopShelfFungusConfiguration> codec, EnumSet<Direction> snapDirections) {
+        super(codec, snapDirections);
+    }
 
     private record ProtoFeatureBlock(BlockState blockState) {
             private static final ProtoFeatureBlock INSIDE_CAP_BLOCK = new ProtoFeatureBlock(Blocks.AIR.defaultBlockState());
     }
 
-    public FlatTopShelfFungus(Codec<FlatTopShelfFungusConfiguration> codec) {
-        super(codec);
-    }
 
-    private List<Pair<Integer, Integer>> validPlacements(WorldGenLevel levelAccessor, BlockPos blockPos, Direction wall, FlatTopShelfFungusConfiguration configuration) {
-        Direction away = wall.getOpposite();
-        Direction ccw = wall.getCounterClockWise();
-        Direction cw = wall.getClockWise();
+    private List<Pair<Integer, Integer>> getValidPlacements(WorldGenLevel levelAccessor, SurfaceContext surfaceContext, FlatTopShelfFungusConfiguration configuration) {
+        Direction wall = surfaceContext.surfaceDirection();
+        Direction away = surfaceContext.surfaceDirection().getOpposite();
+        Direction ccw = surfaceContext.surfaceDirection().getCounterClockWise();
+        Direction cw = surfaceContext.surfaceDirection().getClockWise();
+        BlockPos surfacePos = surfaceContext.surfacePos();
 
-        BlockPos corner1 = blockPos.mutable().move(cw, 1).move(away, 1).immutable();
-        BlockPos corner2 = blockPos.mutable().move(ccw, 2).move(wall, 2).immutable();
+        BlockPos corner1 = surfacePos.mutable().move(cw, 1).move(away, 1).immutable();
+        BlockPos corner2 = surfacePos.mutable().move(ccw, 1).move(wall, 1).immutable();
 
         List<Pair<Integer, Integer>> validLocations = new ArrayList<>();
 
@@ -70,39 +69,6 @@ public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration>
         return validLocations;
     }
 
-    private WallContext findWall(WorldGenLevel levelAccessor, BlockPos blockPos, List<Block> validWallTargets, FlatTopShelfFungusConfiguration configuration) {
-        BlockPos.MutableBlockPos wallSearcher = new BlockPos.MutableBlockPos().set(blockPos);
-        List<Direction> scanDirections = Direction.Plane.HORIZONTAL.stream().collect(Collectors.toList());
-
-        for (int i = 1; i < WALL_FIND_RADIUS; i++) {
-            for (Direction d : scanDirections) {
-                wallSearcher.move(d, i);
-                if (!levelAccessor.getBlockState(wallSearcher).canBeReplaced()) {
-                    if (validWallTargets.contains(levelAccessor.getBlockState(wallSearcher).getBlock())) {
-                        List<Pair<Integer, Integer>> validPlacements = validPlacements(levelAccessor, wallSearcher, d, configuration);
-                        if (!validPlacements.isEmpty()) {
-                            return new WallContext(wallSearcher, d, validPlacements);
-                        }
-                        // No valid placements here, this direction is no good! remove it from checked directions.
-                        else {
-                            scanDirections.remove(d);
-                            wallSearcher.move(d.getOpposite(), i);
-                            break;
-                        }
-                    }
-                    // Not the right block, this direction is no good! Remove it from checked directions.
-                    else {
-                        scanDirections.remove(d);
-                        wallSearcher.move(d.getOpposite(), i);
-                        break;
-                    }
-                }
-                wallSearcher.move(d.getOpposite(), i);
-            }
-        }
-        return null;
-    }
-
     @Override
     public boolean place(FeaturePlaceContext<FlatTopShelfFungusConfiguration> context) {
         WorldGenLevel worldgenlevel = context.level();
@@ -123,20 +89,24 @@ public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration>
         final List<BlockPos> horizontalCapAnchor = new ArrayList<>();
         final Map<BlockPos, ProtoFeatureBlock> capBlocks = new HashMap<>();
         final Map<BlockPos, ProtoFeatureBlock> stemBlocks = new HashMap<>();
-        WallContext wallContext = findWall(worldgenlevel, blockpos, validWallTargets, shelfFungusConfiguration);
+        SurfaceContext surfaceContext = findWall(worldgenlevel, blockpos, validWallTargets);
 
-        if (wallContext == null) {
+        if (surfaceContext == null) {
             return false;
         }
 
-        Direction in = wallContext.wallDirection();
+        Direction in = surfaceContext.surfaceDirection();
         Direction away = in.getOpposite();
         Direction cw = in.getClockWise();
         Direction ccw = in.getCounterClockWise();
-        BlockPos.MutableBlockPos cursor = wallContext.wallPos().mutable();
+        BlockPos.MutableBlockPos cursor = surfaceContext.surfacePos().mutable();
 
-        // Pick a random set of stem dimensions from all that are valid.
-        Pair<Integer, Integer> stemDimensions = wallContext.validPlacements().get(random.nextInt(wallContext.validPlacements().size()));
+        // Pick a random set of stem dimensions from all that are valid. None valid? We can't place the feature here.
+        List<Pair<Integer, Integer>> validPlacements = getValidPlacements(worldgenlevel, surfaceContext, shelfFungusConfiguration);
+        if (validPlacements.isEmpty()) {
+            return false;
+        }
+        Pair<Integer, Integer> stemDimensions = validPlacements.get(random.nextInt(validPlacements.size()));
 
         // Stem placement
         for (int i = 0; i < stemDimensions.left(); i ++) {
