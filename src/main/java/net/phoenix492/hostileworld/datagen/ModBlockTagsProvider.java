@@ -141,6 +141,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(ModBlocks.BROWN_MYCOSTONE.get())
             .add(ModBlocks.RED_MYCOSTONE.get());
 
+        tag(ModTagKeys.Blocks.SUPPORTS_MYCORRHIZAL_GROWTH)
+            .add(Blocks.MYCELIUM)
+            .add(ModBlocks.MYCOTURF.get())
+            .add(ModBlocks.BROWN_MYCOSTONE.get())
+            .add(ModBlocks.RED_MYCOSTONE.get())
+            .add(ModBlocks.MIXED_MYCOSTONE.get())
+            .add(ModBlocks.MYCORESTONE.get());
+
 
         /*
             Tag controlling which blocks will drop a rain of spores down below.

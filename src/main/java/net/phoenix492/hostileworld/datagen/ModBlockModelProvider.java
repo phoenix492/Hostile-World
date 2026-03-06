@@ -84,7 +84,8 @@ public class ModBlockModelProvider extends BlockModelProvider {
         cubeAll("dummy_mycorestone", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mycorestone"));
         cubeAll("mycoturf", mcLoc("block/mycelium_top"));
 
-        crop("myenoki_patch", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/myenoki_patch")).renderType("cutout");
+        cross("mycorrhizal_growth", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/mycorrhizal_growth")).renderType("cutout");
+        cross("blooming_mycorrhizal_growth", ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block/blooming_mycorrhizal_growth")).renderType("cutout");
 
         mycostoneModelBuilder("red_mycostone");
         mycostoneModelBuilder("brown_mycostone");

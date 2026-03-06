@@ -26,7 +26,8 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.MYCORESTONE.asItem());
                 output.accept(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER.asItem());
                 output.accept(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER.asItem());
-                output.accept(ModBlocks.MYENOKI_PATCH.asItem());
+                output.accept(ModBlocks.MYCORRHIZAL_GROWTH.asItem());
+                output.accept(ModBlocks.BLOOMING_MYCORRHIZAL_GROWTH.asItem());
                 output.accept(ModItems.APOCALYPTIC_MUSHROOM_IGNITER);
                 output.accept(ModItems.STRONG_MUSHROOM_IGNITER);
                 output.accept(ModItems.NORMAL_MUSHROOM_IGNITER);

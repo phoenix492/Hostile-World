@@ -18,7 +18,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.APOCALYPTIC_MUSHROOM_IGNITER.asItem());
         basicItem(ModItems.IMMUNITE_SHARD.asItem());
         basicItem(ModItems.IMMUNITE_CLUSTER.asItem());
-        withExistingParent("myenoki_patch", "minecraft:item/generated").texture("layer0", "hostileworld:block/myenoki_patch");
+        withExistingParent("mycorrhizal_growth", "minecraft:item/generated").texture("layer0", "hostileworld:block/mycorrhizal_growth");
+        withExistingParent("blooming_mycorrhizal_growth", "minecraft:item/generated").texture("layer0", "hostileworld:block/blooming_mycorrhizal_growth");
         withExistingParent("strong_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("weak_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));
         withExistingParent("normal_mushroom_igniter", ResourceLocation.parse("hostileworld:item/apocalyptic_mushroom_igniter"));

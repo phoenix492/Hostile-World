@@ -6,7 +6,7 @@ import net.phoenix492.hostileworld.block.MycofireBlock;
 import net.phoenix492.hostileworld.block.MycorestoneBlock;
 import net.phoenix492.hostileworld.block.MycostoneBlock;
 import net.phoenix492.hostileworld.block.MycoturfBlock;
-import net.phoenix492.hostileworld.block.MyenokiPatchBlock;
+import net.phoenix492.hostileworld.block.MycorrhizalGrowthBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -128,9 +128,22 @@ public class ModBlocks {
         )
     );
 
-    public static final DeferredBlock<Block> MYENOKI_PATCH = registerWithItem(
-        "myenoki_patch",
-        () -> new MyenokiPatchBlock(
+    public static final DeferredBlock<Block> MYCORRHIZAL_GROWTH = registerWithItem(
+        "mycorrhizal_growth",
+        () -> new MycorrhizalGrowthBlock(
+        BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_PURPLE)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.GRASS)
+                .pushReaction(PushReaction.DESTROY)
+        )
+    );
+
+    public static final DeferredBlock<Block> BLOOMING_MYCORRHIZAL_GROWTH = registerWithItem(
+        "blooming_mycorrhizal_growth",
+        () -> new MycorrhizalGrowthBlock(
         BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .noCollission()

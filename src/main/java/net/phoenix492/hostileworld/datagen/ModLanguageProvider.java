@@ -45,7 +45,8 @@ public class ModLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.MYCOFIRE, "Mycofire");
         addBlock(ModBlocks.NASCENT_AUTOIMMUNE_CLUSTER, "Nascent Autoimmune Cluster");
         addBlock(ModBlocks.MATURE_AUTOIMMUNE_CLUSTER, "Mature Autoimmune Cluster");
-        addBlock(ModBlocks.MYENOKI_PATCH, "Myenoki Patch");
+        addBlock(ModBlocks.MYCORRHIZAL_GROWTH, "Mycorrhizal Growth");
+        addBlock(ModBlocks.BLOOMING_MYCORRHIZAL_GROWTH, "Blooming Mycorrhizal Growth");
 
         // Creative Tabs
         add("creativetab.hostileworld.hostileworld_creative_tab", "Hostile World");

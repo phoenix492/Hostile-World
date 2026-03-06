@@ -1,0 +1,70 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "items": "minecraft:shears"
+                  }
+                }
+              ],
+              "name": "hostileworld:blooming_mycorrhizal_growth"
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": {
+                "pools": [
+                  {
+                    "bonus_rolls": 0.0,
+                    "entries": [
+                      {
+                        "type": "minecraft:item",
+                        "name": "minecraft:red_mushroom"
+                      },
+                      {
+                        "type": "minecraft:item",
+                        "name": "minecraft:brown_mushroom"
+                      }
+                    ],
+                    "functions": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "formula": "minecraft:binomial_with_bonus_count",
+                        "function": "minecraft:apply_bonus",
+                        "parameters": {
+                          "extra": 0,
+                          "probability": 0.5
+                        }
+                      },
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "formula": "minecraft:binomial_with_bonus_count",
+                        "function": "minecraft:apply_bonus",
+                        "parameters": {
+                          "extra": 0,
+                          "probability": 0.5
+                        }
+                      }
+                    ],
+                    "rolls": 1.0
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "hostileworld:blocks/blooming_mycorrhizal_growth"
+}
