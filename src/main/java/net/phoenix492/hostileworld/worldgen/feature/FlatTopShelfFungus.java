@@ -273,7 +273,7 @@ public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration>
             }
         }
 
-        // If these are HugeMushroomBlocks, we've gotta go through and adjust their side blockstates to make the cap look natural.
+        // If these are HugeMushroomBlocks, we've gotta go through and adjust their side blockstates to make the cap and stem look natural.
         if (CAP_BLOCK.getBlock() instanceof HugeMushroomBlock) {
             for (Map.Entry<BlockPos, ProtoFeatureBlock> entry : capBlocks.entrySet()) {
                 BlockPos pos = entry.getKey();
@@ -296,6 +296,28 @@ public class FlatTopShelfFungus extends Feature<FlatTopShelfFungusConfiguration>
                 }
 
                 capBlocks.put(pos, new ProtoFeatureBlock(replacement));
+            }
+        }
+
+        if (STEM_BLOCK.getBlock() instanceof HugeMushroomBlock) {
+            for (Map.Entry<BlockPos, ProtoFeatureBlock> entry : stemBlocks.entrySet()) {
+                BlockPos pos = entry.getKey();
+                ProtoFeatureBlock block = entry.getValue();
+                BlockState replacement = block.blockState();
+
+                for (Direction d : Direction.values()) {
+                    BlockPos checkedPos = pos.relative(d);
+                    ProtoFeatureBlock checkedBlock1 = capBlocks.get(checkedPos);
+                    ProtoFeatureBlock checkedBlock2 = stemBlocks.get(checkedPos);
+                    if (checkedBlock1 instanceof ProtoFeatureBlock pfb && pfb != ProtoFeatureBlock.INSIDE_CAP_BLOCK) {
+                        replacement = replacement.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(d), false);
+                    }
+                    if (checkedBlock2 instanceof ProtoFeatureBlock) {
+                        replacement = replacement.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(d), false);
+                    }
+                }
+
+                stemBlocks.put(pos, new ProtoFeatureBlock(replacement));
             }
         }
 
