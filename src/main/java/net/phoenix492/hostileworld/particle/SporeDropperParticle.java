@@ -27,7 +27,7 @@ public class SporeDropperParticle extends TextureSheetParticle {
 
         // Random float between -1 and 1
         this.x_movement_direction = (random.nextFloat() * 2) - 1;
-        // Apply pythagorean and multiply by either -1 or 1 to snap it to the top/bottom half of a "circle"
+        // Apply pythagorean and multiply by either -1 or 1 to "snap" it to the top/bottom half of a circle
         this.z_movement_direction = Mth.sqrt(1 - Mth.square(x_movement_direction)) * (random.nextInt(1) * 2 - 1);
 
         this.oscillationFactor = 0.01F;
