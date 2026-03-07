@@ -7,11 +7,6 @@
     "minStemHeight": 4,
     "rimDepth": 3,
     "stemBlock": "minecraft:mushroom_stem",
-    "validWallTargets": [
-      "hostileworld:mixed_mycostone",
-      "hostileworld:brown_mycostone",
-      "hostileworld:red_mycostone",
-      "hostileworld:mycoturf"
-    ]
+    "validWallTargets": "#hostileworld:supports_shelf_fungus"
   }
 }

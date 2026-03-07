@@ -69,6 +69,10 @@ public class ModBiomes {
                         )
                         .addFeature(
                             GenerationStep.Decoration.VEGETAL_DECORATION,
+                            placedFeatures.getOrThrow(ModPlacedFeatures.FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_PLACED_KEY)
+                        )
+                        .addFeature(
+                            GenerationStep.Decoration.VEGETAL_DECORATION,
                             placedFeatures.getOrThrow(ModPlacedFeatures.FUNGAL_CAVERNS_BIG_RED_MUSHROOM_PLACED_KEY)
                         )
                         .addFeature(

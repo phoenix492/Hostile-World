@@ -23,8 +23,10 @@ public class FloorSnappingVegetation extends SurfaceSnappingFeature<FloorSnappin
         WorldGenLevel level = context.level();
         if (surfaceContext instanceof SurfaceContext) {
             BlockPos placeTarget = surfaceContext.surfacePos().above();
-            level.setBlock(placeTarget, config.block().getState(level.getRandom(), placeTarget), 3);
-            return true;
+            if (level.getBlockState(placeTarget).isAir()) {
+                level.setBlock(placeTarget, config.block().getState(level.getRandom(), placeTarget), 3);
+                return true;
+            }
         }
         return false;
     }

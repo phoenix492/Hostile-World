@@ -43,7 +43,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS_KEY = registerKey("brown_shelf_fungus");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FRANKLIN = registerKey("franklin");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_MYCORRHIZAL_PATCH = registerKey("fungal_caverns_mycorrhizal_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_KEY = registerKey("fungal_caverns_mycorrhizal_patch");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
     public static final RuleTest MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES);
@@ -211,15 +211,14 @@ public class ModConfiguredFeatures {
         );
         register(
             context,
-            FUNGAL_CAVERNS_MYCORRHIZAL_PATCH,
+            FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_KEY,
             ModFeatures.FLOOR_SNAPPING_VEGETATION.get(),
             FloorSnappingVegetationConfiguration.builder()
                 .validFloorTargets(BuiltInRegistries.BLOCK.getOrCreateTag(ModTagKeys.Blocks.SUPPORTS_MYCORRHIZAL_GROWTH))
                 .addPlacedState(ModBlocks.BLOOMING_MYCORRHIZAL_GROWTH.get().defaultBlockState(), 1)
-                .addPlacedState(ModBlocks.MYCORRHIZAL_GROWTH.get().defaultBlockState(), 4)
+                .addPlacedState(ModBlocks.MYCORRHIZAL_GROWTH.get().defaultBlockState(), 7)
                 .build()
         );
-
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(

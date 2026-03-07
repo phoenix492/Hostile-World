@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_RED_MYCOSTONE_BLOB_PLACED_KEY = registerKey("fungal_caverns_red_mycostone_blob_placed");
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_MATURE_AUTOIMMUNE_CLUSTER_PLACED_KEY = registerKey("fungal_caverns_mature_autoimmune_cluster_placed");
     public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_BROWN_SHELF_FUNGUS_PLACED_KEY = registerKey("fungal_caverns_brown_shelf_fungus_placed");
+    public static final ResourceKey<PlacedFeature> FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_PLACED_KEY = registerKey("fungal_caverns_mycorrhizal_patch_placed");
 
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -126,6 +128,20 @@ public class ModPlacedFeatures {
                 CountPlacement.of(10),
                 HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.BOTTOM, VerticalAnchor.absolute(60))),
                 InSquarePlacement.spread(),
+                BiomeFilter.biome()
+            )
+        );
+
+        register(
+            context,
+            FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_PLACED_KEY,
+            configuredFeatures.getOrThrow(ModConfiguredFeatures.FUNGAL_CAVERNS_MYCORRHIZAL_PATCH_KEY),
+            List.of(
+                CountPlacement.of(20),
+                HeightRangePlacement.of(UniformHeight.of(VerticalAnchor.BOTTOM, VerticalAnchor.absolute(60))),
+                InSquarePlacement.spread(),
+                CountPlacement.of(12),
+                RandomOffsetPlacement.horizontal(UniformInt.of(-4, 4)),
                 BiomeFilter.biome()
             )
         );
