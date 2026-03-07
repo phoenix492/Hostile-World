@@ -184,13 +184,7 @@ public class ModConfiguredFeatures {
             FlatTopShelfFungusConfiguration.builder()
                 .capBlock(Blocks.BROWN_MUSHROOM_BLOCK)
                 .stemBlock(Blocks.MUSHROOM_STEM)
-                .validWallTargets(HolderSet.direct(
-                        Block::builtInRegistryHolder,
-                        ModBlocks.MIXED_MYCOSTONE.get(),
-                        ModBlocks.BROWN_MYCOSTONE.get(),
-                        ModBlocks.RED_MYCOSTONE.get(),
-                        ModBlocks.MYCOTURF.get()
-                ))
+                .validWallTargets(BuiltInRegistries.BLOCK.getOrCreateTag(ModTagKeys.Blocks.SUPPORTS_SHELF_FUNGUS))
                 .minStemLength(2)
                 .maxStemLength(3)
                 .minStemHeight(1)
@@ -206,13 +200,7 @@ public class ModConfiguredFeatures {
             FlatTopShelfFungusConfiguration.builder()
                 .capBlock(Blocks.RED_MUSHROOM_BLOCK)
                 .stemBlock(Blocks.MUSHROOM_STEM)
-                .validWallTargets(HolderSet.direct(
-                    Block::builtInRegistryHolder,
-                    ModBlocks.MIXED_MYCOSTONE.get(),
-                    ModBlocks.BROWN_MYCOSTONE.get(),
-                    ModBlocks.RED_MYCOSTONE.get(),
-                    ModBlocks.MYCOTURF.get()
-                ))
+                .validWallTargets(BuiltInRegistries.BLOCK.getOrCreateTag(ModTagKeys.Blocks.SUPPORTS_SHELF_FUNGUS))
                 .minStemHeight(4)
                 .maxStemHeight(6)
                 .minStemLength(2)
