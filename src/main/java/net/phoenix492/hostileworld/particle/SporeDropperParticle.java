@@ -7,24 +7,30 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
 import org.jetbrains.annotations.Nullable;
 
 public class SporeDropperParticle extends TextureSheetParticle {
-    private static final int TICK_TIMER_CAP = 360;
     private static final int FADEOUT_LENGTH = 40;
     int counter = 0;
-    int x_movement_direction;
-    int z_movement_direction;
+    float x_movement_direction;
+    float z_movement_direction;
+    float oscillationFactor;
     int fadeoutTimer;
 
     protected SporeDropperParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet, double xSpeed, double ySpeed, double zSpeed) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
 
         RandomSource random = level.getRandom();
-        this.x_movement_direction = random.nextInt(-1, 1);
-        this.z_movement_direction = random.nextInt(-1, 1);
+
+        // Random float between -1 and 1
+        this.x_movement_direction = (random.nextFloat() * 2) - 1;
+        // Apply pythagorean and multiply by either -1 or 1 to snap it to the top/bottom half of a "circle"
+        this.z_movement_direction = Mth.sqrt(1 - Mth.square(x_movement_direction)) * (random.nextInt(1) * 2 - 1);
+
+        this.oscillationFactor = 0.01F;
         this.gravity = 0.04f - (random.nextFloat() / 50);
         this.lifetime = 200;
         this.fadeoutTimer = 0;
@@ -41,14 +47,10 @@ public class SporeDropperParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        if (counter < TICK_TIMER_CAP) {
-            counter += 6;
-        } else {
-            counter = 0;
-        }
+        counter += 6;
         if (!this.onGround) {
-            this.xd = Math.sin(Math.toRadians(counter)) * x_movement_direction * 0.01D;
-            this.zd = Math.sin(Math.toRadians(counter)) * z_movement_direction * 0.01D;
+            this.xd = Math.sin(Math.toRadians(counter)) * x_movement_direction * this.oscillationFactor;
+            this.zd = Math.sin(Math.toRadians(counter)) * z_movement_direction * this.oscillationFactor;
         }
 
         if (this.onGround || this.age >= this.lifetime - FADEOUT_LENGTH) {
