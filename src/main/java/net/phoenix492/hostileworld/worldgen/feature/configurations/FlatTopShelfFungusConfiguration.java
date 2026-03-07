@@ -2,12 +2,12 @@ package net.phoenix492.hostileworld.worldgen.feature.configurations;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-
-import java.util.List;
-import com.google.common.collect.ImmutableList;
 
 public record FlatTopShelfFungusConfiguration(
     int width,
@@ -22,7 +22,7 @@ public record FlatTopShelfFungusConfiguration(
     boolean generateRimCorners,
     Block capBlock,
     Block stemBlock,
-    List<Block> validWallTargets
+    HolderSet<Block> validWallTargets
     ) implements FeatureConfiguration {
     public static Codec<FlatTopShelfFungusConfiguration> CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
@@ -38,7 +38,7 @@ public record FlatTopShelfFungusConfiguration(
             Codec.BOOL.optionalFieldOf("generateRimCorners", false).forGetter(FlatTopShelfFungusConfiguration::generateRimCorners),
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("capBlock").forGetter(FlatTopShelfFungusConfiguration::capBlock),
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("stemBlock").forGetter(FlatTopShelfFungusConfiguration::stemBlock),
-            Codec.list(BuiltInRegistries.BLOCK.byNameCodec()).fieldOf("validWallTargets").forGetter(FlatTopShelfFungusConfiguration::validWallTargets)
+            RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("validWallTargets").forGetter(FlatTopShelfFungusConfiguration::validWallTargets)
             ).apply(instance, FlatTopShelfFungusConfiguration::new)
     );
 
@@ -59,7 +59,12 @@ public record FlatTopShelfFungusConfiguration(
         private int rimDepth = 1;
         private Block capBlock = null;
         private Block stemBlock = null;
-        private final ImmutableList.Builder<Block> validWallTargets = ImmutableList.builder();
+        private HolderSet<Block> validWallTargets;
+
+        public FlatTopShelfFungusConfigurationBuilder validWallTargets(HolderSet<Block> targets) {
+            this.validWallTargets = targets;
+            return this;
+        }
 
         public FlatTopShelfFungusConfigurationBuilder width(int width) {
             this.width = width;
@@ -73,11 +78,6 @@ public record FlatTopShelfFungusConfiguration(
 
         public FlatTopShelfFungusConfigurationBuilder outwardCapLength(int outwardCapLength) {
             this.outwardCapLength = outwardCapLength;
-            return this;
-        }
-
-        public FlatTopShelfFungusConfigurationBuilder addValidWallTarget(Block block) {
-            validWallTargets.add(block);
             return this;
         }
 
@@ -142,13 +142,13 @@ public record FlatTopShelfFungusConfiguration(
                 generateRimCorners,
                 capBlock,
                 stemBlock,
-                validWallTargets.build()
+                validWallTargets
                 );
         }
 
         private void validate() {
-            if (validWallTargets.build().isEmpty()) {
-                throw new IllegalStateException("FlatShelfFungus constructed without valid wall block!");
+            if (validWallTargets == null) {
+                throw new IllegalStateException("FlatShelfFungus constructed without valid wall target!");
             }
             if (minStemHeight < 1) {
                 throw new IllegalStateException("FlatShelfFungus must have minStemHeight a of at least 1!");

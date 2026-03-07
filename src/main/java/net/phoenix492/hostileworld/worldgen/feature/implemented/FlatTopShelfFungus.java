@@ -6,6 +6,7 @@ import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfF
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderSet;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -83,7 +84,7 @@ public final class FlatTopShelfFungus extends SurfaceSnappingFeature<FlatTopShel
 
         final BlockState CAP_BLOCK = shelfFungusConfiguration.capBlock().defaultBlockState();
         final BlockState STEM_BLOCK = shelfFungusConfiguration.stemBlock().defaultBlockState();
-        final List<Block> validWallTargets = shelfFungusConfiguration.validWallTargets();
+        final HolderSet<Block> validWallTargets = shelfFungusConfiguration.validWallTargets();
         final int WIDTH = shelfFungusConfiguration.width();
         final int OUTWARD_LENGTH = shelfFungusConfiguration.outwardCapLength();
         final int INWARD_LENGTH = shelfFungusConfiguration.inwardCapLength();

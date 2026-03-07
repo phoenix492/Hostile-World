@@ -3,6 +3,7 @@ package net.phoenix492.hostileworld.worldgen.feature.abstracted;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -22,7 +23,7 @@ public abstract class SurfaceSnappingFeature<FC extends FeatureConfiguration> ex
         this.snapDirections = snapDirections;
     }
 
-    protected final SurfaceContext findWall(WorldGenLevel levelAccessor, BlockPos blockPos, List<Block> validSurfaceTargets) {
+    protected final SurfaceContext findWall(WorldGenLevel levelAccessor, BlockPos blockPos, HolderSet<Block> validSurfaceTargets) {
         BlockPos.MutableBlockPos wallSearcher = new BlockPos.MutableBlockPos().set(blockPos);
         List<Direction> scanDirections = new ArrayList<>(snapDirections);
 
@@ -30,7 +31,7 @@ public abstract class SurfaceSnappingFeature<FC extends FeatureConfiguration> ex
             for (Direction d : scanDirections) {
                 wallSearcher.move(d, i);
                 if (!levelAccessor.getBlockState(wallSearcher).canBeReplaced()) {
-                    if (validSurfaceTargets.contains(levelAccessor.getBlockState(wallSearcher).getBlock())) {
+                    if (validSurfaceTargets.contains(levelAccessor.getBlockState(wallSearcher).getBlockHolder())) {
                         return new SurfaceContext(wallSearcher, d);
                     }
                     // Not the right block, this direction is no good! Remove it from checked directions.

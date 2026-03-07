@@ -5,8 +5,10 @@ import net.phoenix492.hostileworld.registration.ModBlocks;
 import net.phoenix492.hostileworld.registration.ModFeatures;
 import net.phoenix492.hostileworld.util.ModTagKeys;
 import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfFungusConfiguration;
+import net.phoenix492.hostileworld.worldgen.feature.configurations.FloorSnappingVegetationConfiguration;
 
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
@@ -41,6 +43,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MATURE_AUTOIMMUNE_CLUSTER_ORE_KEY = registerKey("mature_autoimmune_cluster_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_SHELF_FUNGUS_KEY = registerKey("brown_shelf_fungus");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FRANKLIN = registerKey("franklin");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FUNGAL_CAVERNS_MYCORRHIZAL_PATCH = registerKey("fungal_caverns_mycorrhizal_patch");
 
     public static final RuleTest MYCOSTONE_BLOB_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MYCOSTONE_BLOB_REPLACEABLES);
     public static final RuleTest MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES = new TagMatchTest(ModTagKeys.Blocks.MATURE_AUTOIMMUNE_CLUSTER_REPLACEABLES);
@@ -181,10 +184,13 @@ public class ModConfiguredFeatures {
             FlatTopShelfFungusConfiguration.builder()
                 .capBlock(Blocks.BROWN_MUSHROOM_BLOCK)
                 .stemBlock(Blocks.MUSHROOM_STEM)
-                .addValidWallTarget(ModBlocks.MIXED_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.RED_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.BROWN_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.MYCOTURF.get())
+                .validWallTargets(HolderSet.direct(
+                        Block::builtInRegistryHolder,
+                        ModBlocks.MIXED_MYCOSTONE.get(),
+                        ModBlocks.BROWN_MYCOSTONE.get(),
+                        ModBlocks.RED_MYCOSTONE.get(),
+                        ModBlocks.MYCOTURF.get()
+                ))
                 .minStemLength(2)
                 .maxStemLength(3)
                 .minStemHeight(1)
@@ -200,16 +206,29 @@ public class ModConfiguredFeatures {
             FlatTopShelfFungusConfiguration.builder()
                 .capBlock(Blocks.RED_MUSHROOM_BLOCK)
                 .stemBlock(Blocks.MUSHROOM_STEM)
-                .addValidWallTarget(ModBlocks.MIXED_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.RED_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.BROWN_MYCOSTONE.get())
-                .addValidWallTarget(ModBlocks.MYCOTURF.get())
+                .validWallTargets(HolderSet.direct(
+                    Block::builtInRegistryHolder,
+                    ModBlocks.MIXED_MYCOSTONE.get(),
+                    ModBlocks.BROWN_MYCOSTONE.get(),
+                    ModBlocks.RED_MYCOSTONE.get(),
+                    ModBlocks.MYCOTURF.get()
+                ))
                 .minStemHeight(4)
                 .maxStemHeight(6)
                 .minStemLength(2)
                 .maxStemLength(3)
                 .generateRim()
                 .rimDepth(3)
+                .build()
+        );
+        register(
+            context,
+            FUNGAL_CAVERNS_MYCORRHIZAL_PATCH,
+            ModFeatures.FLOOR_SNAPPING_VEGETATION.get(),
+            FloorSnappingVegetationConfiguration.builder()
+                .validFloorTargets(BuiltInRegistries.BLOCK.getOrCreateTag(ModTagKeys.Blocks.SUPPORTS_MYCORRHIZAL_GROWTH))
+                .addPlacedState(ModBlocks.BLOOMING_MYCORRHIZAL_GROWTH.get().defaultBlockState(), 1)
+                .addPlacedState(ModBlocks.MYCORRHIZAL_GROWTH.get().defaultBlockState(), 4)
                 .build()
         );
 

@@ -9,8 +9,8 @@
     "stemBlock": "minecraft:mushroom_stem",
     "validWallTargets": [
       "hostileworld:mixed_mycostone",
-      "hostileworld:red_mycostone",
       "hostileworld:brown_mycostone",
+      "hostileworld:red_mycostone",
       "hostileworld:mycoturf"
     ]
   }

@@ -1,0 +1,23 @@
+{
+  "type": "hostileworld:floor_snapping_vegetation",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "hostileworld:blooming_mycorrhizal_growth"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "hostileworld:mycorrhizal_growth"
+          },
+          "weight": 4
+        }
+      ]
+    },
+    "validFloorTargets": "#hostileworld:supports_mycorrhizal_growth"
+  }
+}
