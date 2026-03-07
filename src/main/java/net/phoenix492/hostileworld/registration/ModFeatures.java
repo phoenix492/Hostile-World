@@ -1,7 +1,7 @@
 package net.phoenix492.hostileworld.registration;
 
 import net.phoenix492.hostileworld.HostileWorld;
-import net.phoenix492.hostileworld.worldgen.feature.FlatTopShelfFungus;
+import net.phoenix492.hostileworld.worldgen.feature.implemented.FlatTopShelfFungus;
 import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfFungusConfiguration;
 
 import net.minecraft.core.registries.BuiltInRegistries;

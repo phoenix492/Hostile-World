@@ -1,5 +1,6 @@
-package net.phoenix492.hostileworld.worldgen.feature;
+package net.phoenix492.hostileworld.worldgen.feature.implemented;
 
+import net.phoenix492.hostileworld.worldgen.feature.abstracted.SurfaceSnappingFeature;
 import net.phoenix492.hostileworld.worldgen.feature.configurations.FlatTopShelfFungusConfiguration;
 
 import com.mojang.serialization.Codec;

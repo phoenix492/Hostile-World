@@ -1,4 +1,4 @@
-package net.phoenix492.hostileworld.worldgen.feature;
+package net.phoenix492.hostileworld.worldgen.feature.abstracted;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
