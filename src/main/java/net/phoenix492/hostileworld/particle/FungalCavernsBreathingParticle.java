@@ -39,12 +39,13 @@ public class FungalCavernsBreathingParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        if (!(level.getBiome(new BlockPos((int) Math.floor(this.x), (int) Math.floor(this.y), (int) Math.floor(this.z))).is(startingBiome))) {
+        int cycleTime = (int) (level.getGameTime() % 400);
+
+        if (cycleTime % 20 == 0 && !(level.getBiome(new BlockPos((int) Math.floor(this.x), (int) Math.floor(this.y), (int) Math.floor(this.z))).is(startingBiome))) {
             this.remove();
             return;
         }
 
-        int cycleTime = (int) (level.getGameTime() % 400);
         if (cycleTime == 0 || this.onGround) {
             this.yd = 0;
             this.gravity = trueGravity;
@@ -68,7 +69,7 @@ public class FungalCavernsBreathingParticle extends TextureSheetParticle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     public record Provider(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
