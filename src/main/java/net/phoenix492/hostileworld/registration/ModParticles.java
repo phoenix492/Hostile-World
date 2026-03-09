@@ -1,6 +1,7 @@
 package net.phoenix492.hostileworld.registration;
 
 import net.phoenix492.hostileworld.HostileWorld;
+import net.phoenix492.hostileworld.particle.BlockBreakSporeParticle;
 import net.phoenix492.hostileworld.particle.FungalCavernsBreathingParticle;
 import net.phoenix492.hostileworld.particle.SporeDropperParticle;
 
@@ -28,6 +29,11 @@ public class ModParticles {
         () -> new SimpleParticleType(false)
     );
 
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> BLOCK_BREAK_SPORE_PARTICLE = PARTICLE_TYPES.register(
+        "block_break_spore_particle",
+        () -> new SimpleParticleType(true) // Gameplay feedback particle, overrides limiter
+    );
+
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }
@@ -38,6 +44,7 @@ public class ModParticles {
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticles.SPORE_DROPPER_PARTICLE.get(), SporeDropperParticle.Provider::new);
             event.registerSpriteSet(ModParticles.FUNGAL_CAVERNS_BREATHING_PARTICLE.get(), FungalCavernsBreathingParticle.Provider::new);
+            event.registerSpriteSet(ModParticles.BLOCK_BREAK_SPORE_PARTICLE.get(), BlockBreakSporeParticle.Provider::new);
         }
     }
 }

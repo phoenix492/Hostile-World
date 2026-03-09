@@ -173,6 +173,8 @@ public final class FlatTopShelfFungus extends SurfaceSnappingFeature<FlatTopShel
             }
         }
 
+        //TODO: This is currently broken. The ring fails oddly when the cap is obstructed during generation.
+
         // Now it's time to go around placing the ring.
         // ...Unless we're not supposed to.
         if (shelfFungusConfiguration.generateRim()) {

@@ -24,5 +24,9 @@ public class ModParticleDescriptionProvider extends ParticleDescriptionProvider 
             ModParticles.FUNGAL_CAVERNS_BREATHING_PARTICLE.get(),
             ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "fungal_caverns_breathing_particle")
         );
+        spriteSet(
+            ModParticles.BLOCK_BREAK_SPORE_PARTICLE.get(),
+            ResourceLocation.fromNamespaceAndPath(HostileWorld.MODID, "block_break_spore")
+        );
     }
 }
